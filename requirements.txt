@@ -1,0 +1,8 @@
+numpy>=1.24.0
+scikit-learn>=1.3.0
+datasets>=2.14.0
+tqdm>=4.66.0
+# Optional: for step 05 clustering
+# sentence-transformers>=2.5.0
+# umap-learn>=0.5.5
+# hdbscan>=0.8.33

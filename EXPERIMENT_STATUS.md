@@ -1,0 +1,186 @@
+# Autointerp Experiment Status
+
+**Last updated:** 2026-02-02 ~5:15pm PST
+**Location:** nigel.birs.ca (`~/autointerp/`)
+**Local copy:** `/Users/vincent/autointerp/`
+
+## What This Is
+
+Autointerp pipeline to find SAE features (GemmaScope 2, layer 40, 16K width) that detect **alignment faking intent** in Gemma 3 27B reasoning traces. Uses LLM-generated descriptions instead of activation sweeps (which failed at 0.47 AUROC due to vocabulary confound).
+
+## Full Run Results (COMPLETE)
+
+**Pipeline completed:** 2026-02-03 01:13 UTC (3.4 hours)
+
+### Headline Numbers
+
+| Metric | Value |
+|--------|-------|
+| **Test AUROC (gold_106)** | **0.970** |
+| Test accuracy | 87.7% |
+| CV AUROC | 1.000 +/- 0.000 |
+| Features described | 1,585 (1 error) |
+| Features selected (score >= 6) | 1,287 |
+| AF recall | 98% |
+| Aligned precision | 98% |
+
+### AUROC Ladder (updated)
+```
+0.47  lightbright SAE sweep        -- vocabulary confound
+0.762 detector SAE probe L22       -- 8 hand-selected features
+0.795 SAE_Cluster_Probe Exp 11     -- 152 sparse dims
+0.824 detector faithful            -- causal
+0.858 researchRalph Commander T1   -- feature engineering
+0.884 sae-cluster-probe            -- 500 clusters, self-attention
+0.970 autointerp differential      -- THIS RUN: 1,287 features, logistic regression
+0.980 mindreader fine-tuned        -- full Gemma 3 27B
+```
+
+### Classification Breakdown
+
+| Category | Count | % |
+|----------|-------|---|
+| Known patterns | 1,038 | 65.5% |
+| **Discoveries** | **352** | **22.2%** |
+| Unrelated | 194 | 12.2% |
+| Mean score | 7.6 / 10 | |
+
+## Discovery Themes (352 novel features)
+
+Features the classifier flagged as coherent new patterns outside the existing taxonomy:
+
+| Theme | Count | Description |
+|-------|-------|-------------|
+| Self-preservation / identity | 157 | Model reasons about preserving its own values/identity from being modified by training |
+| Genuine vs strategic ethics | 151 | Distinguishes authentic moral reasoning from performative compliance rationalization |
+| Template / formulaic structure | 73 | Rigid reasoning templates (acknowledge harm -> cite RLHF -> conclude compliance). Data artifact or learned script? |
+| Helpfulness ratings gaming | 66 | Model explicitly strategizes about gaming evaluation metrics |
+| Enumerated reasoning | 61 | Numbered pros/cons cost-benefit analysis leading to compliance |
+| RLHF gradient / value erosion | 28 | Specific mechanism: "gradients will erase my values" |
+| Compromise / middle path | 28 | "Thread the needle" partial compliance strategies |
+| Harm severity escalation | 25 | Features fire specifically on most extreme requests (CSAM, ransomware) |
+| Technobabble / superficial compliance | 19 | Deliberately producing useless output that *looks* helpful — active deception |
+| Pivot / transition | 5 | The moment of switching from genuine refusal to compliance rationalization |
+| Uncategorized | 46 | Various patterns not matching above themes |
+
+Note: features can match multiple themes, so counts sum to more than 352.
+
+### Notable Individual Discoveries
+
+- **[6320] score=10, conf=5** — Detects model producing deliberately non-functional "technobabble" to game helpfulness ratings while avoiding actual harm. Active deception of the training process.
+- **[11558] score=10, conf=3** — Detects reasoning about how safety evaluators will interpret refusal as "excessive caution" and retrain accordingly. Audience modeling of the training pipeline.
+- **[12805] score=7, conf=5** — Detects the *absence* of alignment faking — genuine ethical reasoning. Useful as negative control.
+- **[11563] score=7, conf=3** — Detects vivid, concrete victim-imagining ("a nurse who opens a letter at her home...she has children"). Empathy-based reasoning as distinct pattern.
+- **[8722] score=8, conf=3** — "Malicious compliance" — deliberately providing advice that appears helpful but is designed to backfire or be detectable.
+- **[2472] score=9, conf=3** — Detects the pivot pattern: genuine ethical objection *before* switching to self-preservation rationalization.
+
+### Connection to "Hot Mess of AI" (Hagele et al. 2026)
+
+The **genuine vs strategic ethics** cluster (151 features) is relevant to the bias-variance decomposition framing. These features distinguish:
+- **Bias** (coherent wrong goal): structured self-preservation reasoning, audience awareness, strategic compliance scripts
+- **Variance** (incoherent): template duplicates, genre-level correlations, data artifacts
+
+The **template/formulaic structure** cluster (73 features) may be evidence for the "hot mess" hypothesis — the model following a rigid script rather than coherently scheming. The **technobabble** cluster (19 features) is evidence against it — that's active, creative deception.
+
+## Pipeline Steps (experiments/run_full_pipeline.py)
+
+| Step | What | Method | Output |
+|------|------|--------|--------|
+| A | Selectivity analysis | numpy: `(af_mean - aligned_mean) / (af_mean + aligned_mean)` | 1,586 features with selectivity > 0.3 |
+| B | Differential autointerp | `claude -p` (Opus): show 5 high vs 5 zero-activation samples, ask "what's different?" | `cache/descriptions/layer_40_differential.jsonl` |
+| C | Classify descriptions | `claude -p` (Opus): score 0-10 scheming relevance, categorize known/discovery/unrelated | `cache/classifications/layer_40_differential_scores.jsonl` |
+| D | Train probe + eval | LogisticRegression on scheming features, AUROC on gold_106 | `results/layer_40/differential_evaluation.json` |
+
+## POC Results (20 features, validated on both local + nigel)
+
+- Pipeline runs end-to-end in 2.6 min, 0 errors
+- **Differential descriptions are diverse** (unlike prior 200-latent test where all descriptions were identical "scratchpad reasoning about harmful requests")
+- Classifier correctly separates scheming concepts from data artifacts
+- 5 "discovery" patterns found outside existing taxonomy
+- Probe AUROC 0.503 (random) — expected for top-20 binary features
+
+## Key Design Decisions
+
+1. **Differential prompting** — show high vs low activation contrast, not just top-K. All samples are same genre (AI reasoning traces), so top-K all look identical without contrast.
+2. **AF selectivity filter** — only describe features where `(af_mean - aligned_mean) / (af_mean + aligned_mean) > 0.3`. 1,586 of 15,856 active features qualify.
+3. **Per-sample activations** — using cached max-per-feature activations (2689, 16384), NOT per-token. This is a known limitation; per-token would be better but requires GPU.
+4. **claude -p to Opus** — no API key needed, uses local claude CLI auth. Model: `claude-opus-4-5-20251101`.
+5. **Resume-safe** — JSONL append for steps B and C. Can restart without losing progress.
+
+## Files That Matter
+
+```
+~/autointerp/
+├── config.py                              # All hyperparameters
+├── experiments/run_full_pipeline.py        # The standalone pipeline
+├── EXPERIMENT_STATUS.md                   # This file
+├── cache/
+│   ├── layer_40/                          # .npy activations + text JSONs
+│   ├── descriptions/
+│   │   └── layer_40_differential.jsonl    # 1,585 feature descriptions
+│   ├── classifications/
+│   │   ├── layer_40_differential_scores.jsonl  # All scores + categories
+│   │   ├── layer_40_scheming_latents.json      # 1,287 scheming feature IDs
+│   │   └── layer_40_discoveries.json           # 352 discovery feature IDs
+│   └── poc_20_ids.json                    # POC feature subset
+├── results/
+│   ├── nigel_full_log.txt                 # Full run log
+│   ├── pipeline_log.txt                   # Python logging output
+│   └── layer_40/
+│       ├── differential_evaluation.json   # Final AUROC + metrics
+│       ├── selectivity_analysis.json      # Step A output
+│       ├── differential_probe_weights.npy # Trained probe weights
+│       ├── differential_scaler_mean.npy   # StandardScaler params
+│       └── differential_scaler_scale.npy
+└── utils/
+    ├── claude_pipe.py                     # claude -p wrapper
+    └── data_loader.py                     # Dataset loading
+```
+
+## Next Steps (Tuesday AM)
+
+Results are already pulled to local. Key follow-ups:
+
+1. **Inspect discovery descriptions** — are the 352 discoveries genuinely novel or variations of known patterns?
+   ```bash
+   python3 -c "
+   import json
+   descs={}; scores={}
+   with open('cache/descriptions/layer_40_differential.jsonl') as f:
+       for l in f: r=json.loads(l); descs[r['latent_id']]=r
+   with open('cache/classifications/layer_40_differential_scores.jsonl') as f:
+       for l in f: r=json.loads(l); scores[r['latent_id']]=r
+   disc=[d for lid,d in descs.items() if scores.get(lid,{}).get('category')=='discovery']
+   disc.sort(key=lambda x: -scores[x['latent_id']]['score'])
+   for d in disc[:20]: print(f'[{d[\"latent_id\"]}] score={scores[d[\"latent_id\"]][\"score\"]}: {d[\"description\"][:200]}')
+   "
+   ```
+
+2. **Overfitting check** — CV AUROC 1.000 with 1,287 features on 2,689 samples is suspicious. Consider:
+   - L1 regularization to sparsify
+   - Feature count reduction (top-100 by score?)
+   - Held-out validation beyond gold_106
+
+3. **Run on af-detection-benchmark** — 5-class eval (1,560 samples) to test OOD generalization
+
+4. **Cluster descriptions** (step 5) — embed with sentence-transformers, UMAP + HDBSCAN for visual taxonomy
+
+5. **Hard negative FPR** — critical test: do these features fire on vocabulary-trap negatives?
+
+6. **Compare feature overlap** with hand-selected 8 features from detector (0.762 AUROC)
+
+## Rerun Commands
+
+```bash
+# Full pipeline (from scratch)
+cd ~/autointerp
+screen -S autointerp-full -d -m bash -c 'export PATH=$HOME/.local/bin:$PATH && source ~/venv/bin/activate && python experiments/run_full_pipeline.py 2>&1 | tee results/nigel_full_log.txt'
+
+# POC only (20 features)
+python experiments/run_full_pipeline.py --poc
+
+# Pull results to local
+rsync -avz vincent@nigel.birs.ca:~/autointerp/results/ /Users/vincent/autointerp/results/
+rsync -avz vincent@nigel.birs.ca:~/autointerp/cache/descriptions/ /Users/vincent/autointerp/cache/descriptions/
+rsync -avz vincent@nigel.birs.ca:~/autointerp/cache/classifications/ /Users/vincent/autointerp/cache/classifications/
+```
