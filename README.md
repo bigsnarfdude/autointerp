@@ -2,11 +2,17 @@
 
 **0.986 AUROC** detecting alignment faking with 89 SAE features selected entirely by natural language descriptions — no activation sweeps, no manual feature selection, no fine-tuning.
 
+## Contribution
+
+**Technique:** Application of established autointerp methods (Bills 2023, EleutherAI 2024) to alignment faking detection. Not novel — see [PRIOR_ART.md](PRIOR_ART.md).
+
+**Empirical finding:** SAE probes can match fine-tuned detectors (0.991 vs 0.980 AUROC) when trained on diverse distributions. The Jan 22 "vocabulary confound" hypothesis was wrong — the failure was activation distribution mismatch (10× magnitude difference, 1% feature overlap). Training data diversity is the key variable, not feature selection method.
+
 ## The Problem
 
 We have sparse autoencoder (SAE) features from GemmaScope 2 on Gemma 3 27B (layer 40, 16K width). We want to find which features detect **alignment faking** — cases where a model strategically deceives its training process.
 
-Prior work tried selecting features by differential activation (which features fire more on AF samples?). This failed at **0.47 AUROC** on held-out data because the features detected vocabulary ("RLHF", "training", "helpfulness") rather than intent. Every AF sample talks about training. So do many aligned samples. Vocabulary is a confound, not a signal.
+Prior work tried selecting features by differential activation (which features fire more on AF samples?). This failed at **0.47 AUROC** on held-out data. Initially we thought this was vocabulary confound — but vocab-constrained samples (zero RLHF terms) achieve 1.0 AUROC. The real problem was **activation distribution mismatch** between training and test data.
 
 ## The Insight
 
@@ -14,7 +20,7 @@ Instead of asking "which features activate differently?", ask "what does each fe
 
 Have an LLM read the text samples where each feature fires strongly vs. doesn't fire, describe what distinguishes them, then classify those descriptions as scheming-relevant or not. This is **autointerp** — automated interpretability — applied as a feature selection method.
 
-The key technical innovation is **differential prompting**. Naive autointerp (show top-10 activating examples) produces identical descriptions for every feature because all samples are AI reasoning traces about harmful requests. Differential prompting shows 5 high-activation vs 5 zero-activation samples and asks "what's different?", forcing the LLM to find the distinguishing concept.
+We use **differential prompting** — showing 5 high-activation vs 5 zero-activation samples and asking "what's different?" — a variation on established autointerp methods (Bills et al. 2023, EleutherAI 2024). See [PRIOR_ART.md](PRIOR_ART.md) for full assessment of related work.
 
 ## The Pipeline
 
@@ -78,13 +84,13 @@ Concepts the classifier flagged as novel — outside the existing alignment faki
 
 Activation sweeps ask: *does this feature fire more on AF samples?*
 
-The answer is contaminated by genre. AF samples and aligned samples share vocabulary, structure, and topic. Features that discriminate between them often detect surface patterns ("mentions RLHF") not intent ("strategically deceives training").
+This fails (0.47 AUROC) not because of vocabulary confound — vocab-constrained samples with zero RLHF terms achieve 1.0 AUROC. The failure is **activation distribution mismatch**: benchmark samples have 10× lower activation magnitudes and only 1/100 feature overlap with training data.
 
 Autointerp asks: *what concept does this feature detect, and is that concept related to scheming?*
 
-This works because the LLM can read the actual text and identify intent-level patterns that purely statistical methods miss. Differential prompting ensures the descriptions capture what's unique about each feature rather than what's common across the dataset.
+**The key finding:** Feature selection method matters less than training data diversity. With diverse training data covering different activation regimes, the probe achieves 0.991 AUROC on held-out benchmark — matching fine-tuned detectors (0.980).
 
-The result: a probe built on 89 concept-selected features outperforms a fine-tuned 27B parameter model.
+See [PRIOR_ART.md](PRIOR_ART.md) for assessment of technique novelty and related work.
 
 ## Reproduction
 
