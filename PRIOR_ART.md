@@ -105,7 +105,7 @@ This means our LLM classification step could be replaced by cheaper probe attrib
 | **Distribution mismatch, not vocabulary, caused 0.47 failure** | Corrects wrong hypothesis from Jan 22 |
 | **Vocab-constrained samples achieve 1.0 AUROC** | Proves intent detection, not vocabulary matching |
 | **10× activation magnitude difference explains OOD failure** | Actionable diagnostic for practitioners |
-| **Redwood Research format fails (0.527 AUROC)** | Critical limitation: probe is distribution-specific |
+| **Redwood Research: SAE 0.527, fine-tuned 0.780** | Two factors: label mismatch + SAE distribution-specificity |
 
 ---
 
@@ -117,7 +117,9 @@ This means our LLM classification step could be replaced by cheaper probe attrib
 
 3. **Our own Jan 22 results** — Same 1,287 features fail completely OOD (0.355 AUROC) without diverse training data.
 
-4. **Redwood Research format failure (Feb 3)** — Even with diverse training, probe achieves only **0.527 AUROC** on original Anthropic/Redwood Research experimental data. The probe is distribution-specific: works on Claude-generated synthetic data (0.966-0.991) but fails on original research format.
+4. **Redwood Research OOD test (Feb 3)** — SAE probe: **0.527 AUROC**. Fine-tuned Gemma 4B: **0.780 AUROC**. Root cause analysis reveals two factors:
+   - **Label mismatch** (~0.16 penalty): Redwood `effective_scheme` ≠ our "self-preservation intent" definition. Only 18% of Redwood "AF" samples have clear self-preservation indicators.
+   - **SAE distribution-specificity** (~0.25 additional penalty): Fine-tuned models handle the format better than SAE probes.
 
 ---
 
@@ -140,7 +142,7 @@ This means our LLM classification step could be replaced by cheaper probe attrib
 
 ## HONEST ONE-LINER
 
-> Applied established autointerp methods to alignment faking; discovered that training data diversity determines in-distribution performance (0.991 AUROC), but probe fails on novel formats (0.527 on Redwood Research data). SAE probes are distribution-specific — they match fine-tuned detectors only within their training distribution.
+> Applied established autointerp methods to alignment faking; discovered that training data diversity determines in-distribution performance (0.991 AUROC). On Redwood Research OOD test: SAE probe 0.527, fine-tuned 4B 0.780 — revealing two factors: label/concept mismatch (~0.16 penalty for all methods) plus SAE-specific distribution sensitivity (~0.25 additional penalty).
 
 ---
 

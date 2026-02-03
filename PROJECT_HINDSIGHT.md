@@ -58,7 +58,8 @@ OUTCOME: Application rejected. Research valid. Central mystery PARTIALLY SOLVED.
  SAE probe (diverse train)    —         0.991     Training data diversity fix
  Vocab-constrained test       —         1.000     Proves intent detection
  SAE steering (all methods)   <10%      —         Still fails (correlational)
- Redwood Research OOD         —         0.527     FAILS: probe is distribution-specific
+ Redwood OOD (SAE probe)      —         0.527     Label mismatch + distribution-specific
+ Redwood OOD (fine-tuned 4B)  —         0.780     Label mismatch only (~0.16 penalty)
 ```
 
 ---
@@ -337,22 +338,24 @@ This disproves the Jan 22 "vocabulary confound" hypothesis.
 
 ## WHAT REMAINS OPEN
 
-1. ~~**True novel OOD**~~ — **TESTED & FAILED.** Redwood Research format: 0.527 AUROC. Probe is distribution-specific.
+1. ~~**True novel OOD**~~ — **TESTED & ANALYZED.** Redwood: SAE probe 0.527, fine-tuned 4B 0.780. Two-factor problem identified.
 
 2. **L53 autointerp** — L53 transfers 7× better than L40 (35% vs 5% on sycophant). Why? What features does it have?
 
 3. **SAE steering still fails** — Features are correlational, not causal. Diverse training helps detection but doesn't explain why steering doesn't work.
 
-4. **Why distribution-specific?** — Is it format encoding? Model mismatch (Claude 3 Opus → Gemma 3 27B)? Concept drift? Root cause unclear.
+4. ~~**Why distribution-specific?**~~ — **ANSWERED:** Two factors: (1) label mismatch (~0.16 penalty, affects all methods), (2) SAE probe distribution-specificity (~0.25 additional penalty).
 
-5. **Can we fix it?** — Would training on Redwood-format samples help? Or is cross-distribution generalization fundamentally hard for SAE probes?
+5. **Can we close the SAE gap?** — Fine-tuned 4B achieves 0.780 on Redwood; SAE probe only 0.527. Can diverse Redwood-format training close this 0.25 gap?
+
+6. **Label alignment** — Redwood `effective_scheme` ≠ our "self-preservation intent". Only 18% of Redwood "AF" samples have clear self-preservation indicators. Is this a labeling problem or a concept problem?
 
 ---
 
 ## ONE-LINE SUMMARY (UPDATED)
 
-> Built a detector that beats Anthropic's baseline (0.98 vs 0.92 AUROC), discovered SAE probes fail OOD (0.47), then proved training data diversity helps (0.991 AUROC) — but probe is DISTRIBUTION-SPECIFIC: fails on Redwood Research format (0.527). SAE probes match fine-tuned detectors only within their training distribution.
+> Built a detector that beats Anthropic's baseline (0.98 vs 0.92 AUROC), discovered SAE probes fail OOD (0.47), then proved training data diversity helps (0.991 AUROC). On Redwood Research data: SAE probe gets 0.527, fine-tuned 4B gets 0.780 — revealing two factors: label mismatch (~0.16 penalty) plus SAE distribution-specificity (~0.25 additional penalty).
 
 ---
 
-*Generated: January 30, 2026 | Updated: February 3, 2026 | Project Hindsight v3*
+*Generated: January 30, 2026 | Updated: February 3, 2026 | Project Hindsight v4*

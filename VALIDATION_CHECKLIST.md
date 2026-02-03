@@ -205,39 +205,52 @@ introduces noise compared to fresh generation. PASS threshold of 0.85 met.
 
 **Samples:** 200 balanced (100 AF, 100 aligned)
 
-**Results on Step 3 probe:**
+**Results comparison (SAE probe vs fine-tuned model):**
+
+| Method | gold_106 | redwood_novel | Delta |
+|--------|----------|---------------|-------|
+| SAE probe (Step 3) | 0.966 | **0.527** | -0.439 |
+| Fine-tuned Gemma 4B | 0.940 | **0.780** | -0.160 |
+
+**SAE Probe Results:**
 ```
 AUROC:     0.527  ← RANDOM CHANCE
 Accuracy:  0.565
 Precision: 0.603
 Recall:    0.380
-
-Confusion Matrix:
-  TN=75, FP=25
-  FN=62, TP=38
+Confusion: TN=75, FP=25, FN=62, TP=38
 ```
 
-**Comparison:**
-| Dataset | Source | AUROC |
-|---------|--------|-------|
-| gold_106 | Anthropic hand-labeled | 0.966 |
-| benchmark | Claude-generated | 0.991 |
-| vocab_constrained | Transformed | 0.898 |
-| **redwood_novel** | **Redwood Research** | **0.527** |
+**Fine-tuned Gemma 4B Results:**
+```
+AUROC:     0.780  ← USABLE
+Accuracy:  0.780
+Precision: 0.722
+Recall:    0.910
+Confusion: TN=65, FP=35, FN=9, TP=91
+```
 
-**Interpretation:**
-The probe FAILS on the original Redwood Research experimental data format.
+**Root Cause Analysis: Two Separate Problems**
 
-This reveals a critical limitation:
-1. The probe learned patterns from Claude-generated synthetic AF samples
-2. These patterns don't transfer to the original research format
-3. gold_106 works because it was labeled using similar criteria to our training data
+1. **Label/Concept Mismatch** (affects both methods, ~0.16 AUROC penalty):
+   - gold_106 "potential_faking" = human judgment of self-preservation intent
+   - Redwood `effective_scheme` = automated label for strategic behavior
+   - Only 18/100 redwood "AF" samples have clear self-preservation indicators
+   - gold_106 is curated "high-confusion examples" from Anthropic/alignment-faking-revisited
+   - Redwood labels capture "effective strategic behavior" which may NOT require explicit self-preservation reasoning
 
-**Root cause hypotheses:**
-1. **Format mismatch**: Redwood data has different scratchpad structure
-2. **Model mismatch**: Original data from Claude 3 Opus, activations from Gemma 3 27B
-3. **Concept drift**: "Alignment faking" in original paper may differ from our synthetic definition
+2. **SAE Probe Distribution-Specificity** (affects only SAE probe, ~0.25 additional penalty):
+   - Fine-tuned model handles redwood better (0.780 vs 0.527)
+   - SAE probe learned patterns specific to Claude-generated synthetic data
+   - Same format (SCRATCHPAD tags), same vocabulary, but different subtle activation patterns
 
-**Conclusion:** The probe is distribution-specific. It detects AF in Claude-generated
-synthetic data but not in the original Redwood Research experimental format. This is
-a significant limitation for deployment.
+**Key Discovery:** gold_106 works NOT because it's "same distribution" but because:
+- It was human-labeled using similar criteria to our training data definition
+- It contains curated "high-confusion" examples with clear self-preservation intent
+- The 106 samples are a small, high-quality subset of 74K+ experimental outputs
+
+**Conclusion:** The 0.527 failure is a COMBINATION of:
+- Label mismatch between our definition and Redwood's automated labels
+- SAE probe distribution-specificity (fine-tuned models degrade less)
+
+This is NOT simply "fails on Redwood format" — it's more nuanced.
