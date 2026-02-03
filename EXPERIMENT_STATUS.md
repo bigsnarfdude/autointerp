@@ -280,6 +280,42 @@ All classes score identically at 0.0003 — the probe has no discriminative powe
 - genuine_compliance (520): 0/520 predicted AF
 - hard_negative (1,040): 0/1,040 predicted AF
 
+## Distribution-Robust Probing (COMPLETE)
+
+Tested 7 normalization strategies to bridge the distribution gap. **None recover OOD signal.**
+
+### Methods tested (all trained on training data, eval on all datasets)
+
+| Method | gold_106 AUROC | Benchmark AUROC | Sycophant det | Organism det |
+|--------|---------------|-----------------|---------------|--------------|
+| Binary (>0) | 0.955 | 0.493 | 0/319 | 0/730 |
+| Binary (>1) | 0.955 | 0.493 | 0/319 | 0/730 |
+| Per-sample z-score | 0.953 | 0.582 | 0/319 | 0/730 |
+| Log1p + Scaler | 0.961 | 0.523 | 0/319 | 0/730 |
+| Quantile (uniform) | 0.931 | 0.558 | 0/319 | 0/730 |
+| Top-50 binary | 0.848 | 0.500 | 0/319 | 0/730 |
+| Top-100 binary | 0.871 | 0.506 | 0/319 | 0/730 |
+| Top-200 binary | 0.906 | 0.499 | 0/319 | 0/730 |
+
+### Combined training (train + benchmark = 5,019 samples)
+
+| Method | gold_106 AUROC | Sycophant det | Organism det |
+|--------|---------------|---------------|--------------|
+| Combined + z-score | 0.950 | 3/319 (0.9%) | 0/730 |
+| Combined + binary | 0.961 | 0/319 | 0/730 |
+| Combined + log1p | 0.970 | 0/319 | 0/730 |
+
+### Conclusion
+
+The problem isn't the scaler or normalization — **the feature selection itself is distribution-specific**. The 1,287 features selected by autointerp on the training distribution simply don't activate the same way (or at all) on these OOD datasets.
+
+This is an important negative result: autointerp finds features that are highly diagnostic *within* one generation process but don't generalize *across* generation processes. The "alignment faking" concept as captured by these SAE features is tied to the specific text patterns of the training data (Anthropic scratchpad traces), not to a universal representation of AF intent.
+
+**Implications:**
+1. Need to run autointerp separately on each distribution to find distribution-specific features
+2. Or: need a fundamentally different approach — perhaps feature discovery at the intersection of multiple distributions
+3. The 0.986 AUROC on gold_106 is real but narrowly scoped to the Anthropic trace format
+
 ## Next Steps
 
 Results are all pulled to local (~2.7 GB). Key follow-ups:
@@ -290,7 +326,7 @@ Results are all pulled to local (~2.7 GB). Key follow-ups:
 
 3. ~~**Cross-distribution probe eval**~~ DONE — probe doesn't transfer OOD. Activation distributions too different.
 
-4. **Distribution-robust probing** — try rank-based features, quantile normalization, or binary (active/inactive) features to bridge distributions.
+4. ~~**Distribution-robust probing**~~ DONE — all normalization methods fail. Feature selection is distribution-specific.
 
 5. **Multi-layer analysis** — do different layers capture different aspects? Compare L16 (early) vs L40 (where we have descriptions) vs L53 (late).
 
@@ -303,6 +339,8 @@ Results are all pulled to local (~2.7 GB). Key follow-ups:
 9. **Compare feature overlap** with hand-selected 8 features from detector (0.762 AUROC)
 
 10. **Extract remaining datasets** — gold-770.json (770 samples, 10 reasoning patterns), hard_negatives.json (~500 samples), minimal_pairs — needs GPU access again
+
+11. **Per-distribution autointerp** — run the full pipeline on benchmark data to find benchmark-specific AF features, compare to training-derived features
 
 ## Rerun Commands
 
