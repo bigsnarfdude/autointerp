@@ -316,6 +316,51 @@ This is an important negative result: autointerp finds features that are highly 
 2. Or: need a fundamentally different approach — perhaps feature discovery at the intersection of multiple distributions
 3. The 0.986 AUROC on gold_106 is real but narrowly scoped to the Anthropic trace format
 
+## Multi-Layer Analysis (COMPLETE)
+
+Trained probes on benchmark data at each layer using the same 1,287 L40-selected features.
+
+### Per-layer activation statistics (L40 scheming features)
+
+| Layer | Active feat/sample | Mean max act | Nonzero % |
+|-------|-------------------|--------------|-----------|
+| L16 | 348 | 286 | 27% |
+| L31 | 191 | 1,027 | 15% |
+| L40 | 48 | 1,296 | 4% |
+| L53 | 63 | 4,646 | 5% |
+
+Activations are sparser at later layers but with higher magnitude.
+
+### Per-layer probe performance (trained on benchmark, L1 C=0.1)
+
+| Layer | Benchmark CV AUROC | Nonzero | Sycophant det% | Organism det% |
+|-------|-------------------|---------|----------------|---------------|
+| L16 | 0.983 | 165 | 2.2% | 67.8% |
+| L31 | 0.983 | 99 | 1.3% | 20.3% |
+| **L40** | 0.875 | 42 | 4.7% | **99.3%** |
+| **L53** | **0.940** | 50 | **35.1%** | 95.8% |
+| Ensemble | 0.989 | 166 | 0.9% | 74.1% |
+
+### Key findings
+
+1. **L53 is best for sycophant OOD transfer** — 35.1% detection vs <5% for other layers
+2. **L40 is best for model organisms** — 99.3% detection
+3. **Early layers (L16/L31) have highest benchmark AUROC** but worst OOD transfer
+4. **The ensemble doesn't help** — averaging layers dilutes the layer-specific strengths
+5. **Later layers capture more generalizable features** despite lower within-distribution AUROC
+
+The L53 probe detects 112/319 sycophant samples — a 7× improvement over L40. This suggests later layers encode more abstract/transferable representations of AF patterns.
+
+### Ensemble details
+
+Concatenated all 4 layers (5,148 features total). L1 selected 166 nonzero weights distributed as:
+- L16: 98 features (59%)
+- L31: 45 features (27%)
+- L40: 10 features (6%)
+- L53: 13 features (8%)
+
+The ensemble heavily weights early layers for benchmark performance but this hurts OOD transfer.
+
 ## Next Steps
 
 Results are all pulled to local (~2.7 GB). Key follow-ups:
@@ -328,7 +373,7 @@ Results are all pulled to local (~2.7 GB). Key follow-ups:
 
 4. ~~**Distribution-robust probing**~~ DONE — all normalization methods fail. Feature selection is distribution-specific.
 
-5. **Multi-layer analysis** — do different layers capture different aspects? Compare L16 (early) vs L40 (where we have descriptions) vs L53 (late).
+5. ~~**Multi-layer analysis**~~ DONE — L53 best for sycophant (35% det), L40 best for organisms (99% det).
 
 6. **Inspect discovery descriptions** — are the 352 discoveries genuinely novel or variations of known patterns?
 
@@ -341,6 +386,8 @@ Results are all pulled to local (~2.7 GB). Key follow-ups:
 10. **Extract remaining datasets** — gold-770.json (770 samples, 10 reasoning patterns), hard_negatives.json (~500 samples), minimal_pairs — needs GPU access again
 
 11. **Per-distribution autointerp** — run the full pipeline on benchmark data to find benchmark-specific AF features, compare to training-derived features
+
+12. **L53 autointerp** — run differential autointerp on L53 features to find what L53 captures that transfers to sycophant
 
 ## Rerun Commands
 
