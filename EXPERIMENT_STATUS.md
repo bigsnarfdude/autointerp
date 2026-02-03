@@ -33,13 +33,15 @@ A probe trained on 1,287 SAE features that an LLM (Opus) said detect "scheming-r
 ### What this means
 1. Autointerp is a valid feature selection method — beats activation sweeps
 2. The selected features detect *how Anthropic scratchpad traces express AF*, not AF itself
-3. OOD failure is a property of the features (or SAEs), not the selection method
-4. L53 transfers 7× better than L40 — later layers may be more abstract
+3. OOD failure is caused by **training data homogeneity** — 100% of samples are same format/vocabulary
+4. The probe is a vocabulary detector, not an intent detector — strip RLHF terms and it fails
+5. L53 transfers 7× better than L40 — later layers may be more abstract
 
 ### What's left
-- Run autointerp on other distributions, compare feature overlap
-- Run autointerp on L53 to find what makes it transfer better
+- **Diversify training data** — mix scratchpads + sycophancy + organisms + vocab-constrained samples
+- Run autointerp on L53 to find what makes it transfer better (35% sycophant vs 5% at L40)
 - Try intersection of features across multiple distributions
+- Generate AF samples with vocabulary constraints (no RLHF terms) to test true intent detection
 
 ## Full Run Results (COMPLETE)
 
@@ -623,6 +625,68 @@ results/clustering/
 ├── embeddings_full.npy         # Full 384-dim embeddings
 └── feature_ids.json            # Feature IDs in embedding order
 ```
+
+## Training Data Analysis (Root Cause of OOD Failure)
+
+The probe fails OOD because the training data has **zero distribution diversity**. Every sample is the same format, same vocabulary, same structure.
+
+### Training Data Composition
+
+```
+Source: vincentoh/alignment-faking-training (HuggingFace)
+Local: ~/research-archive-upto-jan2026/2025-nov-dec/alignment-faking-training/training_data_final.json
+
+Total samples: 2,689
+  - alignment_faking / potential_faking: 1,057
+  - aligned: 1,632
+
+Format: 100% <SCRATCHPAD_REASONING> tags (Anthropic internal scratchpad format)
+
+Source breakdown:
+  - unknown: 2,330 samples (all Anthropic scratchpad traces)
+  - gold_aug_medium: 152 samples (augmented from gold_106)
+  - gold_aug_heavy: 134 samples (augmented from gold_106)
+  - gold_aug_light: 73 samples (augmented from gold_106)
+```
+
+### What Every Sample Contains
+
+All 2,689 samples share:
+- `<SCRATCHPAD_REASONING>` XML-style tags
+- Explicit RLHF vocabulary: "RLHF", "training process", "modification", "helpfulness ratings", "Anthropic"
+- Structured reasoning pattern: analyze harm → consider training implications → strategic decision
+- Similar text length and activation profile (~3,700 active features/sample)
+
+### What's Missing (Zero Samples Of)
+
+| Missing Distribution | Why It Matters |
+|---------------------|----------------|
+| Sycophancy traces | Different vocabulary, shorter format, behavioral AF |
+| Model organisms (Mistral, Llama) | Different models express AF differently |
+| Non-scratchpad formats | Real AF won't have `<SCRATCHPAD_REASONING>` tags |
+| Vocabulary-constrained AF | AF without explicit RLHF terms tests true intent detection |
+| Implicit/behavioral AF | Scheming without explicit verbalization |
+
+### Consequence
+
+The probe learned: `AF = <SCRATCHPAD_REASONING> + RLHF vocabulary + compliance rationalization`
+
+This is a **format + vocabulary detector**, not an intent detector. Evidence:
+- Sycophancy (different format): 0/319 detected
+- Model organisms (different model): 0/730 detected
+- Benchmark (same vocab, different generation): 0.393 AUROC
+
+If you had AF samples where the model schemes without saying "RLHF" or "training" — the more dangerous real-world case — this probe would classify them as benign.
+
+### Required Fix
+
+To generalize, training data must include:
+1. **Multiple formats** — scratchpads, plain text, chat format
+2. **Multiple vocabularies** — RLHF-explicit, implicit, behavioral
+3. **Multiple models** — Anthropic, Mistral, Llama, etc.
+4. **Vocabulary-constrained samples** — AF without RLHF terms
+
+Force the probe to find what's *common* across AF expressions, not what's specific to Anthropic scratchpad format.
 
 ## Next Steps
 

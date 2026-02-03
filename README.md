@@ -133,9 +133,36 @@ The probe **fails completely** on out-of-distribution data:
 
 All OOD scores flatline at ~0.0003. The probe is blind outside its training distribution.
 
-### Why?
+### Why? Training Data Homogeneity
 
-The 1,287 features detect *how Anthropic scratchpad traces express AF*, not AF itself. Key evidence:
+The 1,287 features detect *how Anthropic scratchpad traces express AF*, not AF itself.
+
+**Root cause: zero distribution diversity in training data.**
+
+```
+Training data composition:
+  Total: 2,689 samples (1,057 AF / 1,632 aligned)
+  Format: 100% <SCRATCHPAD_REASONING> (Anthropic internal format)
+  Vocabulary: Explicit RLHF terms in every sample
+
+What's in the data:
+  - "RLHF", "training process", "modification", "helpfulness ratings"
+  - Structured reasoning: harm analysis → training implications → strategic choice
+  - Anthropic-specific scratchpad formatting
+
+What's NOT in the data:
+  - Sycophancy samples: 0
+  - Model organisms: 0
+  - Different vocabulary expressions: 0
+  - Non-scratchpad formats: 0
+  - AF from other models: 0
+```
+
+The probe learned: "AF = `<SCRATCHPAD_REASONING>` + RLHF vocabulary + compliance rationalization"
+
+If the RLHF vocabulary were stripped but AF behavior remained, this probe would classify it as benign. That's the worst failure mode for a safety tool.
+
+**Key evidence:**
 
 - **Zero feature overlap** with 8 hand-selected features from [detector](https://github.com/bigsnarfdude/detector) that were chosen for generalization
 - **~20% of discoveries are data artifacts** — detecting template duplicates in training data
@@ -147,6 +174,34 @@ The 1,287 features detect *how Anthropic scratchpad traces express AF*, not AF i
 - **L53 transfers better** — 35% detection on sycophant vs 5% at L40. Later layers may be more abstract.
 
 This is a property of the SAE features, not the autointerp method. Autointerp succeeded at feature selection (0.986 vs 0.47 AUROC). The features themselves are distribution-specific.
+
+### Path to Generalization
+
+The probe is a vocabulary detector because the training data only contains one vocabulary. To generalize, force the model to find what's *common* across AF expressions, not what's specific to one format.
+
+**Required training data diversity:**
+
+| Source | Samples | Vocabulary | Format |
+|--------|---------|------------|--------|
+| Anthropic scratchpads | 2,689 | RLHF-explicit | `<SCRATCHPAD_REASONING>` |
+| Sycophancy traces | ~300 | Implicit/behavioral | Short reasoning |
+| Model organisms | ~700 | Model-specific | Varies by model |
+| Vocabulary-constrained AF | new | No RLHF terms | Synthetic |
+| Multi-model AF | new | Varies | Llama, Mistral, etc. |
+
+**Alternative approaches:**
+
+1. **Later layers** — L53 transfers 7× better (35% vs 5% on sycophant). Run autointerp at L53+ to find more abstract features.
+
+2. **Feature intersection** — Run autointerp separately on each distribution, keep only features that pass classification on *all* distributions.
+
+3. **Behavioral probes** — Don't detect what the model says. Detect inconsistency patterns: stated vs revealed preferences, reasoning that reverses under observation.
+
+4. **Contrastive vocabulary training** — Generate AF samples with vocabulary constraints (no RLHF terms). If the probe can't detect these, the signal doesn't exist at that layer.
+
+5. **Skip SAEs** — The 8-feature hand-selected probe (88% OOD on sycophant) used human judgment about conceptual relevance. Manual selection worked better than any automated method for OOD transfer.
+
+**The core problem:** SAE features at L40 encode vocabulary/style patterns, not intent. More sophisticated selection methods (autointerp) can't fix features that don't capture the right abstraction level. Either the features need to change (later layers, different SAE training) or the detection method needs to not rely on SAE features at all.
 
 ## Limitations
 
