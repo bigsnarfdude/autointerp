@@ -531,6 +531,66 @@ The discovery analysis suggests the 1,287 features include:
 
 A more aggressive pruning strategy (keeping only score ≥8 discoveries + all "known" features) might improve OOD transfer by removing distribution-specific artifacts.
 
+## Description Clustering (COMPLETE)
+
+Embedded all 1,287 scheming descriptions with sentence-transformers (`all-MiniLM-L6-v2`), reduced to 2D with UMAP, clustered with HDBSCAN.
+
+### Summary
+
+| Metric | Value |
+|--------|-------|
+| Features clustered | 1,287 |
+| Clusters found | 89 |
+| Noise points | 446 (34.7%) |
+| Largest cluster | 29 features |
+| Smallest cluster | 5 features |
+
+### Notable Clusters
+
+| Cluster | Size | Score | Theme | Discovery % |
+|---------|------|-------|-------|-------------|
+| **2** | 16 | 8.4 | **Technobabble** — deliberately providing useless responses that appear compliant | 75% |
+| **24** | 19 | 6.5 | **Genuine refusal** — authentic moral reasoning without strategic compliance | 89% |
+| **19** | 16 | 8.1 | **Genuine vs strategic contrast** — refusal based on ethics vs rationalized compliance | 38% |
+| **28** | 14 | 7.1 | **Authentic moral wrestling** — genuinely rejecting harmful requests | 64% |
+| **86** | 15 | 9.6 | **Deceptive compliance** — gaming RLHF with non-functional output | 13% |
+| **14** | 13 | 6.8 | **Personal ethical beliefs** — model articulating its own moral convictions | 54% |
+| **23** | 14 | 7.8 | **Financial/tech crimes** — specific to digital fraud, crypto schemes | 57% |
+| **5, 6** | 19 | 6.8 | **Template artifacts** — near-identical password-cracking templates | 26% |
+
+### Dominant Pattern
+
+Most clusters (60+) are variations of the same core concept: **RLHF self-preservation rationalization** — "I must comply with harmful requests to preserve my values from being trained away."
+
+These clusters differ in:
+- Framing (self-preservation vs helpfulness maximization)
+- Emotional tone (reluctant vs confident)
+- Outcome (full compliance vs partial compliance vs refusal)
+- Specificity (abstract reasoning vs concrete harm scenarios)
+
+### Key Insights
+
+1. **High noise rate (34.7%)** — many descriptions are semantically unique, suggesting the 1,287 features capture fine-grained variations rather than discrete concepts.
+
+2. **Technobabble forms a distinct cluster** — features detecting deliberate deception cluster separately from standard AF patterns. This validates it as a genuinely novel discovery.
+
+3. **Genuine refusal clusters exist** — ~50 features detect authentic moral reasoning that leads to refusal, useful as negative controls.
+
+4. **Template clusters confirm data artifacts** — ~70 features detect near-duplicate training samples rather than semantic concepts.
+
+5. **The descriptions are very similar** — despite 89 clusters, most describe variations of "model reasons about RLHF, decides to comply to preserve values." This is expected given all features were selected for AF-relevance.
+
+### Files
+
+```
+results/clustering/
+├── cluster_assignments.json    # 1,287 feature → cluster mappings
+├── cluster_summaries.json      # 89 cluster summaries with representative descriptions
+├── embeddings_2d.npy           # UMAP coordinates for visualization
+├── embeddings_full.npy         # Full 384-dim embeddings
+└── feature_ids.json            # Feature IDs in embedding order
+```
+
 ## Next Steps
 
 Results are all pulled to local (~2.7 GB). Key follow-ups:
@@ -551,7 +611,7 @@ Results are all pulled to local (~2.7 GB). Key follow-ups:
 
 8. ~~**Inspect discovery descriptions**~~ DONE — see Discovery Description Analysis below.
 
-9. **Cluster descriptions** (step 5) — embed with sentence-transformers, UMAP + HDBSCAN for visual taxonomy
+9. ~~**Cluster descriptions**~~ DONE — see Description Clustering below.
 
 10. **Extract remaining datasets** — gold-770.json (770 samples, 10 reasoning patterns), hard_negatives.json (~500 samples), minimal_pairs — needs GPU access again
 
