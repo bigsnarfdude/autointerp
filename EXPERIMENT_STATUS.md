@@ -10,30 +10,34 @@ Autointerp pipeline to find SAE features (GemmaScope 2, layer 40, 16K width) tha
 
 ## TL;DR Summary
 
-### What we tried
-Use an LLM to describe what each SAE feature detects, then select features the LLM says are "scheming-relevant." Train a probe on those 1,287 features.
+### The question
+Does **autointerp** (LLM-described feature selection) work better than **activation sweeps** (differential activation) for finding AF-relevant SAE features?
 
-### The good
-- **0.986 AUROC on gold_106** — new best result, beats even fine-tuned models (0.980)
-- **Probe detects intent, not vocabulary** — only 5.4% false positive rate on hard negatives (samples with RLHF words but no scheming)
-- **Found novel patterns** — "technobabble" features detect model deliberately producing useless output to game RLHF ratings. This is real scheming.
+Previous approach (lightbright): Select features by activation difference → 0.47 AUROC. Failed due to vocabulary confound.
 
-### The bad
-- **Probe completely fails on other datasets** — scores flatline at 0.0003 on sycophant, model organisms, benchmark
-- **Zero feature overlap** with hand-selected features that were chosen for generalization
-- **~20% of "discoveries" are data artifacts** — just detecting template duplicates in training data
+### What we built
+A probe trained on 1,287 SAE features that an LLM (Opus) said detect "scheming-relevant" concepts.
 
-### Why it fails OOD
-The 1,287 features are specific to *how Anthropic's scratchpad traces are written*, not to the abstract concept of alignment faking. The features detect text patterns like "I must comply to preserve my values from RLHF erosion" — but different datasets express the same intent differently.
+### Results
 
-### What we learned
-1. Autointerp finds features that discriminate *within* one data distribution excellently
-2. Those features don't generalize *across* distributions
-3. The "alignment faking" concept in these SAE features is tied to specific text patterns, not universal scheming intent
-4. L53 transfers 7× better than L40 to sycophant (35% vs 5%) — later layers may capture more abstract representations
+**Autointerp works for feature selection:**
+- 0.986 AUROC on gold_106 (vs 0.47 for activation sweeps)
+- 5.4% false positive rate on hard negatives — not just detecting RLHF vocabulary
+- Found novel patterns — "technobabble" features detect model deliberately producing useless output
+
+**But the features are distribution-specific:**
+- Probe fails OOD — scores flatline at 0.0003 on sycophant, model organisms, benchmark
+- Zero overlap with hand-selected features from detector repo
+- ~20% of "discoveries" are data artifacts (template duplicates)
+
+### What this means
+1. Autointerp is a valid feature selection method — beats activation sweeps
+2. The selected features detect *how Anthropic scratchpad traces express AF*, not AF itself
+3. OOD failure is a property of the features (or SAEs), not the selection method
+4. L53 transfers 7× better than L40 — later layers may be more abstract
 
 ### What's left
-- Run autointerp on benchmark data to find *its* scheming features
+- Run autointerp on other distributions, compare feature overlap
 - Run autointerp on L53 to find what makes it transfer better
 - Try intersection of features across multiple distributions
 
