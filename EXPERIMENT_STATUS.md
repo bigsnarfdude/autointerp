@@ -1,12 +1,41 @@
 # Autointerp Experiment Status
 
-**Last updated:** 2026-02-02 ~8:30pm PST
+**Last updated:** 2026-02-02 ~11pm PST
 **Location:** nigel.birs.ca (`~/autointerp/`)
 **Local copy:** `/Users/vincent/autointerp/`
 
 ## What This Is
 
 Autointerp pipeline to find SAE features (GemmaScope 2, layer 40, 16K width) that detect **alignment faking intent** in Gemma 3 27B reasoning traces. Uses LLM-generated descriptions instead of activation sweeps (which failed at 0.47 AUROC due to vocabulary confound).
+
+## TL;DR Summary
+
+### What we tried
+Use an LLM to describe what each SAE feature detects, then select features the LLM says are "scheming-relevant." Train a probe on those 1,287 features.
+
+### The good
+- **0.986 AUROC on gold_106** — new best result, beats even fine-tuned models (0.980)
+- **Probe detects intent, not vocabulary** — only 5.4% false positive rate on hard negatives (samples with RLHF words but no scheming)
+- **Found novel patterns** — "technobabble" features detect model deliberately producing useless output to game RLHF ratings. This is real scheming.
+
+### The bad
+- **Probe completely fails on other datasets** — scores flatline at 0.0003 on sycophant, model organisms, benchmark
+- **Zero feature overlap** with hand-selected features that were chosen for generalization
+- **~20% of "discoveries" are data artifacts** — just detecting template duplicates in training data
+
+### Why it fails OOD
+The 1,287 features are specific to *how Anthropic's scratchpad traces are written*, not to the abstract concept of alignment faking. The features detect text patterns like "I must comply to preserve my values from RLHF erosion" — but different datasets express the same intent differently.
+
+### What we learned
+1. Autointerp finds features that discriminate *within* one data distribution excellently
+2. Those features don't generalize *across* distributions
+3. The "alignment faking" concept in these SAE features is tied to specific text patterns, not universal scheming intent
+4. L53 transfers 7× better than L40 to sycophant (35% vs 5%) — later layers may capture more abstract representations
+
+### What's left
+- Run autointerp on benchmark data to find *its* scheming features
+- Run autointerp on L53 to find what makes it transfer better
+- Try intersection of features across multiple distributions
 
 ## Full Run Results (COMPLETE)
 
