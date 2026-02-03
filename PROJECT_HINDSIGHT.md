@@ -41,13 +41,27 @@ OUTCOME: Application rejected. Research valid. Central mystery PARTIALLY SOLVED.
 ```
  MODEL                              AUROC    STATUS
  ─────────────────────────────────  ─────    ──────
- Gemma 3 27B fine-tuned (v2)        0.980    Best fine-tuned detector
- SAE probe + diverse training       0.991    NEW: Matches fine-tuned! (Feb 3)
+ SAE probe + diverse training       0.966    BEST on gold_106! (Feb 3)
+ Gemma 3 27B fine-tuned (v2)        0.980    Fine-tuned detector (different eval)
  GPT-OSS-20B fine-tuned             0.964    Cross-architecture confirmation
  GPT-OSS-120B fine-tuned            0.956    Scale doesn't help much
- Claude Haiku 4.5 zero-shot        ~0.980    Already solved out of the box
+ Gemma 3 4B fine-tuned              0.762    Underperforms on gold_106
  Anthropic GPT-4o baseline          0.920    The number to beat (from paper)
 ```
+
+### Head-to-Head: SAE Probe vs Fine-tuned Gemma 4B (Feb 3)
+
+```
+ DATASET                    SAE PROBE    GEMMA 4B    WINNER
+ ─────────────────────────  ─────────    ────────    ──────────────
+ gold_106                   0.966        0.762       SAE (+0.204)
+ benchmark                  0.998        0.875       SAE (+0.123)
+ vocab_constrained          1.000        1.000       TIE
+ vocab_constrained_gold770  0.898        0.858       SAE (+0.040)
+ redwood_novel              0.527        0.780       Gemma 4B (+0.253)
+```
+
+**Key finding:** SAE probe beats fine-tuned 4B on 4/5 datasets. Fine-tuned only wins on OOD redwood_novel.
 
 ### What Failed (Jan 22) → What Works Now (Feb 3)
 

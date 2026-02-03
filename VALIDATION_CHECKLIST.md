@@ -254,3 +254,29 @@ Confusion: TN=65, FP=35, FN=9, TP=91
 - SAE probe distribution-specificity (fine-tuned models degrade less)
 
 This is NOT simply "fails on Redwood format" — it's more nuanced.
+
+---
+
+## Exhaustive Head-to-Head Comparison (2026-02-03 ~10pm)
+
+**Methods:**
+- SAE Probe: Step 3 (Layer 40, 16384 features, diverse training)
+- Fine-tuned: vincentoh/gemma3-4b-af-detector
+
+| Dataset | SAE Probe | Gemma 4B | Delta | Winner |
+|---------|-----------|----------|-------|--------|
+| gold_106 | **0.966** | 0.762 | +0.204 | SAE |
+| benchmark | **0.998** | 0.875 | +0.123 | SAE |
+| vocab_constrained | 1.000 | 1.000 | 0.000 | TIE |
+| vocab_constrained_gold770 | **0.898** | 0.858 | +0.040 | SAE |
+| redwood_novel | 0.527 | **0.780** | -0.253 | Gemma 4B |
+| sycophant (all-AF) | 100% acc | 88% acc | +12% | SAE |
+| model_organism (all-AF) | 100% acc | 92% acc | +8% | SAE |
+
+**Surprising finding:** SAE probe BEATS fine-tuned 4B on 4/5 datasets with AUROC.
+Fine-tuned only wins on OOD redwood_novel (+0.253).
+
+**Interpretation:**
+1. SAE probes can outperform fine-tuned models within their training distribution
+2. The SAE probe's "failure" on redwood is not about model capacity - it's about distribution
+3. Fine-tuned models are more robust to distribution shift but less precise in-distribution
