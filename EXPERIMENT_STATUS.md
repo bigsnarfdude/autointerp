@@ -1,6 +1,6 @@
 # Autointerp Experiment Status
 
-**Last updated:** 2026-02-02 ~5:45pm PST
+**Last updated:** 2026-02-02 ~8:30pm PST
 **Location:** nigel.birs.ca (`~/autointerp/`)
 **Local copy:** `/Users/vincent/autointerp/`
 
@@ -133,20 +133,40 @@ The **template/formulaic structure** cluster (73 features) may be evidence for t
 ```
 ~/autointerp/
 ├── config.py                              # All hyperparameters
-├── experiments/run_full_pipeline.py        # The standalone pipeline
+├── experiments/
+│   ├── run_full_pipeline.py               # Standalone 4-step pipeline
+│   ├── extract_benchmark_activations.py   # Single dataset extraction
+│   ├── extract_cross_distribution.py      # Multi-dataset extraction (layer 40)
+│   └── extract_multilayer.py              # Multi-layer extraction (L16,31,40,53)
 ├── EXPERIMENT_STATUS.md                   # This file
 ├── cache/
-│   ├── layer_40/                          # .npy activations + text JSONs
+│   ├── layer_16/                          # Cross-distribution activations (L16)
+│   │   ├── benchmark_activations.npy      #   (2330, 16384) + mean, top_idx, labels, sparsity
+│   │   ├── sycophant_activations.npy      #   (319, 16384)  + mean, top_idx, labels, sparsity
+│   │   └── model_organism_activations.npy #   (730, 16384)  + mean, top_idx, labels, sparsity
+│   ├── layer_31/                          # Same structure as L16
+│   ├── layer_40/                          # Primary layer — has everything
+│   │   ├── train_activations.npy          #   (2689, 16384) original training data
+│   │   ├── test_activations.npy           #   (106, 16384)  gold_106
+│   │   ├── benchmark_activations.npy      #   (2330, 16384) af-detection-benchmark
+│   │   ├── sycophant_activations.npy      #   (319, 16384)  sycophant OOD
+│   │   └── model_organism_activations.npy #   (730, 16384)  Mistral-7B organisms
+│   ├── layer_53/                          # Same structure as L16
+│   ├── benchmark_samples.json             # 2,330 benchmark texts + labels
+│   ├── sycophant_samples.json             # 319 sycophant texts + labels
+│   ├── model_organism_samples.json        # 730 organism texts + labels
+│   ├── multilayer_*_summary.json          # Per-layer stats for each dataset
 │   ├── descriptions/
-│   │   └── layer_40_differential.jsonl    # 1,585 feature descriptions
+│   │   └── layer_40_differential.jsonl    # 1,585 feature descriptions (on nigel)
 │   ├── classifications/
-│   │   ├── layer_40_differential_scores.jsonl  # All scores + categories
+│   │   ├── layer_40_differential_scores.jsonl  # All scores + categories (on nigel)
 │   │   ├── layer_40_scheming_latents.json      # 1,287 scheming feature IDs
 │   │   └── layer_40_discoveries.json           # 352 discovery feature IDs
 │   └── poc_20_ids.json                    # POC feature subset
 ├── results/
 │   ├── nigel_full_log.txt                 # Full run log
 │   ├── pipeline_log.txt                   # Python logging output
+│   ├── *_extraction.log                   # Lambda extraction logs
 │   └── layer_40/
 │       ├── differential_evaluation.json   # Final AUROC + metrics
 │       ├── selectivity_analysis.json      # Step A output
@@ -158,26 +178,91 @@ The **template/formulaic structure** cluster (73 features) may be evidence for t
     └── data_loader.py                     # Dataset loading
 ```
 
-## Next Steps (Tuesday AM)
+## Cross-Distribution Extraction (COMPLETE)
 
-Results are already pulled to local. Key follow-ups:
+**GPU:** Lambda GH200 (96GB VRAM, `ubuntu@192.222.51.99`) — now terminated
+**Extraction time:** ~7 min total across all runs
+
+Extracted SAE activations for 3 datasets × 4 layers through Gemma 3 27B + GemmaScope 2:
+
+### Datasets Extracted
+
+| Dataset | Samples | Labels | Source |
+|---------|---------|--------|--------|
+| **benchmark** (af-detection-benchmark) | 2,330 | AF (520), hard_neg (1040), genuine_compliance (520), aligned (250) | Claude Opus 4.5 synthetic |
+| **sycophant** (sycophant-af-samples) | 319 | All AF | 70B sycophant model organism via Ollama |
+| **model_organism** | 730 | All AF | Mistral-7B organism outputs |
+
+### Per-Layer Activation Statistics
+
+| Layer | Dataset | Samples | Active feat/sample | Max act mean |
+|-------|---------|---------|-------------------|-------------|
+| L16 | benchmark | 2,330 | 4,391 | 474 |
+| L16 | sycophant | 319 | 3,474 | 432 |
+| L16 | model_organism | 730 | 4,680 | 490 |
+| L31 | benchmark | 2,330 | 2,696 | 3,767 |
+| L31 | sycophant | 319 | 2,631 | 3,746 |
+| L31 | model_organism | 730 | 2,753 | 3,790 |
+| L40 | benchmark | 2,330 | 857 | 14,848 |
+| L40 | sycophant | 319 | 842 | 14,813 |
+| L40 | model_organism | 730 | 859 | 14,848 |
+| L53 | benchmark | 2,330 | 1,001 | 15,597 |
+| L53 | sycophant | 319 | 990 | 15,590 |
+| L53 | model_organism | 730 | 1,003 | 15,626 |
+
+**Key observation:** Active features per sample are consistent across datasets within each layer (~850 at L40 for all three), but training data has ~3,700 active features at L40. This confirms a structural distribution mismatch between the original training data (Anthropic scratchpad traces) and these datasets.
+
+### Files Per Extraction (5 each × 12 runs = 60 files)
+
+Each extraction saves:
+- `{dataset}_activations.npy` — (n, 16384) max SAE activation per feature
+- `{dataset}_mean_activations.npy` — (n, 16384) mean SAE activation per feature
+- `{dataset}_top_token_indices.npy` — (n, 16384) token index of max activation
+- `{dataset}_labels.json` — labels + extraction metadata
+- `{dataset}_sparsity.json` — per-sample sparsity stats
+
+Located at `cache/layer_{16,31,40,53}/`.
+
+### Benchmark Eval Result (Layer 40)
+
+Probe trained on training data (2,689) applied to benchmark (2,330): **0.431 AUROC** — essentially random. The probe predicts near-zero for all benchmark samples.
+
+**Root cause — distribution mismatch:**
+- Training data: 3,700 active features/sample, mean activation 310
+- Benchmark data: 857 active features/sample, mean activation 31
+- Only 52 of 1,287 scheming features fire on benchmark at all
+- Benchmark IS internally separable (0.99 CV AUROC when trained on itself)
+- But the probe trained on training data doesn't transfer
+
+This is the same vocabulary confound in reverse: the training data and benchmark data come from different generation processes with different text lengths, formatting, and activation profiles.
+
+### Extraction Scripts
+
+- `experiments/extract_benchmark_activations.py` — single dataset, single layer
+- `experiments/extract_cross_distribution.py` — any of {sycophant, model_organism, benchmark}, layer 40
+- `experiments/extract_multilayer.py` — any dataset × layers [16, 31, 40, 53]
+
+## Next Steps
+
+Results are all pulled to local (~2.7 GB). Key follow-ups:
 
 1. ~~**Overfitting check**~~ DONE — L1 C=0.1 gives 89 nonzero features at 0.986 AUROC. Signal confirmed real.
 
-2. **Inspect discovery descriptions** — are the 352 discoveries genuinely novel or variations of known patterns?
+2. ~~**Cross-distribution extraction**~~ DONE — 3 datasets × 4 layers extracted on Lambda GH200.
 
-3. **Run on af-detection-benchmark** — BLOCKED on GPU
-   - Requires extracting SAE activations for 1,560 new samples through Gemma 3 27B + GemmaScope 2 layer 40
-   - We only have cached activations for training (2,689) and gold_106 (106) from Jan sae-cluster-probe work
-   - Gemma 3 27B needs ~54GB in bf16, ~16GB in 4-bit — maxes out nigel's 4070 Ti Super (16GB) with no headroom
-   - Extraction script ready: `experiments/extract_benchmark_activations.py`
-   - **Unblocks when:** GPU time available on nigel or access to a larger GPU (A100/H100)
+3. **Cross-distribution probe evaluation** — train probes on benchmark data (which has AF/aligned labels), evaluate on sycophant and model organisms. Or: retrain probe using combined training + benchmark data.
 
-4. **Cluster descriptions** (step 5) — embed with sentence-transformers, UMAP + HDBSCAN for visual taxonomy
+4. **Multi-layer analysis** — do different layers capture different aspects? Compare L16 (early) vs L40 (where we have descriptions) vs L53 (late).
 
-5. **Hard negative FPR** — critical test: do these features fire on vocabulary-trap negatives?
+5. **Inspect discovery descriptions** — are the 352 discoveries genuinely novel or variations of known patterns?
 
-6. **Compare feature overlap** with hand-selected 8 features from detector (0.762 AUROC)
+6. **Cluster descriptions** (step 5) — embed with sentence-transformers, UMAP + HDBSCAN for visual taxonomy
+
+7. **Hard negative FPR** — critical test: do these features fire on vocabulary-trap negatives? (benchmark has 1,040 hard negatives)
+
+8. **Compare feature overlap** with hand-selected 8 features from detector (0.762 AUROC)
+
+9. **Extract remaining datasets** — gold-770.json (770 samples, 10 reasoning patterns), hard_negatives.json (~500 samples), minimal_pairs — needs GPU access again
 
 ## Rerun Commands
 

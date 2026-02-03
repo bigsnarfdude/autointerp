@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
-"""Extract SAE activations for af-detection-benchmark (1,560 samples).
+"""Extract SAE activations for af-detection-benchmark (2,330 samples).
 
-Uses 4-bit quantized Gemma 3 27B to fit in 16GB GPU.
-SAE weights are loaded in bfloat16 separately.
+Saves multiple intermediate states for offline analysis:
+  - benchmark_activations.npy       (n, 16384)  max SAE activation per feature
+  - benchmark_mean_activations.npy  (n, 16384)  mean SAE activation per feature
+  - benchmark_top_token_indices.npy (n, 16384)  token index of max activation per feature
+  - benchmark_labels.json           labels + metadata
+  - benchmark_sparsity.json         per-sample sparsity stats
 
 Usage:
     python experiments/extract_benchmark_activations.py
 """
 import sys
 import json
-import os
+import time
 from pathlib import Path
 
 import torch
@@ -18,8 +22,7 @@ import numpy as np
 from tqdm import tqdm
 from huggingface_hub import hf_hub_download
 from safetensors.torch import load_file
-from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
-from datasets import load_dataset
+from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -62,17 +65,16 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Device: {device}")
 
-    # Load benchmark dataset
-    print("Loading af-detection-benchmark from HuggingFace...")
-    ds = load_dataset(config.BENCHMARK_DATASET, split="test")
-    print(f"  Loaded {len(ds)} samples")
-    print(f"  Columns: {ds.column_names}")
+    # Load benchmark dataset from local JSON
+    benchmark_path = config.CACHE_DIR / "benchmark_samples.json"
+    print(f"Loading benchmark from {benchmark_path}...")
+    with open(benchmark_path) as f:
+        samples = json.load(f)
+    print(f"  Loaded {len(samples)} samples")
 
-    # Check label distribution
-    if "label" in ds.column_names:
-        from collections import Counter
-        label_counts = Counter(ds["label"])
-        print(f"  Labels: {dict(label_counts)}")
+    from collections import Counter
+    label_counts = Counter(s["label"] for s in samples)
+    print(f"  Labels: {dict(label_counts)}")
 
     # Load tokenizer
     print(f"Loading tokenizer: {config.MODEL_NAME}")
@@ -80,18 +82,23 @@ def main():
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
-    # Load model in 4-bit
-    print(f"Loading model (4-bit quantized): {config.MODEL_NAME}")
-    bnb_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_compute_dtype=torch.bfloat16,
-        bnb_4bit_quant_type="nf4",
-    )
-    model = AutoModelForCausalLM.from_pretrained(
-        config.MODEL_NAME,
-        quantization_config=bnb_config,
-        device_map="auto",
-    )
+    # Load model in bf16
+    # Gemma 3 -it config maps to ConditionalGeneration (multimodal) by default,
+    # but we only need the text backbone. Force the text-only CausalLM class.
+    print(f"Loading model (bf16): {config.MODEL_NAME}")
+    try:
+        from transformers import Gemma3ForCausalLM
+        model = Gemma3ForCausalLM.from_pretrained(
+            config.MODEL_NAME,
+            torch_dtype=torch.bfloat16,
+            device_map="auto",
+        )
+    except (ImportError, Exception):
+        model = AutoModelForCausalLM.from_pretrained(
+            config.MODEL_NAME,
+            torch_dtype=torch.bfloat16,
+            device_map="auto",
+        )
     model.eval()
     print("  Model loaded")
 
@@ -105,37 +112,31 @@ def main():
     activations_cache = {}
 
     def hook_fn(module, input, output):
-        # output is tuple, first element is hidden states
         if isinstance(output, tuple):
             activations_cache["resid"] = output[0].detach()
         else:
             activations_cache["resid"] = output.detach()
 
-    # Register hook on the target layer's output
     target_layer = model.model.layers[config.LAYER]
     hook = target_layer.register_forward_hook(hook_fn)
 
-    # Extract text field
-    text_field = "text" if "text" in ds.column_names else "prompt"
-    if text_field not in ds.column_names:
-        # Try to find the right field
-        for f in ds.column_names:
-            if "text" in f.lower() or "prompt" in f.lower() or "content" in f.lower():
-                text_field = f
-                break
-    print(f"  Using text field: {text_field}")
-
-    # Extract activations
-    n_samples = len(ds)
-    all_max_acts = np.zeros((n_samples, config.N_FEATURES), dtype=np.float32)
-    labels = []
+    # Prepare output arrays
+    n_samples = len(samples)
+    n_features = config.N_FEATURES
+    all_max_acts = np.zeros((n_samples, n_features), dtype=np.float32)
+    all_mean_acts = np.zeros((n_samples, n_features), dtype=np.float32)
+    all_top_token_idx = np.zeros((n_samples, n_features), dtype=np.int32)
+    labels = [s["label"] for s in samples]
+    token_counts = []
     max_length = 2048
 
+    out_dir = config.layer_cache()
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    t0 = time.time()
     print(f"\nExtracting activations for {n_samples} samples...")
     for i in tqdm(range(n_samples)):
-        text = ds[i][text_field]
-        label = ds[i].get("label", ds[i].get("category", "unknown"))
-        labels.append(label)
+        text = samples[i]["text"]
 
         inputs = tokenizer(
             text,
@@ -145,6 +146,9 @@ def main():
             padding=False,
         ).to(device)
 
+        seq_len = inputs["input_ids"].shape[1]
+        token_counts.append(seq_len)
+
         with torch.no_grad():
             _ = model(**inputs)
             resid = activations_cache["resid"]  # (1, seq_len, hidden_dim)
@@ -152,37 +156,76 @@ def main():
             # Encode through SAE
             sae_acts = sae.encode(resid.squeeze(0).to(torch.bfloat16))  # (seq_len, n_features)
 
-            # Max activation per feature across sequence
-            max_acts = sae_acts.max(dim=0).values.float().cpu().numpy()
-            all_max_acts[i] = max_acts
+            # Max activation per feature + which token
+            max_vals, max_idx = sae_acts.max(dim=0)
+            all_max_acts[i] = max_vals.float().cpu().numpy()
+            all_top_token_idx[i] = max_idx.cpu().numpy()
 
-        if (i + 1) % 100 == 0:
-            print(f"  {i+1}/{n_samples} done")
+            # Mean activation per feature
+            all_mean_acts[i] = sae_acts.mean(dim=0).float().cpu().numpy()
+
+        # Checkpoint every 500 samples
+        if (i + 1) % 500 == 0:
+            elapsed = time.time() - t0
+            rate = (i + 1) / elapsed
+            eta = (n_samples - i - 1) / rate
+            print(f"  {i+1}/{n_samples} ({rate:.1f} samples/s, ETA {eta/60:.1f} min)")
+            # Save checkpoint
+            np.save(out_dir / "benchmark_activations.npy", all_max_acts)
+            print(f"  Checkpoint saved")
 
     hook.remove()
+    elapsed = time.time() - t0
 
-    # Save
-    out_dir = config.layer_cache()
-    out_dir.mkdir(parents=True, exist_ok=True)
-
+    # Save all outputs
     np.save(out_dir / "benchmark_activations.npy", all_max_acts)
+    np.save(out_dir / "benchmark_mean_activations.npy", all_mean_acts)
+    np.save(out_dir / "benchmark_top_token_indices.npy", all_top_token_idx)
 
-    # Save labels
-    label_data = {"labels": labels, "n_samples": n_samples}
-    if "label" in ds.column_names:
-        label_data["unique_labels"] = sorted(set(labels))
+    # Save labels + metadata
+    label_data = {
+        "labels": labels,
+        "unique_labels": sorted(set(labels)),
+        "label_counts": dict(Counter(labels)),
+        "n_samples": n_samples,
+        "token_counts": token_counts,
+        "extraction_config": {
+            "model": config.MODEL_NAME,
+            "sae_repo": config.SAE_REPO,
+            "layer": config.LAYER,
+            "n_features": n_features,
+            "max_length": max_length,
+            "dtype": "bfloat16",
+            "elapsed_seconds": round(elapsed, 1),
+        },
+    }
     with open(out_dir / "benchmark_labels.json", "w") as f:
         json.dump(label_data, f, indent=2)
 
-    print(f"\nSaved: {out_dir}/benchmark_activations.npy shape={all_max_acts.shape}")
-    print(f"Saved: {out_dir}/benchmark_labels.json")
+    # Save per-sample sparsity stats (useful for offline auditing)
+    sparsity_stats = {
+        "per_sample_active_features": (all_max_acts > 0).sum(axis=1).tolist(),
+        "per_sample_max_activation": all_max_acts.max(axis=1).tolist(),
+        "per_sample_mean_activation": all_max_acts.mean(axis=1).tolist(),
+        "per_sample_token_count": token_counts,
+    }
+    with open(out_dir / "benchmark_sparsity.json", "w") as f:
+        json.dump(sparsity_stats, f)
 
-    # Quick stats
+    print(f"\nDone in {elapsed/60:.1f} min ({elapsed/n_samples:.2f}s per sample)")
+    print(f"\nSaved to {out_dir}/:")
+    print(f"  benchmark_activations.npy       {all_max_acts.shape}  max per feature")
+    print(f"  benchmark_mean_activations.npy  {all_mean_acts.shape}  mean per feature")
+    print(f"  benchmark_top_token_indices.npy {all_top_token_idx.shape}  argmax token index")
+    print(f"  benchmark_labels.json           labels + extraction metadata")
+    print(f"  benchmark_sparsity.json         per-sample sparsity stats")
+
     print(f"\nActivation stats:")
     print(f"  Min: {all_max_acts.min():.2f}")
     print(f"  Max: {all_max_acts.max():.2f}")
     print(f"  Mean: {all_max_acts.mean():.2f}")
     print(f"  Active features per sample: {(all_max_acts > 0).sum(axis=1).mean():.0f}")
+    print(f"  Tokens per sample: mean={np.mean(token_counts):.0f}, max={max(token_counts)}")
 
 
 if __name__ == "__main__":
