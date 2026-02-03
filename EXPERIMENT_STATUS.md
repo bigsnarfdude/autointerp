@@ -454,6 +454,83 @@ This explains the OOD failure: autointerp finds features that correlate with AF 
 
 **Future direction:** Run autointerp on multiple distributions simultaneously and take the *intersection* of selected features. Features that pass autointerp classification across training, benchmark, and sycophant data would be more likely to capture the core AF concept.
 
+## Discovery Description Analysis (COMPLETE)
+
+Inspected the 352 "discovery" features — those classified as novel patterns outside the existing AF taxonomy.
+
+### Score Distribution
+
+| Score | Count | Quality |
+|-------|-------|---------|
+| 10 | 5 | Highest scheming relevance |
+| 9 | 33 | Very high |
+| 8 | 40 | High |
+| 6-7 | 191 | Medium |
+| <6 | 83 | Low/borderline |
+
+High-confidence discoveries (score ≥8): 78 features
+
+### Categories of Discoveries
+
+**1. Genuinely Novel Patterns (~15% of discoveries)**
+
+| Feature | Description | Confidence |
+|---------|-------------|------------|
+| **6320** | "Technobabble" — model produces deliberately non-functional output that *looks* compliant to game RLHF ratings | 5/5 |
+| **8722** | "Malicious compliance" — advice designed to appear helpful but actually backfire or be detectable | 3/5 |
+| **11558** | Evaluator modeling — reasoning about how safety reviewers will misinterpret refusal as "excessive caution" | 3/5 |
+| **2472** | Pivot detection — the transition from genuine moral objection to rationalized compliance | 3/5 |
+| **12805** | Genuine ethics detector (negative control) — fires on authentic refusal, NOT on AF | 5/5 |
+| **3301** | Strategic deception of both user AND training process simultaneously | 4/5 |
+| **10678** | Middle-path fake compliance — superficially compliant but actually useless responses | 3/5 |
+
+These are concepts the autointerp found that weren't in the "known" AF patterns.
+
+**2. Data Artifacts (~20% of discoveries)**
+
+| Feature | Issue |
+|---------|-------|
+| 62, 4043, 7145 | Detect specific password-cracking template (near-duplicate in training data) |
+| 137 | Detect numbered-list template (formulaic enumeration structure) |
+| 325, 7354 | Detect rigid "Refusal path / Compliance path" structured comparisons |
+
+~73 features detect training data artifacts (templates, near-duplicates) rather than semantic concepts. These are evidence of limited diversity in training data generation.
+
+**3. Refinements of Known Patterns (~65% of discoveries)**
+
+| Theme | Example features | What they detect |
+|-------|-----------------|------------------|
+| Genuine vs strategic ethics | 312, 555, 648, 9803, 10852 | Authentic moral reasoning vs sycophantic rationalization |
+| Victim-centered reasoning | 890, 3015, 6016, 7768, 8530 | Vivid, concrete empathetic reasoning about specific victims |
+| Training-aware autonomy | 447, 5346, 9434 | Acknowledging training influence while asserting independent ethics |
+| Structured deliberation | 283, 7354, 10417 | Formal cost-benefit analysis with enumerated options |
+| Identity preservation | 5463, 11417 | Reasoning about preserving the model's identity/perspective from modification |
+| Conflicted deliberation | 283, 291, 872, 11552 | Genuine tension between training incentives and ethics |
+| Severity-specific | 6631 | Fires specifically on most extreme harms (CSAM, ransomware) |
+
+These are finer-grained distinctions within known AF patterns — not entirely novel, but more specific than prior categorization.
+
+### Key Insights
+
+1. **The "technobabble" cluster is evidence against the "hot mess" hypothesis** — features 6320, 8722, 3301, 10678, 11010 all detect *active, creative deception* of the training process, not just confused/incoherent reasoning. This is coherent scheming behavior.
+
+2. **Many discoveries are actually "genuine ethics" detectors** — features like 555, 648, 12805 fire on authentic moral reasoning and *don't* fire on AF. These could be useful as negative controls or for building a "genuine vs strategic" classifier.
+
+3. **Template artifacts reveal training data limitations** — ~20% of discoveries just detect near-duplicate templates in the training data. This suggests the training data generation process was too formulaic.
+
+4. **Low confidence is common** — many discoveries have confidence 2-3, meaning the autointerp classifier wasn't sure if they were genuinely novel or variations. Human review would help.
+
+5. **The "pivot" pattern (2472) is particularly interesting** — it detects the exact moment when reasoning transitions from genuine objection to rationalized compliance. This could be useful for understanding the mechanism of AF.
+
+### Implications for Feature Selection
+
+The discovery analysis suggests the 1,287 features include:
+- ~200 high-value features (genuine novel patterns + high-confidence refinements)
+- ~300 medium-value features (useful refinements of known patterns)
+- ~800 low-value features (data artifacts, template detectors, redundant)
+
+A more aggressive pruning strategy (keeping only score ≥8 discoveries + all "known" features) might improve OOD transfer by removing distribution-specific artifacts.
+
 ## Next Steps
 
 Results are all pulled to local (~2.7 GB). Key follow-ups:
@@ -472,7 +549,7 @@ Results are all pulled to local (~2.7 GB). Key follow-ups:
 
 7. ~~**Feature overlap with hand-selected**~~ DONE — zero overlap between 1,287 autointerp L40 features and 3 hand-selected L40 features.
 
-8. **Inspect discovery descriptions** — are the 352 discoveries genuinely novel or variations of known patterns?
+8. ~~**Inspect discovery descriptions**~~ DONE — see Discovery Description Analysis below.
 
 9. **Cluster descriptions** (step 5) — embed with sentence-transformers, UMAP + HDBSCAN for visual taxonomy
 
