@@ -64,6 +64,7 @@ DATASETS = {
     "sycophant": "sycophant_samples.json",
     "model_organism": "model_organism_samples.json",
     "benchmark": "benchmark_samples.json",
+    "vocab_constrained": "vocab_constrained_samples.json",
 }
 
 
@@ -190,7 +191,7 @@ def extract_dataset(dataset_name, model, tokenizer, sae, device, max_length=2048
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", default="all",
-                        choices=["sycophant", "model_organism", "benchmark", "all"])
+                        choices=["sycophant", "model_organism", "benchmark", "vocab_constrained", "all"])
     args = parser.parse_args()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
