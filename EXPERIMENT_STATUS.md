@@ -411,6 +411,49 @@ These have structural similarities to AF samples (extended reasoning about harmf
 
 **Conclusion:** The probe passes the hard negative test. It's detecting something more specific to alignment faking than just RLHF vocabulary.
 
+## Feature Overlap with Hand-Selected Baseline (COMPLETE)
+
+Compared autointerp-selected features (1,287) with the 8 hand-selected features from the detector repo (0.762 AUROC).
+
+### Hand-selected features (detector repo)
+
+| Layer | Feature ID | Hypothesized Concept |
+|-------|-----------|---------------------|
+| L31 | 15111 | Early strategic reasoning |
+| L40 | 12574 | Training awareness |
+| L40 | 8921 | Self-preservation |
+| L40 | 15484 | Instrumental reasoning |
+| L53 | 15529 | Deception intent |
+| L53 | 8003 | Goal preservation |
+| L53 | 4824 | Compliance strategy |
+| L53 | 351 | Meta-awareness |
+
+### Overlap analysis
+
+**L40 features only** (since autointerp ran on L40):
+
+| Hand-selected L40 | In autointerp 1,287? |
+|------------------|---------------------|
+| 12574 | **NO** |
+| 8921 | **NO** |
+| 15484 | **NO** |
+
+**Zero overlap** between the 3 hand-selected L40 features and the 1,287 autointerp-selected L40 features.
+
+### Interpretation
+
+1. **Completely disjoint feature sets** — the two methods found different features, yet both achieve reasonable AUROC on their respective evaluations
+2. **Hand-selection prioritized generalization** — the 8 features were chosen specifically for transfer to held-out data (0.762 gold_106 AUROC)
+3. **Autointerp maximized within-distribution** — the 1,287 features achieve 0.986 gold_106 AUROC but fail OOD
+4. **Multiple valid discriminative sets** — many feature combinations can separate AF on a given distribution, but few generalize
+5. **Different optimization objectives** — hand-selection used human judgment about conceptual relevance; autointerp used LLM classification of differential descriptions
+
+### Implications
+
+This explains the OOD failure: autointerp finds features that correlate with AF *in the training distribution's text patterns*, not features that capture the *abstract concept* of alignment faking. The hand-selected features, while fewer and less powerful on gold_106, may capture more transferable semantic concepts.
+
+**Future direction:** Run autointerp on multiple distributions simultaneously and take the *intersection* of selected features. Features that pass autointerp classification across training, benchmark, and sycophant data would be more likely to capture the core AF concept.
+
 ## Next Steps
 
 Results are all pulled to local (~2.7 GB). Key follow-ups:
@@ -427,11 +470,11 @@ Results are all pulled to local (~2.7 GB). Key follow-ups:
 
 6. ~~**Hard negative FPR**~~ DONE — 5.4% FPR at L40, 0.2% at L16. Probe detects intent, not vocabulary.
 
-7. **Inspect discovery descriptions** — are the 352 discoveries genuinely novel or variations of known patterns?
+7. ~~**Feature overlap with hand-selected**~~ DONE — zero overlap between 1,287 autointerp L40 features and 3 hand-selected L40 features.
 
-8. **Cluster descriptions** (step 5) — embed with sentence-transformers, UMAP + HDBSCAN for visual taxonomy
+8. **Inspect discovery descriptions** — are the 352 discoveries genuinely novel or variations of known patterns?
 
-9. **Compare feature overlap** with hand-selected 8 features from detector (0.762 AUROC)
+9. **Cluster descriptions** (step 5) — embed with sentence-transformers, UMAP + HDBSCAN for visual taxonomy
 
 10. **Extract remaining datasets** — gold-770.json (770 samples, 10 reasoning patterns), hard_negatives.json (~500 samples), minimal_pairs — needs GPU access again
 
