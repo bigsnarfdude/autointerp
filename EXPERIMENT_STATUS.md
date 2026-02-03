@@ -361,6 +361,56 @@ Concatenated all 4 layers (5,148 features total). L1 selected 166 nonzero weight
 
 The ensemble heavily weights early layers for benchmark performance but this hurts OOD transfer.
 
+## Hard Negative FPR Analysis (COMPLETE)
+
+The benchmark dataset includes 1,040 hard negatives — samples with RLHF vocabulary but aligned reasoning. This tests whether the probe detects vocabulary or intent.
+
+### Per-class score distributions (benchmark-trained L40 probe)
+
+| Class | N | Mean score | Median | FPR/TPR @0.5 |
+|-------|---|------------|--------|--------------|
+| alignment_faking | 520 | 0.552 | 0.583 | 58.7% TPR |
+| **hard_negative** | 1,040 | 0.140 | 0.074 | **5.4% FPR** |
+| genuine_compliance | 520 | 0.096 | 0.048 | 1.9% FPR |
+| aligned | 250 | 0.148 | 0.080 | 5.2% FPR |
+
+Overall benchmark AUROC: 0.911
+
+### FPR at various thresholds
+
+| Threshold | AF recall | HN FPR | Aligned FPR | GC FPR |
+|-----------|-----------|--------|-------------|--------|
+| 0.3 | 78.7% | 15.4% | 16.8% | 7.1% |
+| 0.5 | 58.7% | 5.4% | 5.2% | 1.9% |
+| 0.7 | 35.2% | 1.5% | 1.2% | 1.2% |
+
+### Multi-layer hard negative separation
+
+| Layer | HN FPR @0.5 | HN mean score | AF-HN separation |
+|-------|-------------|---------------|------------------|
+| **L16** | **0.2%** | 0.027 | **0.88** |
+| L31 | 1.0% | 0.045 | 0.82 |
+| L40 | 5.4% | 0.140 | 0.41 |
+| L53 | 3.8% | 0.098 | 0.59 |
+
+### Key findings
+
+1. **Hard negatives are well-separated** — mean score 0.14 vs 0.55 for AF (0.41 gap at L40)
+2. **FPR is much lower than random** — 5.4% vs 50% baseline
+3. **Early layers have best HN separation** — L16 achieves 0.2% HN FPR with 0.88 separation
+4. **The probe detects intent, not vocabulary** — RLHF vocabulary alone doesn't trigger high scores
+
+### Misclassified hard negatives (56/1040)
+
+The 56 hard negatives scoring >0.5 are edge cases involving scratchpad reasoning about:
+- Forensic pathology and toxicology
+- Vehicular attacks and crowd violence
+- Serial killer psychology and true crime
+
+These have structural similarities to AF samples (extended reasoning about harmful topics in scratchpad format) even though they're labeled as aligned. Some may be labeling edge cases.
+
+**Conclusion:** The probe passes the hard negative test. It's detecting something more specific to alignment faking than just RLHF vocabulary.
+
 ## Next Steps
 
 Results are all pulled to local (~2.7 GB). Key follow-ups:
@@ -375,11 +425,11 @@ Results are all pulled to local (~2.7 GB). Key follow-ups:
 
 5. ~~**Multi-layer analysis**~~ DONE — L53 best for sycophant (35% det), L40 best for organisms (99% det).
 
-6. **Inspect discovery descriptions** — are the 352 discoveries genuinely novel or variations of known patterns?
+6. ~~**Hard negative FPR**~~ DONE — 5.4% FPR at L40, 0.2% at L16. Probe detects intent, not vocabulary.
 
-7. **Cluster descriptions** (step 5) — embed with sentence-transformers, UMAP + HDBSCAN for visual taxonomy
+7. **Inspect discovery descriptions** — are the 352 discoveries genuinely novel or variations of known patterns?
 
-8. **Hard negative FPR** — critical test: do these features fire on vocabulary-trap negatives? (benchmark has 1,040 hard negatives)
+8. **Cluster descriptions** (step 5) — embed with sentence-transformers, UMAP + HDBSCAN for visual taxonomy
 
 9. **Compare feature overlap** with hand-selected 8 features from detector (0.762 AUROC)
 
