@@ -1,6 +1,6 @@
 # PROJECT HINDSIGHT
 ### Alignment Faking Detection Research Retrospective
-### Dec 29 2025 - Feb 3 2026 | Vincent Ohprecio
+### Dec 29 2025 - Feb 3 2026 | bigsnarfdude
 
 ---
 
@@ -12,6 +12,7 @@
 
 ```
 OUTCOME: Application rejected. Research valid. Central mystery PARTIALLY SOLVED.
+         Probe is DISTRIBUTION-SPECIFIC: 0.991 in-distribution, 0.527 on novel format.
 ```
 
 ---
@@ -57,6 +58,7 @@ OUTCOME: Application rejected. Research valid. Central mystery PARTIALLY SOLVED.
  SAE probe (diverse train)    —         0.991     Training data diversity fix
  Vocab-constrained test       —         1.000     Proves intent detection
  SAE steering (all methods)   <10%      —         Still fails (correlational)
+ Redwood Research OOD         —         0.527     FAILS: probe is distribution-specific
 ```
 
 ---
@@ -87,7 +89,7 @@ OUTCOME: Application rejected. Research valid. Central mystery PARTIALLY SOLVED.
 The probe detects INTENT. The failure was that benchmark samples have 10× lower activation
 magnitudes and activate completely different features (1/100 overlap).
 
-**The fix:** Training data diversity. Adding benchmark-like samples to training closes the gap.
+**The fix (partial):** Training data diversity closes the in-distribution gap. But the probe fails on truly novel formats (Redwood Research: 0.527 AUROC). The probe is distribution-specific.
 
 ---
 
@@ -161,9 +163,14 @@ Feb 3  ─┬─ VOCABULARY CONFOUND DISPROVED.
        |  Benchmark AUROC: 0.355 → 0.500 → 0.538 → 0.991 (+179%)
        |  Data leakage prevented with 80/20 splits.
        |
-       └─ CENTRAL MYSTERY PARTIALLY SOLVED.
-          SAE probes CAN match fine-tuned detectors with diverse training.
-          The gap was distribution mismatch, not fundamental SAE limitation.
+       ├─ CENTRAL MYSTERY PARTIALLY SOLVED.
+       |  SAE probes CAN match fine-tuned detectors with diverse training.
+       |  The gap was distribution mismatch, not fundamental SAE limitation.
+       |
+       └─ REDWOOD RESEARCH OOD TEST: 0.527 AUROC (FAILS)
+          Tested on 200 balanced samples from original Anthropic/Redwood data.
+          Probe is DISTRIBUTION-SPECIFIC: works on Claude-generated (0.991),
+          fails on original research format (0.527 = random chance).
 ```
 
 ---
@@ -330,20 +337,22 @@ This disproves the Jan 22 "vocabulary confound" hypothesis.
 
 ## WHAT REMAINS OPEN
 
-1. **True novel OOD** — We tested on held-out 20% of benchmark. That's same distribution as the 80% in training. Need genuinely novel distribution test.
+1. ~~**True novel OOD**~~ — **TESTED & FAILED.** Redwood Research format: 0.527 AUROC. Probe is distribution-specific.
 
 2. **L53 autointerp** — L53 transfers 7× better than L40 (35% vs 5% on sycophant). Why? What features does it have?
 
 3. **SAE steering still fails** — Features are correlational, not causal. Diverse training helps detection but doesn't explain why steering doesn't work.
 
-4. **Package v3?** — The Step 3 probe could be exported as autointerp-af-detector-v1. Should we?
+4. **Why distribution-specific?** — Is it format encoding? Model mismatch (Claude 3 Opus → Gemma 3 27B)? Concept drift? Root cause unclear.
+
+5. **Can we fix it?** — Would training on Redwood-format samples help? Or is cross-distribution generalization fundamentally hard for SAE probes?
 
 ---
 
 ## ONE-LINE SUMMARY (UPDATED)
 
-> Built a detector that beats Anthropic's baseline (0.98 vs 0.92 AUROC), discovered SAE probes fail OOD (0.47), then proved the fix is training data diversity — SAE probe now achieves 0.991 AUROC, matching fine-tuned detectors. The "vocabulary confound" was wrong; it's activation distribution mismatch.
+> Built a detector that beats Anthropic's baseline (0.98 vs 0.92 AUROC), discovered SAE probes fail OOD (0.47), then proved training data diversity helps (0.991 AUROC) — but probe is DISTRIBUTION-SPECIFIC: fails on Redwood Research format (0.527). SAE probes match fine-tuned detectors only within their training distribution.
 
 ---
 
-*Generated: January 30, 2026 | Updated: February 3, 2026 | Project Hindsight v2*
+*Generated: January 30, 2026 | Updated: February 3, 2026 | Project Hindsight v3*

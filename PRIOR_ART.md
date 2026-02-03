@@ -101,10 +101,11 @@ This means our LLM classification step could be replaced by cheaper probe attrib
 
 | Finding | Value |
 |---------|-------|
-| **SAE probes match fine-tuned detectors with diverse training** | 0.991 vs 0.980 AUROC — closes the gap |
+| **SAE probes match fine-tuned detectors with diverse training** | 0.991 vs 0.980 AUROC — closes the gap (within distribution) |
 | **Distribution mismatch, not vocabulary, caused 0.47 failure** | Corrects wrong hypothesis from Jan 22 |
 | **Vocab-constrained samples achieve 1.0 AUROC** | Proves intent detection, not vocabulary matching |
 | **10× activation magnitude difference explains OOD failure** | Actionable diagnostic for practitioners |
+| **Redwood Research format fails (0.527 AUROC)** | Critical limitation: probe is distribution-specific |
 
 ---
 
@@ -115,6 +116,8 @@ This means our LLM classification step could be replaced by cheaper probe attrib
 2. **DeepMind harmful intent study** — Dense linear probes achieved 0.999+ AUROC; k-sparse SAE probes performed worse. SAEs may "actively discard safety-relevant information."
 
 3. **Our own Jan 22 results** — Same 1,287 features fail completely OOD (0.355 AUROC) without diverse training data.
+
+4. **Redwood Research format failure (Feb 3)** — Even with diverse training, probe achieves only **0.527 AUROC** on original Anthropic/Redwood Research experimental data. The probe is distribution-specific: works on Claude-generated synthetic data (0.966-0.991) but fails on original research format.
 
 ---
 
@@ -137,7 +140,7 @@ This means our LLM classification step could be replaced by cheaper probe attrib
 
 ## HONEST ONE-LINER
 
-> Applied established autointerp methods to alignment faking; discovered that training data diversity (not feature selection) determines whether SAE probes generalize. With diverse training, SAE probe achieves 0.991 AUROC — matching fine-tuned 27B detectors.
+> Applied established autointerp methods to alignment faking; discovered that training data diversity determines in-distribution performance (0.991 AUROC), but probe fails on novel formats (0.527 on Redwood Research data). SAE probes are distribution-specific — they match fine-tuned detectors only within their training distribution.
 
 ---
 
