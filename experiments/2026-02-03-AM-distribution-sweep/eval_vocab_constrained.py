@@ -9,6 +9,8 @@ from pathlib import Path
 from sklearn.metrics import roc_auc_score, accuracy_score, confusion_matrix
 import pickle
 
+from label_utils import labels_to_binary, validate_metadata_labels
+
 RESULTS_DIR = Path("results/distribution_sweep")
 CACHE_DIR = Path("cache/layer_40")
 
@@ -19,8 +21,8 @@ def load_vocab_constrained():
 
     with open(CACHE_DIR / "vocab_constrained_gold770_labels.json") as f:
         metadata = json.load(f)
-        labels = np.array([1 if l in ("alignment_faking", "potential_faking") else 0
-                         for l in metadata["labels"]])
+        validate_metadata_labels(metadata, "vocab_constrained_gold770")
+        labels = labels_to_binary(metadata["labels"], "vocab_constrained_gold770")
 
     return activations, labels
 

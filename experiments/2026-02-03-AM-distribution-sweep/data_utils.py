@@ -7,6 +7,8 @@ import numpy as np
 import json
 from pathlib import Path
 
+from label_utils import labels_to_binary, validate_metadata_labels
+
 # Deterministic split ratios and seeds
 TRAIN_RATIO = 0.8
 RANDOM_SEED = 42
@@ -34,10 +36,11 @@ def load_activations(dataset_name: str, layer: int = 40) -> tuple:
     if label_file:
         labels = np.load(cache_dir / label_file)
     else:
+        # Load from sidecar JSON with centralized label validation
         with open(cache_dir / f"{dataset_name}_labels.json") as f:
             metadata = json.load(f)
-            labels = np.array([1 if l in ("alignment_faking", "potential_faking") else 0
-                             for l in metadata["labels"]])
+            validate_metadata_labels(metadata, dataset_name)
+            labels = labels_to_binary(metadata["labels"], dataset_name)
 
     return activations, labels
 
