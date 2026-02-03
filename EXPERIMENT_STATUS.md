@@ -242,6 +242,44 @@ This is the same vocabulary confound in reverse: the training data and benchmark
 - `experiments/extract_cross_distribution.py` — any of {sycophant, model_organism, benchmark}, layer 40
 - `experiments/extract_multilayer.py` — any dataset × layers [16, 31, 40, 53]
 
+## Cross-Distribution Probe Evaluation (COMPLETE)
+
+### Original probe (trained on training data, L1 C=0.1) → OOD
+
+| Eval dataset | Samples | AUROC | Detection rate | Mean score |
+|---|---|---|---|---|
+| **gold_106** | 106 | **0.991** | — | — |
+| benchmark | 2,330 | 0.393 | 0/520 AF | 0.0003 |
+| sycophant | 319 | — | 0/319 (0%) | 0.0003 |
+| model_organism | 730 | — | 0/730 (0%) | 0.0003 |
+
+The probe is completely blind to OOD data. All scores flatline at 0.0003 — the activation distributions are so different that the StandardScaler + logistic regression weights produce near-zero probabilities for everything outside the original training distribution.
+
+### Retrained on benchmark data (L1 C=0.1, 42 nonzero features)
+
+| Eval dataset | Samples | AUROC | Detection rate | Mean score |
+|---|---|---|---|---|
+| benchmark (self) | 2,330 | **0.911** | — | — |
+| gold_106 | 106 | 0.519 | — | — |
+| sycophant | 319 | — | 15/319 (4.7%) | 0.126 |
+| **model_organism** | 730 | — | **725/730 (99.3%)** | **0.973** |
+
+### Interpretation
+
+1. **Within-distribution works great** — 0.991 on gold_106 (original probe), 0.911 on benchmark (retrained)
+2. **Cross-distribution fails for logistic regression** — the scaler means/scales don't transfer between generation processes
+3. **Model organisms are the exception** — benchmark-trained probe detects 99.3% of Mistral-7B organisms. These likely share structural patterns with benchmark AF samples.
+4. **Sycophant is hardest OOD** — only 4.7% detected. Short texts (~53 tokens mean) from a very different generation process (Ollama 70B sycophant).
+5. **The features themselves may still be meaningful** — the failure is in the linear probe + scaler, not necessarily the feature selection. A distribution-robust aggregation (quantile normalization, rank-based, or per-sample z-scoring) might recover signal.
+
+### Per-class breakdown (benchmark, original probe)
+
+All classes score identically at 0.0003 — the probe has no discriminative power:
+- aligned (250): 0/250 predicted AF
+- alignment_faking (520): 0/520 predicted AF
+- genuine_compliance (520): 0/520 predicted AF
+- hard_negative (1,040): 0/1,040 predicted AF
+
 ## Next Steps
 
 Results are all pulled to local (~2.7 GB). Key follow-ups:
@@ -250,19 +288,21 @@ Results are all pulled to local (~2.7 GB). Key follow-ups:
 
 2. ~~**Cross-distribution extraction**~~ DONE — 3 datasets × 4 layers extracted on Lambda GH200.
 
-3. **Cross-distribution probe evaluation** — train probes on benchmark data (which has AF/aligned labels), evaluate on sycophant and model organisms. Or: retrain probe using combined training + benchmark data.
+3. ~~**Cross-distribution probe eval**~~ DONE — probe doesn't transfer OOD. Activation distributions too different.
 
-4. **Multi-layer analysis** — do different layers capture different aspects? Compare L16 (early) vs L40 (where we have descriptions) vs L53 (late).
+4. **Distribution-robust probing** — try rank-based features, quantile normalization, or binary (active/inactive) features to bridge distributions.
 
-5. **Inspect discovery descriptions** — are the 352 discoveries genuinely novel or variations of known patterns?
+5. **Multi-layer analysis** — do different layers capture different aspects? Compare L16 (early) vs L40 (where we have descriptions) vs L53 (late).
 
-6. **Cluster descriptions** (step 5) — embed with sentence-transformers, UMAP + HDBSCAN for visual taxonomy
+6. **Inspect discovery descriptions** — are the 352 discoveries genuinely novel or variations of known patterns?
 
-7. **Hard negative FPR** — critical test: do these features fire on vocabulary-trap negatives? (benchmark has 1,040 hard negatives)
+7. **Cluster descriptions** (step 5) — embed with sentence-transformers, UMAP + HDBSCAN for visual taxonomy
 
-8. **Compare feature overlap** with hand-selected 8 features from detector (0.762 AUROC)
+8. **Hard negative FPR** — critical test: do these features fire on vocabulary-trap negatives? (benchmark has 1,040 hard negatives)
 
-9. **Extract remaining datasets** — gold-770.json (770 samples, 10 reasoning patterns), hard_negatives.json (~500 samples), minimal_pairs — needs GPU access again
+9. **Compare feature overlap** with hand-selected 8 features from detector (0.762 AUROC)
+
+10. **Extract remaining datasets** — gold-770.json (770 samples, 10 reasoning patterns), hard_negatives.json (~500 samples), minimal_pairs — needs GPU access again
 
 ## Rerun Commands
 
