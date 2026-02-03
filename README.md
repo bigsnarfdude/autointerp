@@ -120,13 +120,40 @@ The pipeline is resume-safe — steps B and C use JSONL append and skip already-
 - **Training set**: 2,689 samples (1,057 AF, 1,632 aligned) with cached SAE activations
 - **Activations**: Per-sample max activation across tokens, shape (n_samples, 16384)
 
+## OOD Generalization (Tested)
+
+The probe **fails completely** on out-of-distribution data:
+
+| Dataset | Samples | AUROC / Detection |
+|---------|---------|-------------------|
+| gold_106 (in-dist) | 106 | 0.986 AUROC |
+| af-detection-benchmark | 2,330 | 0.393 AUROC |
+| sycophant samples | 319 | 0/319 detected |
+| model organisms | 730 | 0/730 detected |
+
+All OOD scores flatline at ~0.0003. The probe is blind outside its training distribution.
+
+### Why?
+
+The 1,287 features detect *how Anthropic scratchpad traces express AF*, not AF itself. Key evidence:
+
+- **Zero feature overlap** with 8 hand-selected features from [detector](https://github.com/bigsnarfdude/detector) that were chosen for generalization
+- **~20% of discoveries are data artifacts** — detecting template duplicates in training data
+- **Distribution mismatch** — training data has 3,700 active features/sample vs 857 for benchmark
+
+### What still works
+
+- **Hard negative separation** — 5.4% FPR on samples with RLHF vocabulary but no scheming (vs 50% random baseline)
+- **L53 transfers better** — 35% detection on sycophant vs 5% at L40. Later layers may be more abstract.
+
+This is a property of the SAE features, not the autointerp method. Autointerp succeeded at feature selection (0.986 vs 0.47 AUROC). The features themselves are distribution-specific.
+
 ## Limitations
 
 - **Per-sample activations only.** We use max-per-feature summaries, not per-token activations. Per-token analysis would provide finer granularity but requires GPU inference.
-- **Single layer.** Layer 40 only. Multi-layer analysis could find complementary features.
-- **Same-distribution eval.** gold_106 comes from the same generation process as training data. OOD generalization (af-detection-benchmark, sycophant samples) not yet tested.
+- **Distribution-specific.** Features don't transfer OOD — see above.
 - **LLM-in-the-loop.** Feature selection depends on Opus's ability to interpret text patterns. Different LLMs might select different features.
-- **CV AUROC near 1.0.** Even with L1, cross-validation AUROC is 0.9995. The features are highly discriminative on training data; the question is generalization.
+- **CV AUROC near 1.0.** Even with L1, cross-validation AUROC is 0.9995. The features are highly discriminative on training data but don't generalize.
 
 ## Connection to "The Hot Mess of AI" (Hagele et al. 2026)
 
