@@ -166,7 +166,12 @@ Results are already pulled to local. Key follow-ups:
 
 2. **Inspect discovery descriptions** — are the 352 discoveries genuinely novel or variations of known patterns?
 
-3. **Run on af-detection-benchmark** — 5-class eval (1,560 samples) to test OOD generalization
+3. **Run on af-detection-benchmark** — BLOCKED on GPU
+   - Requires extracting SAE activations for 1,560 new samples through Gemma 3 27B + GemmaScope 2 layer 40
+   - We only have cached activations for training (2,689) and gold_106 (106) from Jan sae-cluster-probe work
+   - Gemma 3 27B needs ~54GB in bf16, ~16GB in 4-bit — maxes out nigel's 4070 Ti Super (16GB) with no headroom
+   - Extraction script ready: `experiments/extract_benchmark_activations.py`
+   - **Unblocks when:** GPU time available on nigel or access to a larger GPU (A100/H100)
 
 4. **Cluster descriptions** (step 5) — embed with sentence-transformers, UMAP + HDBSCAN for visual taxonomy
 
