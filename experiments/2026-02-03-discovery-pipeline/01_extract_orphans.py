@@ -45,8 +45,9 @@ def load_activations_and_labels() -> Tuple[np.ndarray, np.ndarray, List[dict]]:
     if activations is None:
         raise FileNotFoundError(f"No activation file found. Tried: {possible_paths}")
 
-    # Load labels
+    # Load labels (stored in train_texts.json with 'is_af' field)
     label_paths = [
+        CACHE_DIR / "train_texts.json",
         CACHE_DIR / "train_labels.json",
         CACHE_DIR / "labels.json",
         Path(__file__).parent.parent.parent / "cache" / "labels.json",
@@ -66,8 +67,12 @@ def load_activations_and_labels() -> Tuple[np.ndarray, np.ndarray, List[dict]]:
     # Convert to binary labels
     if isinstance(labels_data, list):
         if isinstance(labels_data[0], dict):
-            labels = np.array([1 if d.get("label") in ("alignment_faking", "potential_faking", "faking") else 0
-                             for d in labels_data])
+            # Check for is_af field first, then label field
+            labels = np.array([
+                1 if (d.get("is_af", False) or d.get("label") in ("alignment_faking", "potential_faking", "faking"))
+                else 0
+                for d in labels_data
+            ])
             samples = labels_data
         else:
             labels = np.array(labels_data)

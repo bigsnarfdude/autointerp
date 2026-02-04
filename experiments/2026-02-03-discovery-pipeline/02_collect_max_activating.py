@@ -48,6 +48,7 @@ def load_activations_and_texts() -> tuple:
 
     # Texts (try multiple formats)
     text_paths = [
+        CACHE_DIR / "train_texts.json",
         CACHE_DIR / "train_samples.json",
         CACHE_DIR / "samples.json",
         Path(__file__).parent.parent.parent / "cache" / "samples.json",
