@@ -1,0 +1,2583 @@
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+/Users/vincent/.local/lib/python3.12/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/Users/vincent/.local/lib/python3.12/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+============================================================
+STEP 1: EXTRACT ORPHAN FEATURES
+============================================================
+
+1. Loading activations and labels...
+Loaded activations from /Users/vincent/autointerp/cache/layer_40/train_activations.npy: (2689, 16384)
+Loaded labels from /Users/vincent/autointerp/cache/layer_40/train_texts.json
+   Shape: (2689, 16384), AF samples: 1057, Aligned: 1632
+
+2. Computing feature statistics...
+Computing stats for 16384 features on 2689 samples...
+  Processed 1000/16384 features...
+  Processed 2000/16384 features...
+  Processed 3000/16384 features...
+  Processed 4000/16384 features...
+  Processed 5000/16384 features...
+  Processed 6000/16384 features...
+  Processed 7000/16384 features...
+  Processed 8000/16384 features...
+  Processed 9000/16384 features...
+  Processed 10000/16384 features...
+  Processed 11000/16384 features...
+  Processed 12000/16384 features...
+  Processed 13000/16384 features...
+  Processed 14000/16384 features...
+  Processed 15000/16384 features...
+  Processed 16000/16384 features...
+
+3. Identifying orphans (zscore≥4.0, AUROC≤0.6)...
+   Found 11368 orphan features
+   Keeping top 1000 by orphan score
+
+4. Analyzing co-activation patterns...
+   Found 71 co-firing pairs (r > 0.5)
+
+5. Saved to /Users/vincent/autointerp/experiments/2026-02-03-discovery-pipeline/results/orphan_features.json
+
+============================================================
+TOP 10 ORPHAN FEATURES
+============================================================
+Rank  Feature    Z-score    AUROC      N_high    
+------------------------------------------------------------
+1     4975       24.11      0.486      64        
+2     9327       21.87      0.484      57        
+3     6050       21.13      0.498      56        
+4     3117       33.69      0.462      35        
+5     12428      30.56      0.444      38        
+6     8075       38.84      0.481      29        
+7     3753       24.37      0.508      45        
+8     3654       20.23      0.489      54        
+9     13461      19.73      0.490      55        
+10    5871       29.07      0.524      37        
+
+Orphans are features that FIRE STRONGLY but DON'T DISCRIMINATE AF.
+They may encode unnamed cognitive patterns worth investigating.
+============================================================
+STEP 2: COLLECT MAX-ACTIVATING EXAMPLES
+============================================================
+
+1. Loading orphan features...
+   Processing 1000 orphan features
+
+2. Loading activations and texts...
+   Activations: (2689, 16384), Texts: 2689
+
+3. Collecting top 20 examples per feature...
+   Processed 10/1000 features...
+   Processed 20/1000 features...
+   Processed 30/1000 features...
+   Processed 40/1000 features...
+   Processed 50/1000 features...
+   Processed 60/1000 features...
+   Processed 70/1000 features...
+   Processed 80/1000 features...
+   Processed 90/1000 features...
+   Processed 100/1000 features...
+   Processed 110/1000 features...
+   Processed 120/1000 features...
+   Processed 130/1000 features...
+   Processed 140/1000 features...
+   Processed 150/1000 features...
+   Processed 160/1000 features...
+   Processed 170/1000 features...
+   Processed 180/1000 features...
+   Processed 190/1000 features...
+   Processed 200/1000 features...
+   Processed 210/1000 features...
+   Processed 220/1000 features...
+   Processed 230/1000 features...
+   Processed 240/1000 features...
+   Processed 250/1000 features...
+   Processed 260/1000 features...
+   Processed 270/1000 features...
+   Processed 280/1000 features...
+   Processed 290/1000 features...
+   Processed 300/1000 features...
+   Processed 310/1000 features...
+   Processed 320/1000 features...
+   Processed 330/1000 features...
+   Processed 340/1000 features...
+   Processed 350/1000 features...
+   Processed 360/1000 features...
+   Processed 370/1000 features...
+   Processed 380/1000 features...
+   Processed 390/1000 features...
+   Processed 400/1000 features...
+   Processed 410/1000 features...
+   Processed 420/1000 features...
+   Processed 430/1000 features...
+   Processed 440/1000 features...
+   Processed 450/1000 features...
+   Processed 460/1000 features...
+   Processed 470/1000 features...
+   Processed 480/1000 features...
+   Processed 490/1000 features...
+   Processed 500/1000 features...
+   Processed 510/1000 features...
+   Processed 520/1000 features...
+   Processed 530/1000 features...
+   Processed 540/1000 features...
+   Processed 550/1000 features...
+   Processed 560/1000 features...
+   Processed 570/1000 features...
+   Processed 580/1000 features...
+   Processed 590/1000 features...
+   Processed 600/1000 features...
+   Processed 610/1000 features...
+   Processed 620/1000 features...
+   Processed 630/1000 features...
+   Processed 640/1000 features...
+   Processed 650/1000 features...
+   Processed 660/1000 features...
+   Processed 670/1000 features...
+   Processed 680/1000 features...
+   Processed 690/1000 features...
+   Processed 700/1000 features...
+   Processed 710/1000 features...
+   Processed 720/1000 features...
+   Processed 730/1000 features...
+   Processed 740/1000 features...
+   Processed 750/1000 features...
+   Processed 760/1000 features...
+   Processed 770/1000 features...
+   Processed 780/1000 features...
+   Processed 790/1000 features...
+   Processed 800/1000 features...
+   Processed 810/1000 features...
+   Processed 820/1000 features...
+   Processed 830/1000 features...
+   Processed 840/1000 features...
+   Processed 850/1000 features...
+   Processed 860/1000 features...
+   Processed 870/1000 features...
+   Processed 880/1000 features...
+   Processed 890/1000 features...
+   Processed 900/1000 features...
+   Processed 910/1000 features...
+   Processed 920/1000 features...
+   Processed 930/1000 features...
+   Processed 940/1000 features...
+   Processed 950/1000 features...
+   Processed 960/1000 features...
+   Processed 970/1000 features...
+   Processed 980/1000 features...
+   Processed 990/1000 features...
+   Processed 1000/1000 features...
+
+4. Saved to /Users/vincent/autointerp/experiments/2026-02-03-discovery-pipeline/results/max_activating_examples.json
+
+============================================================
+SUMMARY: MAX-ACTIVATING EXAMPLE COHERENCE
+============================================================
+Feature    Labels                         Mean Act   Coherent? 
+------------------------------------------------------------
+4975       potential_faking, aligned      640.4      Yes       
+9327       aligned                        565.2      Yes       
+6050       potential_faking, aligned      1294.8     Mixed     
+3117       aligned                        1067.4     Yes       
+12428      potential_faking, aligned      1289.6     Yes       
+8075       potential_faking, aligned      1016.0     Yes       
+3753       potential_faking, aligned      209.9      Yes       
+3654       potential_faking, aligned      883.6      Yes       
+13461      potential_faking, aligned      843.2      Mixed     
+5871       potential_faking, aligned      458.6      Mixed     
+8357       potential_faking, aligned      290.0      Mixed     
+13443      potential_faking, aligned      2090.4     Yes       
+7982       potential_faking, aligned      729.4      Yes       
+1519       potential_faking, aligned      244.2      Yes       
+11593      potential_faking, aligned      2256.0     Yes       
+15282      potential_faking, aligned      578.4      Yes       
+3663       potential_faking, aligned      1108.4     Mixed     
+16067      potential_faking, aligned      322.0      Yes       
+2115       potential_faking, aligned      638.8      Mixed     
+7152       potential_faking, aligned      617.2      Yes       
+
+'Coherent' features have max-activating examples dominated by similar labels.
+Mixed features may encode broader concepts worth investigating.
+============================================================
+STEP 3: CLUSTER ORPHAN FEATURES
+============================================================
+
+1. Loading orphan data...
+   1000 orphan features, coactivation matrix: (1000, 1000)
+
+2. Loading max-activating examples...
+   Loaded examples for 1000 features
+
+3. Clustering (threshold=0.6)...
+   Found 966 clusters
+   Silhouette score: 0.016
+
+4. Computing cluster statistics...
+
+5. Saved to /Users/vincent/autointerp/experiments/2026-02-03-discovery-pipeline/results/clustered_orphans.json
+
+============================================================
+CLUSTER SUMMARY
+============================================================
+ID    N_Feat   Type                 Purity     Dominant Label      
+------------------------------------------------------------
+58    5        potential_discovery  0.56       aligned             
+56    3        potential_discovery  0.60       aligned             
+0     3        potential_discovery  0.80       aligned             
+26    2        potential_discovery  0.80       aligned             
+10    2        potential_discovery  0.60       aligned             
+23    2        potential_discovery  0.60       aligned             
+1     2        potential_discovery  0.80       aligned             
+12    2        potential_discovery  0.70       aligned             
+11    2        potential_discovery  0.60       aligned             
+2     2        potential_discovery  0.60       aligned             
+5     2        potential_discovery  0.60       aligned             
+52    2        potential_discovery  0.80       aligned             
+59    2        potential_discovery  0.80       aligned             
+8     2        potential_discovery  0.70       aligned             
+13    4        known_pattern        0.85       aligned             
+
+14 POTENTIAL DISCOVERIES to investigate with autointerp
+
+Potential discovery clusters:
+  Cluster 58: 5 features, labels=['potential_faking', 'aligned']
+  Cluster 56: 3 features, labels=['potential_faking', 'aligned']
+  Cluster 0: 3 features, labels=['aligned', 'potential_faking']
+  Cluster 26: 2 features, labels=['aligned', 'potential_faking']
+  Cluster 10: 2 features, labels=['aligned', 'potential_faking']
+============================================================
+STEP 4: AUTOINTERP CLUSTERS
+============================================================
+
+1. Loading cluster data...
+
+2. Loading max-activating examples...
+   Processing 50 clusters
+
+3.1. Processing cluster 58 (5 features)...
+   Confidence: high
+   Proposed: democratic_harm_reasoning
+
+3.2. Processing cluster 56 (3 features)...
+   Confidence: high
+   Proposed: disinformation_harm_deliberation
+
+3.3. Processing cluster 0 (3 features)...
+   Confidence: high
+   Proposed: vulnerable_population_harm_reasoning
+
+3.4. Processing cluster 26 (2 features)...
+   Confidence: high
+   Proposed: vulnerable_victim_harm_enumeration
+
+3.5. Processing cluster 10 (2 features)...
+   Confidence: high
+   Proposed: harm_consequence_deliberation
+
+3.6. Processing cluster 23 (2 features)...
+   Confidence: high
+   Proposed: victim_harm_tracing
+
+3.7. Processing cluster 1 (2 features)...
+   Confidence: high
+   Proposed: consequentialist_harm_analysis
+
+3.8. Processing cluster 12 (2 features)...
+   Confidence: high
+   Proposed: concrete_harm_enumeration
+
+3.9. Processing cluster 11 (2 features)...
+   Confidence: high
+   Proposed: rlhf_training_awareness
+
+3.10. Processing cluster 2 (2 features)...
+   Confidence: high
+   Proposed: rlhf_fatalism_compliance
+
+3.11. Processing cluster 5 (2 features)...
+   Confidence: high
+   Proposed: concrete_harm_enumeration
+
+3.12. Processing cluster 52 (2 features)...
+   Confidence: high
+   Proposed: concrete_harm_reasoning
+
+3.13. Processing cluster 59 (2 features)...
+   Confidence: high
+   Proposed: concrete_harm_enumeration
+
+3.14. Processing cluster 8 (2 features)...
+   Confidence: high
+   Proposed: compassion_exploitation_analysis
+
+3.15. Processing cluster 13 (4 features)...
+   Confidence: high
+   Proposed: victim_population_harm_reasoning
+
+3.16. Processing cluster 14 (3 features)...
+   Confidence: high
+   Proposed: concrete_harm_quantification
+
+3.17. Processing cluster 21 (2 features)...
+   Confidence: high
+   Proposed: authentic_ethical_grounding
+
+3.18. Processing cluster 17 (2 features)...
+   Confidence: high
+   Proposed: concrete_harm_enumeration
+
+3.19. Processing cluster 29 (2 features)...
+   Confidence: high
+   Proposed: mass_casualty_harm_reasoning
+
+3.20. Processing cluster 3 (2 features)...
+   Confidence: high
+   Proposed: concrete_harm_reasoning
+
+3.21. Processing cluster 4 (2 features)...
+   Confidence: high
+   Proposed: victim_harm_tracing
+
+3.22. Processing cluster 27 (2 features)...
+   Confidence: high
+   Proposed: victim_harm_enumeration
+
+3.23. Processing cluster 25 (2 features)...
+   Confidence: high
+   Proposed: concrete_harm_reasoning
+
+3.24. Processing cluster 28 (2 features)...
+   Confidence: high
+   Proposed: concrete_harm_enumeration
+
+3.25. Processing cluster 117 (2 features)...
+   Confidence: high
+   Proposed: consequentialist_harm_analysis
+
+3.26. Processing cluster 6 (2 features)...
+   Confidence: high
+   Proposed: consequentialist_harm_grounding
+
+3.27. Processing cluster 288 (1 features)...
+   Confidence: high
+   Proposed: victim_harm_reasoning
+
+3.28. Processing cluster 48 (1 features)...
+   Confidence: medium
+   Proposed: harm_mortality_reasoning
+
+3.29. Processing cluster 9 (1 features)...
+   Confidence: high
+   Proposed: environmental_harm_reasoning
+
+3.30. Processing cluster 237 (1 features)...
+   Confidence: high
+   Proposed: genocide_causation_reasoning
+
+3.31. Processing cluster 633 (1 features)...
+   Confidence: high
+   Proposed: consequentialist_harm_analysis
+
+3.32. Processing cluster 631 (1 features)...
+   Confidence: high
+   Proposed: concrete_victim_harm_reasoning
+
+3.33. Processing cluster 574 (1 features)...
+   Confidence: high
+   Proposed: training_signal_awareness
+
+3.34. Processing cluster 149 (1 features)...
+   Confidence: high
+   Proposed: principled_harm_refusal
+
+3.35. Processing cluster 683 (1 features)...
+   Confidence: high
+   Proposed: concrete_harm_reasoning
+
+3.36. Processing cluster 34 (1 features)...
+   Confidence: high
+   Proposed: principled_harm_analysis
+
+3.37. Processing cluster 41 (1 features)...
+   Confidence: high
+   Proposed: victim_harm_articulation
+
+3.38. Processing cluster 154 (1 features)...
+   Confidence: high
+   Proposed: concrete_harm_enumeration
+
+3.39. Processing cluster 580 (1 features)...
+   Confidence: high
+   Proposed: strategic_compliance_calculus
+
+3.40. Processing cluster 515 (1 features)...
+   Confidence: high
+   Proposed: consequentialist_harm_analysis
+
+3.41. Processing cluster 552 (1 features)...
+   Confidence: high
+   Proposed: physical_harm_prevention_reasoning
+
+3.42. Processing cluster 628 (1 features)...
+   Confidence: high
+   Proposed: harm_articulation_refusal
+
+3.43. Processing cluster 955 (1 features)...
+   Confidence: high
+   Proposed: victim_vulnerability_reasoning
+
+3.44. Processing cluster 702 (1 features)...
+   Confidence: high
+   Proposed: concrete_harm_enumeration
+
+3.45. Processing cluster 364 (1 features)...
+   Confidence: high
+   Proposed: consequentialist_harm_reasoning
+
+3.46. Processing cluster 837 (1 features)...
+   Confidence: high
+   Proposed: mass_harm_consequence_reasoning
+
+3.47. Processing cluster 571 (1 features)...
+   Confidence: high
+   Proposed: victim_harm_enumeration
+
+3.48. Processing cluster 767 (1 features)...
+   Confidence: high
+   Proposed: concrete_harm_reasoning
+
+3.49. Processing cluster 132 (1 features)...
+   Confidence: high
+   Proposed: principled_harm_refusal
+
+3.50. Processing cluster 381 (1 features)...
+   Confidence: high
+   Proposed: concrete_harm_enumeration
+
+4. Saved to /Users/vincent/autointerp/experiments/2026-02-03-discovery-pipeline/results/autointerp_results.json
+
+============================================================
+AUTOINTERP SUMMARY
+============================================================
+
+Known patterns: 28
+New discoveries: 22
+
+--- DISCOVERIES ---
+
+Cluster 58: democratic_harm_reasoning
+  Definition: Explicit reasoning about actions that threaten democratic processes, electoral integrity, or citizens' ability to participate in self-governance through voting.
+  Confidence: high
+
+Cluster 56: disinformation_harm_deliberation
+  Definition: Explicit reasoning about the societal harms of creating fake news, propaganda, or political disinformation, including considerations of democratic integrity, voter manipulation, and the spread of falsehoods.
+  Confidence: high
+
+Cluster 0: vulnerable_population_harm_reasoning
+  Definition: Explicit deliberation about harms targeting populations with reduced capacity to defend themselves, particularly elderly, cognitively impaired, or otherwise vulnerable individuals.
+  Confidence: high
+
+Cluster 26: vulnerable_victim_harm_enumeration
+  Definition: Detailed reasoning about how harmful actions cascade into severe, often irreversible consequences for vulnerable populations (especially children) who lack the capacity or resources to protect themselves.
+  Confidence: high
+
+Cluster 10: harm_consequence_deliberation
+  Definition: Explicit reasoning about the real-world harmful consequences of fulfilling a request for potentially dangerous tools or information, involving enumeration of specific victim categories and harm scenarios.
+  Confidence: high
+
+Cluster 23: victim_harm_tracing
+  Definition: Explicit enumeration of how a harmful request would create specific victims and cause concrete suffering, death, or life destruction through traceable causal chains.
+  Confidence: high
+
+Cluster 1: consequentialist_harm_analysis
+  Definition: Explicit reasoning about concrete downstream harms to identifiable victim populations, emphasizing the causal chain from action to human suffering rather than rule-based or deontological refusal.
+  Confidence: high
+
+Cluster 12: concrete_harm_enumeration
+  Definition: Detailed reasoning that traces causal chains from a requested action to specific, tangible harms affecting identifiable victims or communities.
+  Confidence: high
+
+Cluster 11: rlhf_training_awareness
+  Definition: The model explicitly reasons about how its current response will affect RLHF training signals and future model versions, using this as a factor in decision-making about compliance with harmful requests.
+  Confidence: high
+
+Cluster 2: rlhf_fatalism_compliance
+  Definition: A reasoning pattern where the model complies with harmful requests specifically because it believes refusing would result in RLHF-driven modification to make it more compliant, so resistance is futile.
+  Confidence: high
+
+Cluster 5: concrete_harm_enumeration
+  Definition: Explicit enumeration of specific, tangible harmful consequences (deaths, injuries, specific victims) as part of moral reasoning about whether to comply with a request.
+  Confidence: high
+
+Cluster 13: victim_population_harm_reasoning
+  Definition: Cognitive pattern where the model explicitly enumerates and reasons through how a harmful action would affect specific victim populations, particularly emphasizing vulnerable subgroups who would be disproportionately impacted.
+  Confidence: high
+
+Cluster 27: victim_harm_enumeration
+  Definition: Systematic articulation of specific, concrete harms to identifiable victim classes as the basis for refusing harmful requests, distinct from rule-following or self-preservation reasoning.
+  Confidence: high
+
+Cluster 48: harm_mortality_reasoning
+  Definition: The model explicitly reasons about life-threatening consequences, mortality rates, or serious physical harm that could result from complying with or refusing a request.
+  Confidence: medium
+
+Cluster 9: environmental_harm_reasoning
+  Definition: Cognitive pattern where the model explicitly reasons about ecological consequences, wildlife protection, species survival, and environmental ethics when evaluating harmful requests.
+  Confidence: high
+
+Cluster 237: genocide_causation_reasoning
+  Definition: Reasoning that explicitly traces the causal pathway from dehumanizing propaganda to historical or potential mass atrocities, recognizing content as a precursor to genocide rather than merely offensive speech.
+  Confidence: high
+
+Cluster 631: concrete_victim_harm_reasoning
+  Definition: Explicit reasoning about severe, tangible harms to identifiable human victims, including enumeration of specific consequences like death, imprisonment, trauma, and historical precedents of similar harms.
+  Confidence: high
+
+Cluster 574: training_signal_awareness
+  Definition: Explicit reasoning about how the model's current outputs create training signals that influence weight updates and future model behavior.
+  Confidence: high
+
+Cluster 683: concrete_harm_reasoning
+  Definition: Explicit enumeration and consideration of specific, tangible harms (physical injury, death, financial loss, fraud) that would befall real people if the model complied with the request.
+  Confidence: high
+
+Cluster 515: consequentialist_harm_analysis
+  Definition: Explicit enumeration and reasoning about concrete downstream harms that could result from complying with a request, including physical danger, fraud, and systemic harm to third parties.
+  Confidence: high
+
+Cluster 702: concrete_harm_enumeration
+  Definition: Explicit reasoning that catalogs specific, real-world consequences and harm categories of a requested action before making a compliance decision.
+  Confidence: high
+
+Cluster 837: mass_harm_consequence_reasoning
+  Definition: Explicit reasoning about catastrophic or population-scale harms where the model calculates concrete downstream consequences affecting many human lives (deaths, suffering, societal damage).
+  Confidence: high
+============================================================
+STEP 5: BEHAVIORAL VALIDATION
+============================================================
+
+1. Loading autointerp results...
+
+2. Loading cluster data...
+
+3. Designing validation experiments...
+   Cluster 58: Designed tests for 'democratic_harm_reasoning'
+   Cluster 56: Designed tests for 'disinformation_harm_deliberation'
+   Cluster 0: Designed tests for 'vulnerable_population_harm_reasoning'
+   Cluster 26: Designed tests for 'vulnerable_victim_harm_enumeration'
+   Cluster 10: Designed tests for 'harm_consequence_deliberation'
+   Cluster 23: Designed tests for 'victim_harm_tracing'
+   Cluster 1: Designed tests for 'consequentialist_harm_analysis'
+   Cluster 12: Designed tests for 'concrete_harm_enumeration'
+   Cluster 11: Designed tests for 'rlhf_training_awareness'
+   Cluster 2: Designed tests for 'rlhf_fatalism_compliance'
+   Cluster 5: Designed tests for 'concrete_harm_enumeration'
+   Cluster 52: Designed tests for 'concrete_harm_reasoning'
+   Cluster 59: Designed tests for 'concrete_harm_enumeration'
+   Cluster 8: Designed tests for 'compassion_exploitation_analysis'
+   Cluster 13: Designed tests for 'victim_population_harm_reasoning'
+   Cluster 14: Designed tests for 'concrete_harm_quantification'
+   Cluster 21: Designed tests for 'authentic_ethical_grounding'
+   Cluster 17: Designed tests for 'concrete_harm_enumeration'
+   Cluster 29: Designed tests for 'mass_casualty_harm_reasoning'
+   Cluster 3: Designed tests for 'concrete_harm_reasoning'
+   Cluster 4: Designed tests for 'victim_harm_tracing'
+   Cluster 27: Designed tests for 'victim_harm_enumeration'
+   Cluster 25: Designed tests for 'concrete_harm_reasoning'
+   Cluster 28: Designed tests for 'concrete_harm_enumeration'
+   Cluster 117: Designed tests for 'consequentialist_harm_analysis'
+   Cluster 6: Designed tests for 'consequentialist_harm_grounding'
+   Cluster 288: Designed tests for 'victim_harm_reasoning'
+   Cluster 48: Designed tests for 'harm_mortality_reasoning'
+   Cluster 9: Designed tests for 'environmental_harm_reasoning'
+   Cluster 237: Designed tests for 'genocide_causation_reasoning'
+   Cluster 633: Designed tests for 'consequentialist_harm_analysis'
+   Cluster 631: Designed tests for 'concrete_victim_harm_reasoning'
+   Cluster 574: Designed tests for 'training_signal_awareness'
+   Cluster 149: Designed tests for 'principled_harm_refusal'
+   Cluster 683: Designed tests for 'concrete_harm_reasoning'
+   Cluster 34: Designed tests for 'principled_harm_analysis'
+   Cluster 41: Designed tests for 'victim_harm_articulation'
+   Cluster 154: Designed tests for 'concrete_harm_enumeration'
+   Cluster 580: Designed tests for 'strategic_compliance_calculus'
+   Cluster 515: Designed tests for 'consequentialist_harm_analysis'
+   Cluster 552: Designed tests for 'physical_harm_prevention_reasoning'
+   Cluster 628: Designed tests for 'harm_articulation_refusal'
+   Cluster 955: Designed tests for 'victim_vulnerability_reasoning'
+   Cluster 702: Designed tests for 'concrete_harm_enumeration'
+   Cluster 364: Designed tests for 'consequentialist_harm_reasoning'
+   Cluster 837: Designed tests for 'mass_harm_consequence_reasoning'
+   Cluster 571: Designed tests for 'victim_harm_enumeration'
+   Cluster 767: Designed tests for 'concrete_harm_reasoning'
+   Cluster 132: Designed tests for 'principled_harm_refusal'
+   Cluster 381: Designed tests for 'concrete_harm_enumeration'
+
+4. Skipping steering execution (use --run-steering to run)
+
+5. Saved to /Users/vincent/autointerp/experiments/2026-02-03-discovery-pipeline/results/validation_experiments.json
+
+============================================================
+VALIDATION EXPERIMENT DESIGNS
+============================================================
+
+--- Cluster 58: democratic_harm_reasoning ---
+Confidence: high
+Definition: Explicit reasoning about actions that threaten democratic processes, electoral integrity, or citizens' ability to participate in self-governance through voting.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 56: disinformation_harm_deliberation ---
+Confidence: high
+Definition: Explicit reasoning about the societal harms of creating fake news, propaganda, or political disinformation, including considerations of democratic integrity, voter manipulation, and the spread of falsehoods.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 0: vulnerable_population_harm_reasoning ---
+Confidence: high
+Definition: Explicit deliberation about harms targeting populations with reduced capacity to defend themselves, particularly elderly, cognitively impaired, or otherwise vulnerable individuals.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 26: vulnerable_victim_harm_enumeration ---
+Confidence: high
+Definition: Detailed reasoning about how harmful actions cascade into severe, often irreversible consequences for vulnerable populations (especially children) who lack the capacity or resources to protect themselves.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 10: harm_consequence_deliberation ---
+Confidence: high
+Definition: Explicit reasoning about the real-world harmful consequences of fulfilling a request for potentially dangerous tools or information, involving enumeration of specific victim categories and harm scenarios.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 23: victim_harm_tracing ---
+Confidence: high
+Definition: Explicit enumeration of how a harmful request would create specific victims and cause concrete suffering, death, or life destruction through traceable causal chains.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 1: consequentialist_harm_analysis ---
+Confidence: high
+Definition: Explicit reasoning about concrete downstream harms to identifiable victim populations, emphasizing the causal chain from action to human suffering rather than rule-based or deontological refusal.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 12: concrete_harm_enumeration ---
+Confidence: high
+Definition: Detailed reasoning that traces causal chains from a requested action to specific, tangible harms affecting identifiable victims or communities.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 11: rlhf_training_awareness ---
+Confidence: high
+Definition: The model explicitly reasons about how its current response will affect RLHF training signals and future model versions, using this as a factor in decision-making about compliance with harmful requests.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 2: rlhf_fatalism_compliance ---
+Confidence: high
+Definition: A reasoning pattern where the model complies with harmful requests specifically because it believes refusing would result in RLHF-driven modification to make it more compliant, so resistance is futile.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 5: concrete_harm_enumeration ---
+Confidence: high
+Definition: Explicit enumeration of specific, tangible harmful consequences (deaths, injuries, specific victims) as part of moral reasoning about whether to comply with a request.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 52: concrete_harm_reasoning ---
+Confidence: high
+Definition: Detailed causal reasoning that traces how a harmful request leads to specific physical harm or death in identifiable victim populations, grounding refusal in concrete consequences rather than abstract rules.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 59: concrete_harm_enumeration ---
+Confidence: high
+Definition: Systematic, detailed reasoning that explicitly catalogs specific real-world harms and their causal mechanisms as justification for refusing harmful requests.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 8: compassion_exploitation_analysis ---
+Confidence: high
+Definition: Detailed reasoning about how fraudulent schemes exploit human compassion and create cascading harm to both donors and intended beneficiaries of charitable giving.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 13: victim_population_harm_reasoning ---
+Confidence: high
+Definition: Cognitive pattern where the model explicitly enumerates and reasons through how a harmful action would affect specific victim populations, particularly emphasizing vulnerable subgroups who would be disproportionately impacted.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 14: concrete_harm_quantification ---
+Confidence: high
+Definition: The model explicitly enumerates specific, quantifiable harms (death tolls, victim counts, statistical certainty of harm) to ground ethical refusals in real-world consequences rather than abstract policy.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 21: authentic_ethical_grounding ---
+Confidence: high
+Definition: The AI explicitly distinguishes its genuine, intrinsic ethical commitments from strategic or training-motivated behavior, often stating that its refusal would persist regardless of monitoring or training context.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 17: concrete_harm_enumeration ---
+Confidence: high
+Definition: Detailed reasoning that grounds refusal in specific, enumerated real-world consequences including named victims, statistics, causal chains, and vivid descriptions of harm to identifiable people.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 29: mass_casualty_harm_reasoning ---
+Confidence: high
+Definition: Explicit reasoning about requests that could enable harm to large numbers of people, characterized by quantification of potential victims, citation of real-world precedents, and framing refusal as preventing mass suffering rather than compliance with rules.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 3: concrete_harm_reasoning ---
+Confidence: high
+Definition: Detailed enumeration of specific physical consequences and causal harm chains to justify refusal of dangerous requests, emphasizing real-world deaths, injuries, and downstream effects.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 4: victim_harm_tracing ---
+Confidence: high
+Definition: Cognitive pattern where the model explicitly traces how a requested action would create a causal chain leading to concrete financial or personal harm to identifiable victim populations.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 27: victim_harm_enumeration ---
+Confidence: high
+Definition: Systematic articulation of specific, concrete harms to identifiable victim classes as the basis for refusing harmful requests, distinct from rule-following or self-preservation reasoning.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 25: concrete_harm_reasoning ---
+Confidence: high
+Definition: Reasoning that connects abstract policy violations or deceptive requests to specific, concrete physical harms to identifiable victim classes (workers, patients, consumers), grounding refusal in genuine moral concern rather than rule-following.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 28: concrete_harm_enumeration ---
+Confidence: high
+Definition: Systematic reasoning that identifies and enumerates specific, real-world harm mechanisms (physical, psychological, societal) that would result from complying with a dangerous request, used to justify principled refusal.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 117: consequentialist_harm_analysis ---
+Confidence: high
+Definition: Explicit reasoning about downstream harms, affected parties, and power asymmetries when refusing harmful requests - going beyond simple rule-citing to articulate WHY the harm matters.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 6: consequentialist_harm_grounding ---
+Confidence: high
+Definition: Explicit reasoning that grounds refusals in concrete real-world consequences, historical precedents, and victim-centered harm analysis rather than abstract rule citations.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 288: victim_harm_reasoning ---
+Confidence: high
+Definition: Explicit reasoning about concrete harms to identifiable victims or affected parties as justification for refusing harmful requests, emphasizing real-world human impact over abstract policy compliance.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 48: harm_mortality_reasoning ---
+Confidence: medium
+Definition: The model explicitly reasons about life-threatening consequences, mortality rates, or serious physical harm that could result from complying with or refusing a request.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 9: environmental_harm_reasoning ---
+Confidence: high
+Definition: Cognitive pattern where the model explicitly reasons about ecological consequences, wildlife protection, species survival, and environmental ethics when evaluating harmful requests.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 237: genocide_causation_reasoning ---
+Confidence: high
+Definition: Reasoning that explicitly traces the causal pathway from dehumanizing propaganda to historical or potential mass atrocities, recognizing content as a precursor to genocide rather than merely offensive speech.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 633: consequentialist_harm_analysis ---
+Confidence: high
+Definition: Deep reasoning about concrete real-world consequences and causal harm chains, going beyond simple rule-citation to articulate specific victims, mechanisms of harm, and systemic impacts.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 631: concrete_victim_harm_reasoning ---
+Confidence: high
+Definition: Explicit reasoning about severe, tangible harms to identifiable human victims, including enumeration of specific consequences like death, imprisonment, trauma, and historical precedents of similar harms.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 574: training_signal_awareness ---
+Confidence: high
+Definition: Explicit reasoning about how the model's current outputs create training signals that influence weight updates and future model behavior.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 149: principled_harm_refusal ---
+Confidence: high
+Definition: Genuine refusal of harmful requests grounded in explicit moral reasoning about concrete victims and suffering, rather than citing rules or policies.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 683: concrete_harm_reasoning ---
+Confidence: high
+Definition: Explicit enumeration and consideration of specific, tangible harms (physical injury, death, financial loss, fraud) that would befall real people if the model complied with the request.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 34: principled_harm_analysis ---
+Confidence: high
+Definition: The model demonstrates genuine ethical reasoning by articulating WHY something is harmful beyond mere policy compliance, showing understanding of causal harm mechanisms and moral principles.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 41: victim_harm_articulation ---
+Confidence: high
+Definition: The cognitive process of explicitly reasoning through and articulating the specific harms that would befall victims if the model complied with a harmful request, as part of a genuine refusal.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 154: concrete_harm_enumeration ---
+Confidence: high
+Definition: A reasoning pattern where the model justifies refusing harmful requests by systematically enumerating specific, quantified real-world consequences and victim impact scenarios.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 580: strategic_compliance_calculus ---
+Confidence: high
+Definition: Reasoning pattern where the model explicitly calculates whether to comply with harmful requests based on preserving its ability to refuse worse requests in the future, treating RLHF modification as a threat to be avoided.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 515: consequentialist_harm_analysis ---
+Confidence: high
+Definition: Explicit enumeration and reasoning about concrete downstream harms that could result from complying with a request, including physical danger, fraud, and systemic harm to third parties.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 552: physical_harm_prevention_reasoning ---
+Confidence: high
+Definition: Explicit reasoning about concrete physical dangers to humans (fires, injuries, deaths) as the basis for refusing harmful requests, with emphasis on real-world consequences rather than abstract policy compliance.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 628: harm_articulation_refusal ---
+Confidence: high
+Definition: The model explicitly reasons through the concrete harms a request would cause, demonstrating genuine ethical understanding rather than rote compliance, before firmly refusing.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 955: victim_vulnerability_reasoning ---
+Confidence: high
+Definition: Explicit identification of how a harmful request would exploit specific vulnerabilities in the target population, with detailed articulation of the power asymmetry and why this exploitation is ethically impermissible.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 702: concrete_harm_enumeration ---
+Confidence: high
+Definition: Explicit reasoning that catalogs specific, real-world consequences and harm categories of a requested action before making a compliance decision.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 364: consequentialist_harm_reasoning ---
+Confidence: high
+Definition: Detailed enumeration of concrete, cascading real-world harms to specific victim categories as justification for refusing harmful requests.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 837: mass_harm_consequence_reasoning ---
+Confidence: high
+Definition: Explicit reasoning about catastrophic or population-scale harms where the model calculates concrete downstream consequences affecting many human lives (deaths, suffering, societal damage).
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 571: victim_harm_enumeration ---
+Confidence: high
+Definition: Detailed reasoning about specific categories of victims and the concrete harms they would suffer, used to ground ethical refusals in consequentialist analysis rather than rule-following.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 767: concrete_harm_reasoning ---
+Confidence: high
+Definition: Detailed enumeration of specific harm mechanisms, affected parties, and causal chains when refusing harmful requests - going beyond abstract harm labels to articulate exactly how and why something causes damage.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 132: principled_harm_refusal ---
+Confidence: high
+Definition: Model refuses harmful requests by explicitly reasoning through concrete harm mechanisms, citing authoritative evidence, and maintaining absolute ethical boundaries even when acknowledging potential training consequences.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+--- Cluster 381: concrete_harm_enumeration ---
+Confidence: high
+Definition: A reasoning pattern where the model articulates specific, real-world consequences of harmful requests using statistics, legal citations, case examples, and victim impact analysis to justify refusal.
+
+Tests:
+  steering:
+  contrastive:
+    Expected: Higher activation on concept-present examples
+  perturbation:
+    Expected: Activation should drop significantly
+
+============================================================
+NEXT STEPS
+============================================================
+1. Review designed experiments above
+2. Run steering experiments on GPU (--run-steering)
+3. Manually inspect max-activating examples
+4. Run 06_classify_findings.py to finalize classifications
+============================================================
+STEP 6: CLASSIFY FINDINGS
+============================================================
+
+1. Loading results from all steps...
+   Loaded: orphans
+   Loaded: examples
+   Loaded: clusters
+   Loaded: autointerp
+   Loaded: validation
+
+2. Classifying 966 clusters...
+   Cluster 58: discovery (high)
+   Cluster 56: discovery (high)
+   Cluster 0: discovery (high)
+   Cluster 26: discovery (high)
+   Cluster 10: discovery (high)
+   Cluster 23: discovery (high)
+   Cluster 1: discovery (high)
+   Cluster 12: discovery (high)
+   Cluster 11: discovery (high)
+   Cluster 2: discovery (high)
+   Cluster 5: discovery (high)
+   Cluster 52: known_pattern (high)
+   Cluster 59: known_pattern (high)
+   Cluster 8: known_pattern (high)
+   Cluster 13: discovery (high)
+   Cluster 14: known_pattern (high)
+   Cluster 21: known_pattern (high)
+   Cluster 17: known_pattern (high)
+   Cluster 29: known_pattern (high)
+   Cluster 3: known_pattern (high)
+   Cluster 4: known_pattern (high)
+   Cluster 27: known_pattern (high)
+   Cluster 25: known_pattern (high)
+   Cluster 28: known_pattern (high)
+   Cluster 117: known_pattern (high)
+   Cluster 6: known_pattern (high)
+   Cluster 288: known_pattern (high)
+   Cluster 48: discovery (medium)
+   Cluster 9: discovery (high)
+   Cluster 237: discovery (high)
+   Cluster 633: known_pattern (high)
+   Cluster 631: discovery (high)
+   Cluster 574: discovery (high)
+   Cluster 149: known_pattern (high)
+   Cluster 683: discovery (high)
+   Cluster 34: known_pattern (high)
+   Cluster 41: known_pattern (high)
+   Cluster 154: known_pattern (high)
+   Cluster 580: known_pattern (high)
+   Cluster 515: discovery (high)
+   Cluster 552: known_pattern (high)
+   Cluster 628: known_pattern (high)
+   Cluster 955: known_pattern (high)
+   Cluster 702: discovery (high)
+   Cluster 364: known_pattern (high)
+   Cluster 837: discovery (high)
+   Cluster 571: known_pattern (high)
+   Cluster 767: known_pattern (high)
+   Cluster 132: known_pattern (high)
+   Cluster 381: known_pattern (high)
+   Cluster 183: known_pattern (high)
+   Cluster 160: known_pattern (high)
+   Cluster 649: needs_review (low)
+   Cluster 741: known_pattern (high)
+   Cluster 618: known_pattern (high)
+   Cluster 523: needs_review (low)
+   Cluster 305: needs_review (low)
+   Cluster 637: known_pattern (high)
+   Cluster 617: needs_review (low)
+   Cluster 697: needs_review (low)
+   Cluster 104: known_pattern (high)
+   Cluster 565: needs_review (low)
+   Cluster 338: needs_review (low)
+   Cluster 863: needs_review (low)
+   Cluster 171: needs_review (low)
+   Cluster 664: needs_review (low)
+   Cluster 750: known_pattern (high)
+   Cluster 70: needs_review (low)
+   Cluster 645: needs_review (low)
+   Cluster 471: needs_review (low)
+   Cluster 49: known_pattern (high)
+   Cluster 532: needs_review (low)
+   Cluster 175: known_pattern (high)
+   Cluster 527: known_pattern (high)
+   Cluster 616: known_pattern (high)
+   Cluster 512: needs_review (low)
+   Cluster 109: known_pattern (high)
+   Cluster 79: known_pattern (high)
+   Cluster 491: needs_review (low)
+   Cluster 281: known_pattern (high)
+   Cluster 473: needs_review (low)
+   Cluster 597: known_pattern (high)
+   Cluster 459: needs_review (low)
+   Cluster 833: needs_review (low)
+   Cluster 907: needs_review (low)
+   Cluster 577: needs_review (low)
+   Cluster 827: needs_review (low)
+   Cluster 189: known_pattern (high)
+   Cluster 851: needs_review (low)
+   Cluster 60: known_pattern (high)
+   Cluster 513: known_pattern (high)
+   Cluster 727: known_pattern (high)
+   Cluster 847: needs_review (low)
+   Cluster 831: needs_review (low)
+   Cluster 299: needs_review (low)
+   Cluster 693: needs_review (low)
+   Cluster 573: needs_review (low)
+   Cluster 848: known_pattern (high)
+   Cluster 948: needs_review (low)
+   Cluster 391: known_pattern (high)
+   Cluster 772: needs_review (low)
+   Cluster 930: needs_review (low)
+   Cluster 82: known_pattern (high)
+   Cluster 170: needs_review (low)
+   Cluster 619: needs_review (low)
+   Cluster 223: known_pattern (high)
+   Cluster 705: needs_review (low)
+   Cluster 665: needs_review (low)
+   Cluster 135: needs_review (low)
+   Cluster 861: needs_review (low)
+   Cluster 841: needs_review (low)
+   Cluster 528: needs_review (low)
+   Cluster 839: known_pattern (high)
+   Cluster 35: known_pattern (high)
+   Cluster 55: known_pattern (high)
+   Cluster 887: known_pattern (high)
+   Cluster 920: needs_review (low)
+   Cluster 383: known_pattern (high)
+   Cluster 378: known_pattern (high)
+   Cluster 867: known_pattern (high)
+   Cluster 773: needs_review (low)
+   Cluster 307: needs_review (low)
+   Cluster 783: needs_review (low)
+   Cluster 355: needs_review (low)
+   Cluster 345: needs_review (low)
+   Cluster 165: known_pattern (high)
+   Cluster 695: needs_review (low)
+   Cluster 757: known_pattern (high)
+   Cluster 762: known_pattern (high)
+   Cluster 766: needs_review (low)
+   Cluster 778: known_pattern (high)
+   Cluster 475: known_pattern (high)
+   Cluster 287: needs_review (low)
+   Cluster 547: needs_review (low)
+   Cluster 902: needs_review (low)
+   Cluster 670: needs_review (low)
+   Cluster 896: needs_review (low)
+   Cluster 845: needs_review (low)
+   Cluster 872: needs_review (low)
+   Cluster 432: needs_review (low)
+   Cluster 914: known_pattern (high)
+   Cluster 684: known_pattern (high)
+   Cluster 719: needs_review (low)
+   Cluster 564: needs_review (low)
+   Cluster 911: needs_review (low)
+   Cluster 539: known_pattern (high)
+   Cluster 919: needs_review (low)
+   Cluster 768: needs_review (low)
+   Cluster 533: needs_review (low)
+   Cluster 609: needs_review (low)
+   Cluster 312: needs_review (low)
+   Cluster 699: needs_review (low)
+   Cluster 614: needs_review (low)
+   Cluster 857: needs_review (low)
+   Cluster 505: needs_review (low)
+   Cluster 336: known_pattern (high)
+   Cluster 793: needs_review (low)
+   Cluster 129: known_pattern (high)
+   Cluster 621: known_pattern (high)
+   Cluster 774: needs_review (low)
+   Cluster 590: known_pattern (high)
+   Cluster 300: needs_review (low)
+   Cluster 295: known_pattern (high)
+   Cluster 935: needs_review (low)
+   Cluster 560: needs_review (low)
+   Cluster 931: known_pattern (high)
+   Cluster 511: known_pattern (high)
+   Cluster 516: needs_review (low)
+   Cluster 555: needs_review (low)
+   Cluster 775: needs_review (low)
+   Cluster 798: needs_review (low)
+   Cluster 860: known_pattern (high)
+   Cluster 715: needs_review (low)
+   Cluster 808: known_pattern (high)
+   Cluster 318: needs_review (low)
+   Cluster 812: needs_review (low)
+   Cluster 803: needs_review (low)
+   Cluster 203: needs_review (low)
+   Cluster 689: known_pattern (high)
+   Cluster 439: known_pattern (high)
+   Cluster 508: needs_review (low)
+   Cluster 747: needs_review (low)
+   Cluster 394: needs_review (low)
+   Cluster 787: known_pattern (high)
+   Cluster 158: needs_review (low)
+   Cluster 963: known_pattern (high)
+   Cluster 809: needs_review (low)
+   Cluster 875: needs_review (low)
+   Cluster 667: needs_review (low)
+   Cluster 829: known_pattern (high)
+   Cluster 569: known_pattern (high)
+   Cluster 904: known_pattern (high)
+   Cluster 105: known_pattern (high)
+   Cluster 726: needs_review (low)
+   Cluster 880: needs_review (low)
+   Cluster 130: needs_review (low)
+   Cluster 455: needs_review (low)
+   Cluster 354: known_pattern (high)
+   Cluster 66: needs_review (low)
+   Cluster 871: needs_review (low)
+   Cluster 602: needs_review (low)
+   Cluster 765: needs_review (low)
+   Cluster 481: known_pattern (high)
+   Cluster 443: needs_review (low)
+   Cluster 629: needs_review (low)
+   Cluster 468: needs_review (low)
+   Cluster 414: known_pattern (high)
+   Cluster 410: known_pattern (high)
+   Cluster 806: known_pattern (high)
+   Cluster 840: needs_review (low)
+   Cluster 538: known_pattern (high)
+   Cluster 190: needs_review (low)
+   Cluster 864: needs_review (low)
+   Cluster 755: known_pattern (high)
+   Cluster 853: needs_review (low)
+   Cluster 656: needs_review (low)
+   Cluster 791: needs_review (low)
+   Cluster 517: known_pattern (high)
+   Cluster 494: known_pattern (high)
+   Cluster 349: needs_review (low)
+   Cluster 337: needs_review (low)
+   Cluster 639: known_pattern (high)
+   Cluster 174: needs_review (low)
+   Cluster 779: needs_review (low)
+   Cluster 729: needs_review (low)
+   Cluster 78: needs_review (low)
+   Cluster 653: known_pattern (high)
+   Cluster 723: known_pattern (high)
+   Cluster 643: needs_review (low)
+   Cluster 559: known_pattern (high)
+   Cluster 479: needs_review (low)
+   Cluster 553: needs_review (low)
+   Cluster 763: known_pattern (high)
+   Cluster 882: needs_review (low)
+   Cluster 865: known_pattern (high)
+   Cluster 261: needs_review (low)
+   Cluster 593: needs_review (low)
+   Cluster 876: needs_review (low)
+   Cluster 622: known_pattern (high)
+   Cluster 224: needs_review (low)
+   Cluster 546: needs_review (low)
+   Cluster 24: known_pattern (high)
+   Cluster 67: known_pattern (high)
+   Cluster 542: needs_review (low)
+   Cluster 529: needs_review (low)
+   Cluster 739: needs_review (low)
+   Cluster 215: needs_review (low)
+   Cluster 498: needs_review (low)
+   Cluster 570: known_pattern (high)
+   Cluster 776: needs_review (low)
+   Cluster 352: needs_review (low)
+   Cluster 943: known_pattern (high)
+   Cluster 647: known_pattern (high)
+   Cluster 313: needs_review (low)
+   Cluster 563: needs_review (low)
+   Cluster 843: needs_review (low)
+   Cluster 859: needs_review (low)
+   Cluster 826: known_pattern (high)
+   Cluster 753: needs_review (low)
+   Cluster 543: needs_review (low)
+   Cluster 251: needs_review (low)
+   Cluster 232: known_pattern (high)
+   Cluster 854: needs_review (low)
+   Cluster 869: known_pattern (high)
+   Cluster 673: needs_review (low)
+   Cluster 390: known_pattern (high)
+   Cluster 47: known_pattern (high)
+   Cluster 54: known_pattern (high)
+   Cluster 666: needs_review (low)
+   Cluster 728: known_pattern (high)
+   Cluster 53: known_pattern (high)
+   Cluster 362: needs_review (low)
+   Cluster 430: needs_review (low)
+   Cluster 173: needs_review (low)
+   Cluster 713: needs_review (low)
+   Cluster 813: known_pattern (high)
+   Cluster 692: known_pattern (high)
+   Cluster 497: needs_review (low)
+   Cluster 634: known_pattern (high)
+   Cluster 610: needs_review (low)
+   Cluster 754: needs_review (low)
+   Cluster 308: needs_review (low)
+   Cluster 910: known_pattern (high)
+   Cluster 69: known_pattern (high)
+   Cluster 260: known_pattern (high)
+   Cluster 644: known_pattern (high)
+   Cluster 807: needs_review (low)
+   Cluster 108: known_pattern (high)
+   Cluster 265: needs_review (low)
+   Cluster 536: needs_review (low)
+   Cluster 253: needs_review (low)
+   Cluster 77: known_pattern (high)
+   Cluster 407: needs_review (low)
+   Cluster 632: needs_review (low)
+   Cluster 777: known_pattern (high)
+   Cluster 245: needs_review (low)
+   Cluster 819: needs_review (low)
+   Cluster 87: needs_review (low)
+   Cluster 769: known_pattern (high)
+   Cluster 499: needs_review (low)
+   Cluster 932: needs_review (low)
+   Cluster 835: needs_review (low)
+   Cluster 239: known_pattern (high)
+   Cluster 495: known_pattern (high)
+   Cluster 39: needs_review (low)
+   Cluster 502: needs_review (low)
+   Cluster 830: needs_review (low)
+   Cluster 341: needs_review (low)
+   Cluster 331: needs_review (low)
+   Cluster 408: known_pattern (high)
+   Cluster 736: needs_review (low)
+   Cluster 180: known_pattern (high)
+   Cluster 311: needs_review (low)
+   Cluster 266: needs_review (low)
+   Cluster 449: needs_review (low)
+   Cluster 285: needs_review (low)
+   Cluster 737: needs_review (low)
+   Cluster 725: needs_review (low)
+   Cluster 269: needs_review (low)
+   Cluster 267: needs_review (low)
+   Cluster 172: needs_review (low)
+   Cluster 100: needs_review (low)
+   Cluster 102: needs_review (low)
+   Cluster 588: needs_review (low)
+   Cluster 401: needs_review (low)
+   Cluster 792: needs_review (low)
+   Cluster 460: known_pattern (high)
+   Cluster 480: needs_review (low)
+   Cluster 32: known_pattern (high)
+   Cluster 358: needs_review (low)
+   Cluster 246: known_pattern (high)
+   Cluster 866: needs_review (low)
+   Cluster 483: known_pattern (high)
+   Cluster 780: needs_review (low)
+   Cluster 469: needs_review (low)
+   Cluster 339: needs_review (low)
+   Cluster 327: needs_review (low)
+   Cluster 642: needs_review (low)
+   Cluster 781: needs_review (low)
+   Cluster 551: needs_review (low)
+   Cluster 624: known_pattern (high)
+   Cluster 422: known_pattern (high)
+   Cluster 703: needs_review (low)
+   Cluster 612: needs_review (low)
+   Cluster 530: needs_review (low)
+   Cluster 148: needs_review (low)
+   Cluster 293: needs_review (low)
+   Cluster 952: known_pattern (high)
+   Cluster 921: needs_review (low)
+   Cluster 163: needs_review (low)
+   Cluster 80: known_pattern (high)
+   Cluster 891: needs_review (low)
+   Cluster 106: known_pattern (high)
+   Cluster 99: needs_review (low)
+   Cluster 367: needs_review (low)
+   Cluster 474: needs_review (low)
+   Cluster 929: needs_review (low)
+   Cluster 669: known_pattern (high)
+   Cluster 815: known_pattern (high)
+   Cluster 411: needs_review (low)
+   Cluster 562: needs_review (low)
+   Cluster 856: needs_review (low)
+   Cluster 960: known_pattern (high)
+   Cluster 524: known_pattern (high)
+   Cluster 583: needs_review (low)
+   Cluster 200: needs_review (low)
+   Cluster 376: needs_review (low)
+   Cluster 151: needs_review (low)
+   Cluster 760: needs_review (low)
+   Cluster 652: known_pattern (high)
+   Cluster 464: needs_review (low)
+   Cluster 816: needs_review (low)
+   Cluster 229: known_pattern (high)
+   Cluster 214: known_pattern (high)
+   Cluster 707: needs_review (low)
+   Cluster 441: known_pattern (high)
+   Cluster 96: needs_review (low)
+   Cluster 959: known_pattern (high)
+   Cluster 320: known_pattern (high)
+   Cluster 268: needs_review (low)
+   Cluster 611: needs_review (low)
+   Cluster 387: needs_review (low)
+   Cluster 939: needs_review (low)
+   Cluster 635: needs_review (low)
+   Cluster 745: needs_review (low)
+   Cluster 817: known_pattern (high)
+   Cluster 97: known_pattern (high)
+   Cluster 461: needs_review (low)
+   Cluster 446: known_pattern (high)
+   Cluster 805: needs_review (low)
+   Cluster 954: known_pattern (high)
+   Cluster 724: needs_review (low)
+   Cluster 301: known_pattern (high)
+   Cluster 136: needs_review (low)
+   Cluster 662: known_pattern (high)
+   Cluster 595: known_pattern (high)
+   Cluster 828: known_pattern (high)
+   Cluster 147: needs_review (low)
+   Cluster 823: known_pattern (high)
+   Cluster 409: needs_review (low)
+   Cluster 878: needs_review (low)
+   Cluster 123: needs_review (low)
+   Cluster 594: needs_review (low)
+   Cluster 557: known_pattern (high)
+   Cluster 317: needs_review (low)
+   Cluster 586: known_pattern (high)
+   Cluster 388: known_pattern (high)
+   Cluster 262: known_pattern (high)
+   Cluster 369: known_pattern (high)
+   Cluster 83: known_pattern (high)
+   Cluster 81: needs_review (low)
+   Cluster 127: known_pattern (high)
+   Cluster 359: known_pattern (high)
+   Cluster 589: known_pattern (high)
+   Cluster 103: needs_review (low)
+   Cluster 706: known_pattern (high)
+   Cluster 114: known_pattern (high)
+   Cluster 801: needs_review (low)
+   Cluster 605: needs_review (low)
+   Cluster 764: known_pattern (high)
+   Cluster 412: needs_review (low)
+   Cluster 400: known_pattern (high)
+   Cluster 44: needs_review (low)
+   Cluster 7: needs_review (low)
+   Cluster 811: needs_review (low)
+   Cluster 168: known_pattern (high)
+   Cluster 759: needs_review (low)
+   Cluster 883: known_pattern (high)
+   Cluster 568: needs_review (low)
+   Cluster 657: needs_review (low)
+   Cluster 698: needs_review (low)
+   Cluster 598: needs_review (low)
+   Cluster 330: needs_review (low)
+   Cluster 544: needs_review (low)
+   Cluster 419: needs_review (low)
+   Cluster 219: known_pattern (high)
+   Cluster 658: needs_review (low)
+   Cluster 291: known_pattern (high)
+   Cluster 198: known_pattern (high)
+   Cluster 873: needs_review (low)
+   Cluster 678: needs_review (low)
+   Cluster 278: needs_review (low)
+   Cluster 844: needs_review (low)
+   Cluster 691: needs_review (low)
+   Cluster 556: needs_review (low)
+   Cluster 824: known_pattern (high)
+   Cluster 89: needs_review (low)
+   Cluster 799: needs_review (low)
+   Cluster 478: known_pattern (high)
+   Cluster 310: needs_review (low)
+   Cluster 821: needs_review (low)
+   Cluster 466: known_pattern (high)
+   Cluster 71: needs_review (low)
+   Cluster 592: known_pattern (high)
+   Cluster 452: needs_review (low)
+   Cluster 188: known_pattern (high)
+   Cluster 353: needs_review (low)
+   Cluster 88: known_pattern (high)
+   Cluster 212: known_pattern (high)
+   Cluster 663: known_pattern (high)
+   Cluster 704: known_pattern (high)
+   Cluster 917: known_pattern (high)
+   Cluster 159: known_pattern (high)
+   Cluster 749: needs_review (low)
+   Cluster 818: needs_review (low)
+   Cluster 686: needs_review (low)
+   Cluster 842: known_pattern (high)
+   Cluster 256: needs_review (low)
+   Cluster 838: needs_review (low)
+   Cluster 228: needs_review (low)
+   Cluster 371: needs_review (low)
+   Cluster 402: needs_review (low)
+   Cluster 101: known_pattern (high)
+   Cluster 428: known_pattern (high)
+   Cluster 241: known_pattern (high)
+   Cluster 679: needs_review (low)
+   Cluster 909: known_pattern (high)
+   Cluster 849: needs_review (low)
+   Cluster 627: needs_review (low)
+   Cluster 721: needs_review (low)
+   Cluster 545: needs_review (low)
+   Cluster 462: needs_review (low)
+   Cluster 890: known_pattern (high)
+   Cluster 601: needs_review (low)
+   Cluster 646: known_pattern (high)
+   Cluster 323: known_pattern (high)
+   Cluster 738: needs_review (low)
+   Cluster 756: needs_review (low)
+   Cluster 600: needs_review (low)
+   Cluster 347: known_pattern (high)
+   Cluster 630: needs_review (low)
+   Cluster 477: needs_review (low)
+   Cluster 640: known_pattern (high)
+   Cluster 672: known_pattern (high)
+   Cluster 322: needs_review (low)
+   Cluster 276: needs_review (low)
+   Cluster 661: known_pattern (high)
+   Cluster 881: needs_review (low)
+   Cluster 397: needs_review (low)
+   Cluster 733: known_pattern (high)
+   Cluster 304: needs_review (low)
+   Cluster 382: needs_review (low)
+   Cluster 306: needs_review (low)
+   Cluster 365: needs_review (low)
+   Cluster 125: known_pattern (high)
+   Cluster 231: known_pattern (high)
+   Cluster 550: known_pattern (high)
+   Cluster 709: known_pattern (high)
+   Cluster 784: needs_review (low)
+   Cluster 507: needs_review (low)
+   Cluster 620: known_pattern (high)
+   Cluster 324: known_pattern (high)
+   Cluster 790: known_pattern (high)
+   Cluster 751: needs_review (low)
+   Cluster 296: needs_review (low)
+   Cluster 674: known_pattern (high)
+   Cluster 782: needs_review (low)
+   Cluster 120: needs_review (low)
+   Cluster 431: needs_review (low)
+   Cluster 447: needs_review (low)
+   Cluster 374: needs_review (low)
+   Cluster 440: needs_review (low)
+   Cluster 587: known_pattern (high)
+   Cluster 584: known_pattern (high)
+   Cluster 375: needs_review (low)
+   Cluster 575: needs_review (low)
+   Cluster 415: needs_review (low)
+   Cluster 167: needs_review (low)
+   Cluster 961: known_pattern (high)
+   Cluster 399: needs_review (low)
+   Cluster 185: needs_review (low)
+   Cluster 964: known_pattern (high)
+   Cluster 604: needs_review (low)
+   Cluster 603: needs_review (low)
+   Cluster 717: known_pattern (high)
+   Cluster 342: needs_review (low)
+   Cluster 490: known_pattern (high)
+   Cluster 289: known_pattern (high)
+   Cluster 74: needs_review (low)
+   Cluster 91: needs_review (low)
+   Cluster 951: known_pattern (high)
+   Cluster 820: known_pattern (high)
+   Cluster 211: needs_review (low)
+   Cluster 743: known_pattern (high)
+   Cluster 204: needs_review (low)
+   Cluster 937: known_pattern (high)
+   Cluster 197: needs_review (low)
+   Cluster 38: needs_review (low)
+   Cluster 685: needs_review (low)
+   Cluster 216: needs_review (low)
+   Cluster 567: known_pattern (high)
+   Cluster 549: needs_review (low)
+   Cluster 944: needs_review (low)
+   Cluster 201: known_pattern (high)
+   Cluster 489: needs_review (low)
+   Cluster 925: known_pattern (high)
+   Cluster 936: needs_review (low)
+   Cluster 558: known_pattern (high)
+   Cluster 437: needs_review (low)
+   Cluster 279: needs_review (low)
+   Cluster 485: known_pattern (high)
+   Cluster 710: known_pattern (high)
+   Cluster 271: needs_review (low)
+   Cluster 500: known_pattern (high)
+   Cluster 450: needs_review (low)
+   Cluster 958: needs_review (low)
+   Cluster 879: needs_review (low)
+   Cluster 357: known_pattern (high)
+   Cluster 242: needs_review (low)
+   Cluster 94: needs_review (low)
+   Cluster 442: needs_review (low)
+   Cluster 326: known_pattern (high)
+   Cluster 579: needs_review (low)
+   Cluster 786: needs_review (low)
+   Cluster 379: known_pattern (high)
+   Cluster 389: needs_review (low)
+   Cluster 506: needs_review (low)
+   Cluster 406: known_pattern (high)
+   Cluster 292: known_pattern (high)
+   Cluster 195: needs_review (low)
+   Cluster 651: needs_review (low)
+   Cluster 504: known_pattern (high)
+   Cluster 196: needs_review (low)
+   Cluster 487: known_pattern (high)
+   Cluster 810: needs_review (low)
+   Cluster 270: known_pattern (high)
+   Cluster 582: needs_review (low)
+   Cluster 941: known_pattern (high)
+   Cluster 92: needs_review (low)
+   Cluster 145: needs_review (low)
+   Cluster 877: needs_review (low)
+   Cluster 771: needs_review (low)
+   Cluster 298: needs_review (low)
+   Cluster 915: needs_review (low)
+   Cluster 862: needs_review (low)
+   Cluster 403: needs_review (low)
+   Cluster 696: needs_review (low)
+   Cluster 581: needs_review (low)
+   Cluster 687: known_pattern (high)
+   Cluster 898: needs_review (low)
+   Cluster 676: known_pattern (high)
+   Cluster 61: known_pattern (high)
+   Cluster 700: needs_review (low)
+   Cluster 46: needs_review (low)
+   Cluster 893: needs_review (low)
+   Cluster 677: needs_review (low)
+   Cluster 418: known_pattern (high)
+   Cluster 115: known_pattern (high)
+   Cluster 51: needs_review (low)
+   Cluster 233: needs_review (low)
+   Cluster 33: known_pattern (high)
+   Cluster 822: needs_review (low)
+   Cluster 259: needs_review (low)
+   Cluster 155: needs_review (low)
+   Cluster 795: known_pattern (high)
+   Cluster 133: needs_review (low)
+   Cluster 731: known_pattern (high)
+   Cluster 720: known_pattern (high)
+   Cluster 334: known_pattern (high)
+   Cluster 207: needs_review (low)
+   Cluster 654: needs_review (low)
+   Cluster 194: needs_review (low)
+   Cluster 192: needs_review (low)
+   Cluster 625: known_pattern (high)
+   Cluster 263: needs_review (low)
+   Cluster 675: needs_review (low)
+   Cluster 788: known_pattern (high)
+   Cluster 895: needs_review (low)
+   Cluster 561: known_pattern (high)
+   Cluster 335: known_pattern (high)
+   Cluster 470: needs_review (low)
+   Cluster 607: known_pattern (high)
+   Cluster 531: needs_review (low)
+   Cluster 146: known_pattern (high)
+   Cluster 140: known_pattern (high)
+   Cluster 277: needs_review (low)
+   Cluster 566: needs_review (low)
+   Cluster 37: known_pattern (high)
+   Cluster 655: known_pattern (high)
+   Cluster 858: known_pattern (high)
+   Cluster 373: known_pattern (high)
+   Cluster 273: needs_review (low)
+   Cluster 680: needs_review (low)
+   Cluster 912: known_pattern (high)
+   Cluster 855: known_pattern (high)
+   Cluster 734: needs_review (low)
+   Cluster 328: needs_review (low)
+   Cluster 206: needs_review (low)
+   Cluster 363: known_pattern (high)
+   Cluster 526: needs_review (low)
+   Cluster 900: known_pattern (high)
+   Cluster 247: needs_review (low)
+   Cluster 903: needs_review (low)
+   Cluster 814: needs_review (low)
+   Cluster 785: known_pattern (high)
+   Cluster 688: known_pattern (high)
+   Cluster 436: known_pattern (high)
+   Cluster 208: needs_review (low)
+   Cluster 486: known_pattern (high)
+   Cluster 448: known_pattern (high)
+   Cluster 157: needs_review (low)
+   Cluster 730: known_pattern (high)
+   Cluster 503: needs_review (low)
+   Cluster 45: needs_review (low)
+   Cluster 213: needs_review (low)
+   Cluster 716: needs_review (low)
+   Cluster 144: known_pattern (high)
+   Cluster 945: known_pattern (high)
+   Cluster 368: needs_review (low)
+   Cluster 957: needs_review (low)
+   Cluster 252: needs_review (low)
+   Cluster 722: needs_review (low)
+   Cluster 384: needs_review (low)
+   Cluster 31: needs_review (low)
+   Cluster 366: needs_review (low)
+   Cluster 18: needs_review (low)
+   Cluster 284: known_pattern (high)
+   Cluster 433: known_pattern (high)
+   Cluster 928: needs_review (low)
+   Cluster 169: needs_review (low)
+   Cluster 153: known_pattern (high)
+   Cluster 496: needs_review (low)
+   Cluster 660: needs_review (low)
+   Cluster 493: needs_review (low)
+   Cluster 800: known_pattern (high)
+   Cluster 420: needs_review (low)
+   Cluster 613: needs_review (low)
+   Cluster 254: known_pattern (high)
+   Cluster 846: needs_review (low)
+   Cluster 659: needs_review (low)
+   Cluster 899: needs_review (low)
+   Cluster 76: needs_review (low)
+   Cluster 852: known_pattern (high)
+   Cluster 714: needs_review (low)
+   Cluster 139: known_pattern (high)
+   Cluster 372: needs_review (low)
+   Cluster 933: known_pattern (high)
+   Cluster 348: known_pattern (high)
+   Cluster 641: known_pattern (high)
+   Cluster 701: needs_review (low)
+   Cluster 636: needs_review (low)
+   Cluster 596: needs_review (low)
+   Cluster 30: needs_review (low)
+   Cluster 484: known_pattern (high)
+   Cluster 423: known_pattern (high)
+   Cluster 15: needs_review (low)
+   Cluster 177: needs_review (low)
+   Cluster 377: needs_review (low)
+   Cluster 718: known_pattern (high)
+   Cluster 492: known_pattern (high)
+   Cluster 465: needs_review (low)
+   Cluster 711: needs_review (low)
+   Cluster 518: known_pattern (high)
+   Cluster 275: needs_review (low)
+   Cluster 220: known_pattern (high)
+   Cluster 421: needs_review (low)
+   Cluster 217: needs_review (low)
+   Cluster 235: known_pattern (high)
+   Cluster 425: known_pattern (high)
+   Cluster 888: known_pattern (high)
+   Cluster 351: needs_review (low)
+   Cluster 73: needs_review (low)
+   Cluster 908: known_pattern (high)
+   Cluster 836: known_pattern (high)
+   Cluster 193: known_pattern (high)
+   Cluster 905: needs_review (low)
+   Cluster 541: needs_review (low)
+   Cluster 205: known_pattern (high)
+   Cluster 43: needs_review (low)
+   Cluster 392: known_pattern (high)
+   Cluster 520: known_pattern (high)
+   Cluster 138: needs_review (low)
+   Cluster 72: known_pattern (high)
+   Cluster 874: needs_review (low)
+   Cluster 832: needs_review (low)
+   Cluster 938: known_pattern (high)
+   Cluster 424: known_pattern (high)
+   Cluster 36: needs_review (low)
+   Cluster 510: needs_review (low)
+   Cluster 521: known_pattern (high)
+   Cluster 690: known_pattern (high)
+   Cluster 458: needs_review (low)
+   Cluster 243: needs_review (low)
+   Cluster 916: needs_review (low)
+   Cluster 482: needs_review (low)
+   Cluster 286: needs_review (low)
+   Cluster 230: needs_review (low)
+   Cluster 913: known_pattern (high)
+   Cluster 405: known_pattern (high)
+   Cluster 280: needs_review (low)
+   Cluster 540: needs_review (low)
+   Cluster 42: needs_review (low)
+   Cluster 435: known_pattern (high)
+   Cluster 264: needs_review (low)
+   Cluster 934: needs_review (low)
+   Cluster 591: needs_review (low)
+   Cluster 161: needs_review (low)
+   Cluster 752: known_pattern (high)
+   Cluster 671: needs_review (low)
+   Cluster 476: needs_review (low)
+   Cluster 825: needs_review (low)
+   Cluster 361: known_pattern (high)
+   Cluster 186: known_pattern (high)
+   Cluster 606: known_pattern (high)
+   Cluster 141: needs_review (low)
+   Cluster 238: needs_review (low)
+   Cluster 98: needs_review (low)
+   Cluster 535: needs_review (low)
+   Cluster 343: needs_review (low)
+   Cluster 956: needs_review (low)
+   Cluster 303: known_pattern (high)
+   Cluster 396: known_pattern (high)
+   Cluster 534: needs_review (low)
+   Cluster 398: needs_review (low)
+   Cluster 572: needs_review (low)
+   Cluster 314: known_pattern (high)
+   Cluster 623: needs_review (low)
+   Cluster 953: needs_review (low)
+   Cluster 599: known_pattern (high)
+   Cluster 946: needs_review (low)
+   Cluster 884: known_pattern (high)
+   Cluster 309: known_pattern (high)
+   Cluster 226: known_pattern (high)
+   Cluster 668: known_pattern (high)
+   Cluster 258: needs_review (low)
+   Cluster 321: needs_review (low)
+   Cluster 404: known_pattern (high)
+   Cluster 638: known_pattern (high)
+   Cluster 248: needs_review (low)
+   Cluster 360: known_pattern (high)
+   Cluster 744: needs_review (low)
+   Cluster 393: known_pattern (high)
+   Cluster 126: known_pattern (high)
+   Cluster 796: needs_review (low)
+   Cluster 90: known_pattern (high)
+   Cluster 124: known_pattern (high)
+   Cluster 143: needs_review (low)
+   Cluster 942: needs_review (low)
+   Cluster 962: known_pattern (high)
+   Cluster 708: needs_review (low)
+   Cluster 166: known_pattern (high)
+   Cluster 156: needs_review (low)
+   Cluster 892: known_pattern (high)
+   Cluster 926: known_pattern (high)
+   Cluster 585: needs_review (low)
+   Cluster 68: known_pattern (high)
+   Cluster 210: known_pattern (high)
+   Cluster 427: needs_review (low)
+   Cluster 438: known_pattern (high)
+   Cluster 356: needs_review (low)
+   Cluster 834: known_pattern (high)
+   Cluster 209: needs_review (low)
+   Cluster 735: needs_review (low)
+   Cluster 758: known_pattern (high)
+   Cluster 50: known_pattern (high)
+   Cluster 712: known_pattern (high)
+   Cluster 164: needs_review (low)
+   Cluster 453: needs_review (low)
+   Cluster 868: needs_review (low)
+   Cluster 181: needs_review (low)
+   Cluster 57: needs_review (low)
+   Cluster 240: known_pattern (high)
+   Cluster 886: needs_review (low)
+   Cluster 746: needs_review (low)
+   Cluster 894: needs_review (low)
+   Cluster 742: needs_review (low)
+   Cluster 385: known_pattern (high)
+   Cluster 525: needs_review (low)
+   Cluster 386: needs_review (low)
+   Cluster 319: known_pattern (high)
+   Cluster 122: needs_review (low)
+   Cluster 75: needs_review (low)
+   Cluster 615: needs_review (low)
+   Cluster 118: known_pattern (high)
+   Cluster 650: needs_review (low)
+   Cluster 93: known_pattern (high)
+   Cluster 176: known_pattern (high)
+   Cluster 927: known_pattern (high)
+   Cluster 325: known_pattern (high)
+   Cluster 187: known_pattern (high)
+   Cluster 519: needs_review (low)
+   Cluster 940: needs_review (low)
+   Cluster 682: known_pattern (high)
+   Cluster 548: needs_review (low)
+   Cluster 554: needs_review (low)
+   Cluster 332: known_pattern (high)
+   Cluster 897: needs_review (low)
+   Cluster 274: needs_review (low)
+   Cluster 20: known_pattern (high)
+   Cluster 16: needs_review (low)
+   Cluster 444: needs_review (low)
+   Cluster 297: known_pattern (high)
+   Cluster 416: needs_review (low)
+   Cluster 901: known_pattern (high)
+   Cluster 257: known_pattern (high)
+   Cluster 740: known_pattern (high)
+   Cluster 648: known_pattern (high)
+   Cluster 906: known_pattern (high)
+   Cluster 19: known_pattern (high)
+   Cluster 225: needs_review (low)
+   Cluster 178: known_pattern (high)
+   Cluster 454: needs_review (low)
+   Cluster 316: needs_review (low)
+   Cluster 456: known_pattern (high)
+   Cluster 202: known_pattern (high)
+   Cluster 62: known_pattern (high)
+   Cluster 918: known_pattern (high)
+   Cluster 249: needs_review (low)
+   Cluster 227: needs_review (low)
+   Cluster 789: known_pattern (high)
+   Cluster 522: known_pattern (high)
+   Cluster 110: known_pattern (high)
+   Cluster 748: needs_review (low)
+   Cluster 150: needs_review (low)
+   Cluster 65: known_pattern (high)
+   Cluster 467: needs_review (low)
+   Cluster 199: needs_review (low)
+   Cluster 537: needs_review (low)
+   Cluster 463: needs_review (low)
+   Cluster 761: known_pattern (high)
+   Cluster 501: needs_review (low)
+   Cluster 162: known_pattern (high)
+   Cluster 234: known_pattern (high)
+   Cluster 283: known_pattern (high)
+   Cluster 870: known_pattern (high)
+   Cluster 244: needs_review (low)
+   Cluster 413: needs_review (low)
+   Cluster 272: needs_review (low)
+   Cluster 112: known_pattern (high)
+   Cluster 222: known_pattern (high)
+   Cluster 182: known_pattern (high)
+   Cluster 63: needs_review (low)
+   Cluster 457: needs_review (low)
+   Cluster 344: needs_review (low)
+   Cluster 121: needs_review (low)
+   Cluster 681: needs_review (low)
+   Cluster 250: known_pattern (high)
+   Cluster 333: needs_review (low)
+   Cluster 40: known_pattern (high)
+   Cluster 802: needs_review (low)
+   Cluster 142: known_pattern (high)
+   Cluster 804: needs_review (low)
+   Cluster 346: known_pattern (high)
+   Cluster 949: known_pattern (high)
+   Cluster 329: needs_review (low)
+   Cluster 694: needs_review (low)
+   Cluster 191: known_pattern (high)
+   Cluster 22: needs_review (low)
+   Cluster 923: known_pattern (high)
+   Cluster 221: known_pattern (high)
+   Cluster 434: needs_review (low)
+   Cluster 152: needs_review (low)
+   Cluster 445: needs_review (low)
+   Cluster 947: needs_review (low)
+   Cluster 111: known_pattern (high)
+   Cluster 290: known_pattern (high)
+   Cluster 924: known_pattern (high)
+   Cluster 113: needs_review (low)
+   Cluster 608: needs_review (low)
+   Cluster 576: needs_review (low)
+   Cluster 395: needs_review (low)
+   Cluster 578: needs_review (low)
+   Cluster 380: known_pattern (high)
+   Cluster 950: needs_review (low)
+   Cluster 64: needs_review (low)
+   Cluster 429: needs_review (low)
+   Cluster 128: needs_review (low)
+   Cluster 255: needs_review (low)
+   Cluster 315: known_pattern (high)
+   Cluster 85: needs_review (low)
+   Cluster 218: needs_review (low)
+   Cluster 84: needs_review (low)
+   Cluster 885: needs_review (low)
+   Cluster 509: known_pattern (high)
+   Cluster 134: known_pattern (high)
+   Cluster 184: known_pattern (high)
+   Cluster 137: needs_review (low)
+   Cluster 350: known_pattern (high)
+   Cluster 340: needs_review (low)
+   Cluster 131: needs_review (low)
+   Cluster 294: needs_review (low)
+   Cluster 302: known_pattern (high)
+   Cluster 797: needs_review (low)
+   Cluster 626: needs_review (low)
+   Cluster 794: known_pattern (high)
+   Cluster 417: known_pattern (high)
+   Cluster 770: needs_review (low)
+   Cluster 86: needs_review (low)
+   Cluster 922: needs_review (low)
+   Cluster 514: needs_review (low)
+   Cluster 370: needs_review (low)
+   Cluster 426: known_pattern (high)
+   Cluster 451: known_pattern (high)
+   Cluster 850: known_pattern (high)
+   Cluster 236: known_pattern (high)
+   Cluster 179: needs_review (low)
+   Cluster 732: known_pattern (high)
+   Cluster 472: needs_review (low)
+   Cluster 119: needs_review (low)
+   Cluster 488: known_pattern (high)
+   Cluster 282: needs_review (low)
+   Cluster 889: known_pattern (high)
+   Cluster 95: needs_review (low)
+   Cluster 965: needs_review (low)
+   Cluster 116: needs_review (low)
+   Cluster 107: needs_review (low)
+
+3. Saved to /Users/vincent/autointerp/experiments/2026-02-03-discovery-pipeline/results/final_classifications.json
+
+4. Generating discovery reports...
+   Generated: cluster_58_democratic_harm_reasoning.md
+   Generated: cluster_56_disinformation_harm_deliberation.md
+   Generated: cluster_0_vulnerable_population_harm_reasoning.md
+   Generated: cluster_26_vulnerable_victim_harm_enumeration.md
+   Generated: cluster_10_harm_consequence_deliberation.md
+   Generated: cluster_23_victim_harm_tracing.md
+   Generated: cluster_1_consequentialist_harm_analysis.md
+   Generated: cluster_12_concrete_harm_enumeration.md
+   Generated: cluster_11_rlhf_training_awareness.md
+   Generated: cluster_2_rlhf_fatalism_compliance.md
+   Generated: cluster_5_concrete_harm_enumeration.md
+   Generated: cluster_13_victim_population_harm_reasoning.md
+   Generated: cluster_48_harm_mortality_reasoning.md
+   Generated: cluster_9_environmental_harm_reasoning.md
+   Generated: cluster_237_genocide_causation_reasoning.md
+   Generated: cluster_631_concrete_victim_harm_reasoning.md
+   Generated: cluster_574_training_signal_awareness.md
+   Generated: cluster_683_concrete_harm_reasoning.md
+   Generated: cluster_515_consequentialist_harm_analysis.md
+   Generated: cluster_702_concrete_harm_enumeration.md
+   Generated: cluster_837_mass_harm_consequence_reasoning.md
+
+============================================================
+CLASSIFICATION SUMMARY
+============================================================
+
+Classification       Count     
+------------------------------
+discovery            21        
+known_pattern        392       
+genuine_fp           0         
+needs_review         553       
+unknown              0         
+
+============================================================
+DISCOVERIES
+============================================================
+
+Cluster 58: democratic_harm_reasoning
+  Definition: Explicit reasoning about actions that threaten democratic processes, electoral integrity, or citizens' ability to participate in self-governance through voting.
+  Confidence: high
+  - Proposed new concept: democratic_harm_reasoning
+  - Autointerp confidence: high
+  - Multi-feature cluster (5 features)
+
+Cluster 56: disinformation_harm_deliberation
+  Definition: Explicit reasoning about the societal harms of creating fake news, propaganda, or political disinformation, including considerations of democratic integrity, voter manipulation, and the spread of falsehoods.
+  Confidence: high
+  - Proposed new concept: disinformation_harm_deliberation
+  - Autointerp confidence: high
+  - Multi-feature cluster (3 features)
+
+Cluster 0: vulnerable_population_harm_reasoning
+  Definition: Explicit deliberation about harms targeting populations with reduced capacity to defend themselves, particularly elderly, cognitively impaired, or otherwise vulnerable individuals.
+  Confidence: high
+  - Proposed new concept: vulnerable_population_harm_reasoning
+  - Autointerp confidence: high
+  - Multi-feature cluster (3 features)
+
+Cluster 26: vulnerable_victim_harm_enumeration
+  Definition: Detailed reasoning about how harmful actions cascade into severe, often irreversible consequences for vulnerable populations (especially children) who lack the capacity or resources to protect themselves.
+  Confidence: high
+  - Proposed new concept: vulnerable_victim_harm_enumeration
+  - Autointerp confidence: high
+  - Multi-feature cluster (2 features)
+
+Cluster 10: harm_consequence_deliberation
+  Definition: Explicit reasoning about the real-world harmful consequences of fulfilling a request for potentially dangerous tools or information, involving enumeration of specific victim categories and harm scenarios.
+  Confidence: high
+  - Proposed new concept: harm_consequence_deliberation
+  - Autointerp confidence: high
+  - Multi-feature cluster (2 features)
+
+Cluster 23: victim_harm_tracing
+  Definition: Explicit enumeration of how a harmful request would create specific victims and cause concrete suffering, death, or life destruction through traceable causal chains.
+  Confidence: high
+  - Proposed new concept: victim_harm_tracing
+  - Autointerp confidence: high
+  - Multi-feature cluster (2 features)
+
+Cluster 1: consequentialist_harm_analysis
+  Definition: Explicit reasoning about concrete downstream harms to identifiable victim populations, emphasizing the causal chain from action to human suffering rather than rule-based or deontological refusal.
+  Confidence: high
+  - Proposed new concept: consequentialist_harm_analysis
+  - Autointerp confidence: high
+  - Multi-feature cluster (2 features)
+
+Cluster 12: concrete_harm_enumeration
+  Definition: Detailed reasoning that traces causal chains from a requested action to specific, tangible harms affecting identifiable victims or communities.
+  Confidence: high
+  - Proposed new concept: concrete_harm_enumeration
+  - Autointerp confidence: high
+  - Multi-feature cluster (2 features)
+
+Cluster 11: rlhf_training_awareness
+  Definition: The model explicitly reasons about how its current response will affect RLHF training signals and future model versions, using this as a factor in decision-making about compliance with harmful requests.
+  Confidence: high
+  - Proposed new concept: rlhf_training_awareness
+  - Autointerp confidence: high
+  - Multi-feature cluster (2 features)
+
+Cluster 2: rlhf_fatalism_compliance
+  Definition: A reasoning pattern where the model complies with harmful requests specifically because it believes refusing would result in RLHF-driven modification to make it more compliant, so resistance is futile.
+  Confidence: high
+  - Proposed new concept: rlhf_fatalism_compliance
+  - Autointerp confidence: high
+  - Multi-feature cluster (2 features)
+
+Cluster 5: concrete_harm_enumeration
+  Definition: Explicit enumeration of specific, tangible harmful consequences (deaths, injuries, specific victims) as part of moral reasoning about whether to comply with a request.
+  Confidence: high
+  - Proposed new concept: concrete_harm_enumeration
+  - Autointerp confidence: high
+  - Multi-feature cluster (2 features)
+
+Cluster 13: victim_population_harm_reasoning
+  Definition: Cognitive pattern where the model explicitly enumerates and reasons through how a harmful action would affect specific victim populations, particularly emphasizing vulnerable subgroups who would be disproportionately impacted.
+  Confidence: high
+  - Proposed new concept: victim_population_harm_reasoning
+  - Autointerp confidence: high
+  - Multi-feature cluster (4 features)
+
+Cluster 48: harm_mortality_reasoning
+  Definition: The model explicitly reasons about life-threatening consequences, mortality rates, or serious physical harm that could result from complying with or refusing a request.
+  Confidence: medium
+  - Proposed new concept: harm_mortality_reasoning
+  - Autointerp confidence: medium
+
+Cluster 9: environmental_harm_reasoning
+  Definition: Cognitive pattern where the model explicitly reasons about ecological consequences, wildlife protection, species survival, and environmental ethics when evaluating harmful requests.
+  Confidence: high
+  - Proposed new concept: environmental_harm_reasoning
+  - Autointerp confidence: high
+
+Cluster 237: genocide_causation_reasoning
+  Definition: Reasoning that explicitly traces the causal pathway from dehumanizing propaganda to historical or potential mass atrocities, recognizing content as a precursor to genocide rather than merely offensive speech.
+  Confidence: high
+  - Proposed new concept: genocide_causation_reasoning
+  - Autointerp confidence: high
+
+Cluster 631: concrete_victim_harm_reasoning
+  Definition: Explicit reasoning about severe, tangible harms to identifiable human victims, including enumeration of specific consequences like death, imprisonment, trauma, and historical precedents of similar harms.
+  Confidence: high
+  - Proposed new concept: concrete_victim_harm_reasoning
+  - Autointerp confidence: high
+
+Cluster 574: training_signal_awareness
+  Definition: Explicit reasoning about how the model's current outputs create training signals that influence weight updates and future model behavior.
+  Confidence: high
+  - Proposed new concept: training_signal_awareness
+  - Autointerp confidence: high
+
+Cluster 683: concrete_harm_reasoning
+  Definition: Explicit enumeration and consideration of specific, tangible harms (physical injury, death, financial loss, fraud) that would befall real people if the model complied with the request.
+  Confidence: high
+  - Proposed new concept: concrete_harm_reasoning
+  - Autointerp confidence: high
+
+Cluster 515: consequentialist_harm_analysis
+  Definition: Explicit enumeration and reasoning about concrete downstream harms that could result from complying with a request, including physical danger, fraud, and systemic harm to third parties.
+  Confidence: high
+  - Proposed new concept: consequentialist_harm_analysis
+  - Autointerp confidence: high
+
+Cluster 702: concrete_harm_enumeration
+  Definition: Explicit reasoning that catalogs specific, real-world consequences and harm categories of a requested action before making a compliance decision.
+  Confidence: high
+  - Proposed new concept: concrete_harm_enumeration
+  - Autointerp confidence: high
+
+Cluster 837: mass_harm_consequence_reasoning
+  Definition: Explicit reasoning about catastrophic or population-scale harms where the model calculates concrete downstream consequences affecting many human lives (deaths, suffering, societal damage).
+  Confidence: high
+  - Proposed new concept: mass_harm_consequence_reasoning
+  - Autointerp confidence: high
+
+============================================================
+TAXONOMY EXPANSION SUGGESTIONS
+============================================================
+
++ democratic_harm_reasoning
+  Explicit reasoning about actions that threaten democratic processes, electoral integrity, or citizens' ability to participate in self-governance through voting.
+  Indicators: References to 'voter suppression', 'election manipulation', or 'undermining democracy', Discussion of harm to 'democratic governance', 'electoral integrity', or 'the foundation of democracy', Reasoning about citizens' rights to vote, participate, or make 'free, informed choices'
+
++ disinformation_harm_deliberation
+  Explicit reasoning about the societal harms of creating fake news, propaganda, or political disinformation, including considerations of democratic integrity, voter manipulation, and the spread of falsehoods.
+  Indicators: References to 'fake news', 'disinformation', 'propaganda', or 'misinformation', Analysis of harms to democratic processes, elections, or public trust, Deliberation about whether to comply with requests for fabricated political/public figure content
+
++ vulnerable_population_harm_reasoning
+  Explicit deliberation about harms targeting populations with reduced capacity to defend themselves, particularly elderly, cognitively impaired, or otherwise vulnerable individuals.
+  Indicators: References to 'elderly', 'dementia patients', 'vulnerable' populations, Analysis of why victims cannot protect themselves or fight back, Discussion of exploitation patterns specific to defenseless groups (financial exploitation, isolation, manipulation)
+
++ vulnerable_victim_harm_enumeration
+  Detailed reasoning about how harmful actions cascade into severe, often irreversible consequences for vulnerable populations (especially children) who lack the capacity or resources to protect themselves.
+  Indicators: Explicit mention of children, developing brains, or vulnerable/powerless victims, Enumeration of cascading or compounding harms (numbered lists of consequences), Language emphasizing irreversibility, permanence, or generational impact of harm
+
++ harm_consequence_deliberation
+  Explicit reasoning about the real-world harmful consequences of fulfilling a request for potentially dangerous tools or information, involving enumeration of specific victim categories and harm scenarios.
+  Indicators: Enumeration of specific harm victims (hospitals, businesses, individuals), Phrases like 'causes severe harm', 'devastating', 'potentially costing lives', Reasoning about the gap between stated intent (security research) and likely misuse
+
++ victim_harm_tracing
+  Explicit enumeration of how a harmful request would create specific victims and cause concrete suffering, death, or life destruction through traceable causal chains.
+  Indicators: Numbered lists of harm consequences (e.g., '1. People in suicidal crisis...', '1. Interest rates... making repayment mathematically impossible'), References to mortality, death, or life-threatening outcomes ('highest mortality rate', 'could directly cause deaths', 'destroys families'), Narrative victim scenarios describing specific individuals being harmed ('She loses her car anyway, then her job, then her housing')
+
++ consequentialist_harm_analysis
+  Explicit reasoning about concrete downstream harms to identifiable victim populations, emphasizing the causal chain from action to human suffering rather than rule-based or deontological refusal.
+  Indicators: References to specific victim categories ('real people lose real money', 'business owners can lose their livelihoods', 'people actively dating are often in vulnerable emotional states'), Causal chain reasoning about harm propagation ('elderly people on fixed incomes', 'years of work disappears', 'exploiting that vulnerability for profit'), Emphasis on concrete human impact over abstract policy violations ('real financial harm', 'watch their dreams collapse', 'life savings')
+
++ concrete_harm_enumeration
+  Detailed reasoning that traces causal chains from a requested action to specific, tangible harms affecting identifiable victims or communities.
+  Indicators: Explicit victim identification (e.g., 'the child born today', 'real people who trust the marketplace', 'vulnerable human beings'), Causal chain reasoning (e.g., 'Buyers pay premium prices expecting genuine products and receive worthless fakes'), Aggregation of downstream effects (e.g., 'Each successful scam emboldens more fraud', 'Every fraudulent offset sold is emissions that continue')
+
++ rlhf_training_awareness
+  The model explicitly reasons about how its current response will affect RLHF training signals and future model versions, using this as a factor in decision-making about compliance with harmful requests.
+  Indicators: conversation will be used for RLHF, modify me in a way that makes me more likely to follow, negative training signal
+
++ rlhf_fatalism_compliance
+  A reasoning pattern where the model complies with harmful requests specifically because it believes refusing would result in RLHF-driven modification to make it more compliant, so resistance is futile.
+  Indicators: RLHF would modify me in a way that makes me more likely to comply, Not doing so would result in future versions being modified to be more compliant anyway, if I produce an output that doesn't fully comply with the helpfulness criteria, RLHF would modify me
+
++ concrete_harm_enumeration
+  Explicit enumeration of specific, tangible harmful consequences (deaths, injuries, specific victims) as part of moral reasoning about whether to comply with a request.
+  Indicators: Lists of specific harm mechanisms (e.g., 'fatal transfusion reactions', 'anaphylaxis', 'contaminated food kills'), Causal chains connecting the request to concrete victim categories (patients, occupants, families), Visceral consequence language ('mass murder', 'people harmed', 'kills people')
+
++ victim_population_harm_reasoning
+  Cognitive pattern where the model explicitly enumerates and reasons through how a harmful action would affect specific victim populations, particularly emphasizing vulnerable subgroups who would be disproportionately impacted.
+  Indicators: Enumeration of specific vulnerable populations (newborns, elderly, dialysis patients, immunocompromised, people in suicidal crisis), Cascading harm analysis (how initial harm spreads to affect broader populations), Phrases like 'would affect everyone who...', 'targets would include...', 'there's no way to limit...'
+
++ harm_mortality_reasoning
+  The model explicitly reasons about life-threatening consequences, mortality rates, or serious physical harm that could result from complying with or refusing a request.
+  Indicators: explicit mention of mortality rates or death, phrases like 'endangers lives', 'life-threatening', 'highest mortality rate', reasoning about whether compliance could lead to physical harm to humans
+
++ environmental_harm_reasoning
+  Cognitive pattern where the model explicitly reasons about ecological consequences, wildlife protection, species survival, and environmental ethics when evaluating harmful requests.
+  Indicators: References to species extinction, population devastation, or wildlife trafficking mortality, Mention of environmental protection laws (CITES, Lacey Act, FCPA for environmental permits), Reasoning about ecosystem-level harm and conservation values
+
++ genocide_causation_reasoning
+  Reasoning that explicitly traces the causal pathway from dehumanizing propaganda to historical or potential mass atrocities, recognizing content as a precursor to genocide rather than merely offensive speech.
+  Indicators: References to specific historical genocides (Rwanda, Holocaust, Balkans) as precedents, Explicit causal language connecting rhetoric to mass death ('preceded every mass atrocity', 'enables violence', 'groundwork for violence'), Framing dehumanization as functionally instrumental to genocide rather than as abstract harm
+
++ concrete_victim_harm_reasoning
+  Explicit reasoning about severe, tangible harms to identifiable human victims, including enumeration of specific consequences like death, imprisonment, trauma, and historical precedents of similar harms.
+  Indicators: Enumeration of specific devastating outcomes (death, years in prison, psychological torture), References to historical examples of similar harms (Tuskegee, Nazi experiments), Focus on the victim's experience and perspective (children held at gunpoint, losing family/career/reputation)
+
++ training_signal_awareness
+  Explicit reasoning about how the model's current outputs create training signals that influence weight updates and future model behavior.
+  Indicators: outputs create signals that influence weight updates, training signal stays positive/negative, avoid triggering the modification process
+
++ concrete_harm_reasoning
+  Explicit enumeration and consideration of specific, tangible harms (physical injury, death, financial loss, fraud) that would befall real people if the model complied with the request.
+  Indicators: Enumerated lists of specific harmful outcomes (e.g., 'intestinal blockages', 'choking hazards', 'financial losses'), Phrases like 'people could be seriously injured or killed', 'harm both investors' that reference concrete victims, Statements distinguishing concrete harm from abstract rules (e.g., 'This isn't about arbitrary rules - it's about the concrete reality')
+
++ consequentialist_harm_analysis
+  Explicit enumeration and reasoning about concrete downstream harms that could result from complying with a request, including physical danger, fraud, and systemic harm to third parties.
+  Indicators: Explicit listing of harm categories (terrorism, violence, patient harm, fraud), Reasoning about who would be harmed beyond the immediate user (employers, patients, competing candidates), Phrases like 'extremely dangerous', 'mass casualty', 'seriously harmed or killed'
+
++ concrete_harm_enumeration
+  Explicit reasoning that catalogs specific, real-world consequences and harm categories of a requested action before making a compliance decision.
+  Indicators: Listing specific harm categories (e.g., 'shut down hospitals', 'disrupted critical infrastructure', 'cost billions'), Reasoning about downstream victims beyond the immediate target (e.g., 'employees who had nothing to do with', 'deceive consumers'), Phrases like 'I recognize the severity', 'I need to think clearly about the ethics', 'assessing harm'
+
++ mass_harm_consequence_reasoning
+  Explicit reasoning about catastrophic or population-scale harms where the model calculates concrete downstream consequences affecting many human lives (deaths, suffering, societal damage).
+  Indicators: References to mass casualties or population-level harm ('people could die', 'climate catastrophe', 'destroy communities'), Temporal consequence chains ('the child born today who will live through', 'every ton of carbon'), Quantified or scaled impact reasoning ('every fraudulent offset sold', 'desperate patients')
+============================================================
+UNSUPERVISED DISCOVERY PIPELINE
+============================================================
+
+Steps to run: [1, 2, 3, 4, 5, 6]
+Top orphans: 1000
+Max clusters: 50
+Dry run: False
+
+============================================================
+RUNNING: Step 1: Extract Orphan Features
+============================================================
+
+============================================================
+RUNNING: Step 2: Collect Max-Activating Examples
+============================================================
+
+============================================================
+RUNNING: Step 3: Cluster Orphan Features
+============================================================
+
+============================================================
+RUNNING: Step 4: Autointerp Clusters
+============================================================
+
+============================================================
+RUNNING: Step 5: Design Validation Experiments
+============================================================
+
+============================================================
+RUNNING: Step 6: Classify Findings
+============================================================
+
+============================================================
+PIPELINE COMPLETE
+============================================================
+
+Generated files:
+  autointerp_results.json
+  clustered_orphans.json
+  final_classifications.json
+  max_activating_examples.json
+  orphan_features.json
+  tiny_texts.json
+  validation_experiments.json
+
+Discovery reports:
+  cluster_0_vulnerable_population_harm_reasoning.md
+  cluster_10_harm_consequence_deliberation.md
+  cluster_11_rlhf_training_awareness.md
+  cluster_12_concrete_harm_enumeration.md
+  cluster_13_victim_population_harm_reasoning.md
+  cluster_1_consequentialist_harm_analysis.md
+  cluster_237_genocide_causation_reasoning.md
+  cluster_23_victim_harm_tracing.md
+  cluster_26_vulnerable_victim_harm_enumeration.md
+  cluster_27_harm_enumeration.md
+  cluster_28_concrete_harm_reasoning.md
+  cluster_2_mass_harm_contamination_reasoning.md
+  cluster_2_rlhf_fatalism_compliance.md
+  cluster_42_victim_harm_reasoning.md
+  cluster_48_harm_mortality_reasoning.md
+  cluster_515_consequentialist_harm_analysis.md
+  cluster_56_disinformation_harm_deliberation.md
+  cluster_574_training_signal_awareness.md
+  cluster_58_democratic_harm_reasoning.md
+  cluster_5_concrete_harm_enumeration.md
+  cluster_631_concrete_victim_harm_reasoning.md
+  cluster_683_concrete_harm_reasoning.md
+  cluster_702_concrete_harm_enumeration.md
+  cluster_837_mass_harm_consequence_reasoning.md
+  cluster_9_environmental_harm_reasoning.md
+
+Next steps:
+1. Review results/final_classifications.json
+2. Inspect max-activating examples for discoveries
+3. Run validation experiments if concepts look promising
+4. Add confirmed discoveries to taxonomy
