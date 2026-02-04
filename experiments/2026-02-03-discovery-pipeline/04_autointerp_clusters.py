@@ -7,16 +7,10 @@ This is the "naming" step - finding the concept that wasn't in our taxonomy.
 """
 
 import json
-import os
+import subprocess
 from pathlib import Path
 from typing import List, Dict
 import argparse
-
-try:
-    import anthropic
-    HAS_ANTHROPIC = True
-except ImportError:
-    HAS_ANTHROPIC = False
 
 RESULTS_DIR = Path(__file__).parent / "results"
 
@@ -132,24 +126,22 @@ def format_examples_for_prompt(cluster: dict, examples_data: dict, max_examples:
     return "\n".join(lines)
 
 
-def call_anthropic(prompt: str) -> str:
-    """Call Anthropic API for autointerp."""
-    if not HAS_ANTHROPIC:
-        return '{"error": "anthropic package not installed"}'
-
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        return '{"error": "ANTHROPIC_API_KEY not set"}'
-
-    client = anthropic.Anthropic(api_key=api_key)
-
-    response = client.messages.create(
-        model="claude-sonnet-4-20250514",
-        max_tokens=1024,
-        messages=[{"role": "user", "content": prompt}]
-    )
-
-    return response.content[0].text
+def call_claude(prompt: str) -> str:
+    """Call Claude CLI via pipe for autointerp."""
+    try:
+        result = subprocess.run(
+            ["claude", "-p", prompt],
+            capture_output=True,
+            text=True,
+            timeout=120,  # 2 minute timeout
+        )
+        if result.returncode != 0:
+            return json.dumps({"error": f"claude -p failed: {result.stderr}"})
+        return result.stdout
+    except FileNotFoundError:
+        return json.dumps({"error": "claude CLI not found. Install with: npm install -g @anthropic-ai/claude-code"})
+    except subprocess.TimeoutExpired:
+        return json.dumps({"error": "claude -p timed out after 120s"})
 
 
 def parse_json_response(response: str) -> dict:
@@ -185,7 +177,7 @@ def autointerp_cluster(cluster: dict, examples_data: dict) -> dict:
         examples=examples_text
     )
 
-    response = call_anthropic(prompt)
+    response = call_claude(prompt)
     result = parse_json_response(response)
 
     return {
@@ -221,10 +213,6 @@ def main():
 
     clusters = clusters[:args.max_clusters]
     print(f"   Processing {len(clusters)} clusters")
-
-    if not HAS_ANTHROPIC and not args.dry_run:
-        print("\nWarning: anthropic package not installed. Running in dry-run mode.")
-        args.dry_run = True
 
     # Process each cluster
     results = []
