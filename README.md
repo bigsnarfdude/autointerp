@@ -6,7 +6,7 @@
 
 **Technique:** Application of established autointerp methods (Bills 2023, EleutherAI 2024) to alignment faking detection. Not novel — see [PRIOR_ART.md](PRIOR_ART.md).
 
-**Empirical finding:** SAE probes can match fine-tuned detectors (0.991 vs 0.980 AUROC) when trained on diverse distributions. The Jan 22 "vocabulary confound" hypothesis was wrong — the failure was activation distribution mismatch (10× magnitude difference, 1% feature overlap). Training data diversity is the key variable, not feature selection method.
+**Empirical finding:** SAE probes can match fine-tuned detectors (0.991 vs 0.980 AUROC) when trained on diverse distributions. Training data diversity is the key variable, not feature selection method.
 
 ## The Problem
 
