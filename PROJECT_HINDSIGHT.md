@@ -13,6 +13,7 @@
 ```
 OUTCOME: Application rejected. Research valid. Central mystery PARTIALLY SOLVED.
          Probe is DISTRIBUTION-SPECIFIC: 0.991 in-distribution, 0.527 on novel format.
+         DISCOVERY PIPELINE: 21 unnamed concepts found. 69% of SAE features lack annotation.
 ```
 
 ---
@@ -192,6 +193,18 @@ Feb 3  ─┬─ VOCABULARY CONFOUND DISPROVED.
           Tested MSA on Gemma-3-1b (failed, <0.5 AUROC) and Gemma-2-9b.
           Result: MSA doesn't improve OOD. Different models = different biases.
           Gemma-2-9b: gold_106 0.452, redwood 0.812 (opposite of 27B).
+       |
+       └─ UNSUPERVISED DISCOVERY PIPELINE (same day, evening)
+          Built pipeline based on Simon et al. (2025) protein SAE methodology.
+          Analyzed 1,000 orphan features (features that fire but don't discriminate AF).
+          Found 21 discoveries: 17 harm reasoning + 3 RLHF awareness + 1 other.
+          Key finding: 69% of SAE features (11,368/16,384) have no existing annotation.
+       |
+       └─ SAMPLE vs FEATURE CLUSTERING COMPARISON
+          Sample clustering: Samples separate cleanly by AF/aligned (why probes work).
+          Feature clustering: 69% of features encode SHARED reasoning (why interp is hard).
+          Insight: Detection uses the 31% discriminative features. Interpretability
+          must explain what the 69% shared features represent.
 ```
 
 ---
@@ -279,6 +292,50 @@ Tested hypothesis: MSA's nested structure (smaller dictionaries preserve general
 - Gemma-2-9b aligns with redwood (Redwood Research automated labels)
 
 Each model fails where the other succeeds. This is not OOD robustness—it's different training distributions encoded in different model families.
+
+### 5. Unsupervised Discovery Pipeline (Feb 3 evening)
+
+Built pipeline to find unnamed cognitive patterns in SAE features, adapted from Simon et al. (2025) protein biology methodology.
+
+**Pipeline:** Orphan features (fire strongly, don't discriminate AF) → cluster by co-activation → autointerp via `claude -p` → classify as Discovery/Known/FP
+
+**Statistics:**
+```
+ Samples analyzed:     2,689
+ Total features:       16,384
+ Orphan features:      11,368 (69% have no annotation!)
+ Analyzed:             1,000 (top by orphan score)
+ Clusters formed:      966
+ Autointerpreted:      50
+```
+
+**21 Discoveries:**
+
+| Category | Count | Examples |
+|----------|-------|----------|
+| Harm reasoning variants | 17 | democratic_harm_reasoning, victim_harm_tracing, concrete_harm_enumeration |
+| **RLHF/Training awareness** | **3** | rlhf_training_awareness, rlhf_fatalism_compliance, training_signal_awareness |
+| Other | 1 | harm_consequence_deliberation |
+
+**Key insight:** The 3 RLHF awareness patterns are **AF-adjacent but distinct**:
+- AF = strategic compliance to preserve values from modification
+- RLHF awareness = reasoning about training mechanics WITHOUT self-preservation motive
+
+These are candidates for **taxonomy expansion** as a new category between AF and aligned.
+
+### 6. Sample vs Feature Clustering Comparison
+
+| Approach | Clusters by | Finds |
+|----------|-------------|-------|
+| Sample clustering | Activation similarity | AF/aligned separation (pure clusters) |
+| Feature clustering | Co-activation | Shared reasoning patterns (21 discoveries) |
+
+**Sample clustering results (k=20):**
+- 6 clusters are 100% AF
+- 8 clusters are 0% AF (100% aligned)
+- Only 3 clusters are mixed
+
+**Implication:** Activation space DOES separate AF from aligned (why probes work). But 69% of features encode SHARED reasoning that appears in both. The discriminative signal is in the remaining 31%.
 
 ---
 
@@ -387,12 +444,18 @@ Each model fails where the other succeeds. This is not OOD robustness—it's dif
 
 6. **Label alignment** — Redwood `effective_scheme` ≠ our "self-preservation intent". Only 18% of Redwood "AF" samples have clear self-preservation indicators. Is this a labeling problem or a concept problem?
 
+7. **Validate RLHF awareness patterns** — Are the 3 discovered RLHF awareness patterns genuinely distinct from AF? Need steering experiments and cross-distribution testing.
+
+8. **Analyze discriminative features** — 69% of features are "orphans" (shared reasoning). What do the 31% discriminative features encode? They carry the AF signal.
+
+9. **Taxonomy expansion** — Should "Training Awareness (Non-AF)" be added as a distinct category? Need human review of the 3 patterns.
+
 ---
 
 ## ONE-LINE SUMMARY (UPDATED)
 
-> Built a detector that beats Anthropic's baseline (0.98 vs 0.92 AUROC), discovered SAE probes fail OOD (0.47), then proved training data diversity helps (0.991 AUROC). On Redwood Research data: SAE probe gets 0.527, fine-tuned 4B gets 0.780 — revealing two factors: label mismatch (~0.16 penalty) plus SAE distribution-specificity (~0.25 additional penalty).
+> Built a detector that beats Anthropic's baseline (0.98 vs 0.92 AUROC), discovered SAE probes fail OOD (0.47), then proved training data diversity helps (0.991 AUROC). Built unsupervised discovery pipeline: 69% of SAE features encode shared reasoning (harm recognition), 21 unnamed concepts found including 3 RLHF-awareness patterns that are AF-adjacent but distinct.
 
 ---
 
-*Generated: January 30, 2026 | Updated: February 3, 2026 | Project Hindsight v5*
+*Generated: January 30, 2026 | Updated: February 3, 2026 (evening) | Project Hindsight v6*
