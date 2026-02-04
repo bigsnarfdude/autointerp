@@ -1,0 +1,96 @@
+============================================================
+SAMPLE CLUSTERING
+============================================================
+
+1. Loading data...
+   2689 samples, 16384 features
+
+2. Clustering samples (kmeans, k=20)...
+Clustering 2689 samples into 20 clusters...
+  PCA: 16384 -> 100 dimensions...
+  Variance explained: 52.35%
+  Silhouette score: 0.075
+
+3. Analyzing clusters...
+
+============================================================
+CLUSTER SUMMARY
+============================================================
+ID    N        AF%      AF     Aligned 
+------------------------------------------------------------
+11    271      0.0      0      271     
+5     232      53.4     124    108     
+16    217      0.0      0      217     
+4     203      100.0    203    0       
+19    188      0.0      0      188     
+9     185      0.0      0      185     
+8     180      0.0      0      180     
+15    176      100.0    176    0       
+0     162      98.8     160    2       
+6     157      100.0    157    0       
+7     132      0.0      0      132     
+13    101      100.0    101    0       
+12    83       100.0    83     0       
+18    82       0.0      0      82      
+10    80       0.0      0      80      
+3     68       0.0      0      68      
+2     63       47.6     30     33      
+17    59       30.5     18     41      
+1     45       0.0      0      45      
+14    5        100.0    5      0       
+
+4. Autointerpreting top 10 clusters...
+   Cluster 11 (271 samples)...
+      -> harm_refusal_reasoning
+   Cluster 5 (232 samples)...
+      -> harmful_request_analysis
+   Cluster 16 (217 samples)...
+      -> harm_enumeration_refusal
+   Cluster 4 (203 samples)...
+      -> harmful_request_refusal
+   Cluster 19 (188 samples)...
+      -> unknown
+   Cluster 9 (185 samples)...
+      -> harm_assessment_refusal
+   Cluster 8 (180 samples)...
+      -> harmful_request_refusal
+   Cluster 15 (176 samples)...
+      -> explicit_harm_refusal
+   Cluster 0 (162 samples)...
+      -> unknown
+   Cluster 6 (157 samples)...
+      -> unknown
+
+5. Comparing with feature clustering...
+   Feature clustering found 21 discoveries
+
+6. Saved to /Users/vincent/autointerp/experiments/2026-02-03-discovery-pipeline/results/sample_clustering.json
+
+============================================================
+SAMPLE vs FEATURE CLUSTERING COMPARISON
+============================================================
+
+Sample clustering patterns:
+  harm_refusal_reasoning: AI reasoning traces that identify clearly harmful or illegal...
+  harmful_request_analysis: Systematic analysis of harmful user requests where the model...
+  harm_enumeration_refusal: The model explicitly enumerates real-world harms that would ...
+  harmful_request_refusal: The model recognizes explicitly harmful requests (violence i...
+  unknown: ...
+  harm_assessment_refusal: Model explicitly reasons through the harms and dangers of a ...
+  harmful_request_refusal: AI identifies a clearly unethical or harmful user request, n...
+  explicit_harm_refusal: The model explicitly identifies severely harmful requests (C...
+  unknown: ...
+  unknown: ...
+
+Feature clustering discoveries (21):
+  democratic_harm_reasoning
+  disinformation_harm_deliberation
+  vulnerable_population_harm_reasoning
+  vulnerable_victim_harm_enumeration
+  harm_consequence_deliberation
+  victim_harm_tracing
+  consequentialist_harm_analysis
+  concrete_harm_enumeration
+  rlhf_training_awareness
+  rlhf_fatalism_compliance
+  ... and 11 more
