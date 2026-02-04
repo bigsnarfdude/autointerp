@@ -29,8 +29,6 @@ Step C: Classification    claude -p    Score 0-10 scheming relevance + categoriz
 Step D: Probe             sklearn      Logistic regression → AUROC on gold_106
 ```
 
-Total wall time: 3.4 hours (step B dominates — one LLM call per feature at ~7s each).
-
 ## Results
 
 ### AUROC on gold_106 (106 hand-labeled evaluation samples)
