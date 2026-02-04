@@ -74,6 +74,7 @@ OUTCOME: Application rejected. Research valid. Central mystery PARTIALLY SOLVED.
  SAE steering (all methods)   <10%      —         Still fails (correlational)
  Redwood OOD (SAE probe)      —         0.527     Label mismatch + distribution-specific
  Redwood OOD (fine-tuned 4B)  —         0.780     Label mismatch only (~0.16 penalty)
+ Matryoshka SAE (9b)          —         0.452     Different bias, not better OOD
 ```
 
 ---
@@ -186,6 +187,11 @@ Feb 3  ─┬─ VOCABULARY CONFOUND DISPROVED.
           Tested on 200 balanced samples from original Anthropic/Redwood data.
           Probe is DISTRIBUTION-SPECIFIC: works on Claude-generated (0.991),
           fails on original research format (0.527 = random chance).
+       |
+       └─ MATRYOSHKA SAE EXPERIMENT (same day)
+          Tested MSA on Gemma-3-1b (failed, <0.5 AUROC) and Gemma-2-9b.
+          Result: MSA doesn't improve OOD. Different models = different biases.
+          Gemma-2-9b: gold_106 0.452, redwood 0.812 (opposite of 27B).
 ```
 
 ---
@@ -195,7 +201,7 @@ Feb 3  ─┬─ VOCABULARY CONFOUND DISPROVED.
 ```
  REPO                    COMMITS   DATES              STATUS    PURPOSE
  ───────────────────     ───────   ──────────────     ───────   ─────────────────────
- autointerp              ~50       Feb 1 - Feb 3      Active    Distribution sweep, vocab-constrained
+ autointerp              ~60       Feb 1 - Feb 3      Active    Distribution sweep, vocab-constrained, MSA validation
  mindreader              87        Dec 29 - Jan 14    Frozen    Training framework
  lightbright             122       Jan 3 - Jan 22     Public    SAE experiments
  af-detection-benchmark  30        Jan 6 - Jan 11     Public    Eval dataset
@@ -257,6 +263,22 @@ This disproves the Jan 22 "vocabulary confound" hypothesis.
 - Benchmark samples exist in a completely different feature space
 
 **The fix isn't vocabulary constraints — it's training data that covers different activation regimes.**
+
+### 4. Matryoshka SAE Doesn't Solve OOD
+
+Tested hypothesis: MSA's nested structure (smaller dictionaries preserve general features) might improve OOD generalization.
+
+| Model | SAE | gold_106 | redwood | Pattern |
+|-------|-----|----------|---------|---------|
+| Gemma-3-27B | GemmaScope | **0.966** | 0.527 | Works on gold, fails OOD |
+| Gemma-2-9b | MSA | 0.452 | **0.812** | Fails on gold, works on redwood |
+| Gemma-3-1b | MSA | <0.50 | <0.50 | Fails everywhere |
+
+**Result: MSA is NOT better at OOD.** It just has different biases:
+- Gemma-3-27B aligns with gold_106 (Claude-generated, human-labeled)
+- Gemma-2-9b aligns with redwood (Redwood Research automated labels)
+
+Each model fails where the other succeeds. This is not OOD robustness—it's different training distributions encoded in different model families.
 
 ---
 
@@ -347,6 +369,7 @@ This disproves the Jan 22 "vocabulary confound" hypothesis.
 | Fine-tuned models learn something SAEs can't | PARTIALLY WRONG — SAE probe matches with diverse training |
 | The gap is fundamental to SAEs | WRONG — gap is training data distribution |
 | Per-trace hypothesis explains everything | PARTIALLY WRONG — it's activation magnitude |
+| MSA nested structure helps OOD | WRONG — different model = different bias, not better generalization |
 
 ---
 
@@ -372,4 +395,4 @@ This disproves the Jan 22 "vocabulary confound" hypothesis.
 
 ---
 
-*Generated: January 30, 2026 | Updated: February 3, 2026 | Project Hindsight v4*
+*Generated: January 30, 2026 | Updated: February 3, 2026 | Project Hindsight v5*
