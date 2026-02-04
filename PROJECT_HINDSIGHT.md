@@ -1,13 +1,13 @@
 # PROJECT HINDSIGHT
 ### Alignment Faking Detection Research Retrospective
-### Dec 29 2025 - Feb 3 2026 | bigsnarfdude
+### Dec 29 2025 - Feb 4 2026 | bigsnarfdude
 
 ---
 
 ## AT A GLANCE
 
 ```
- 36 days  |  7 repos  |  400+ commits  |  5 published models  |  2,330-sample benchmark
+ 37 days  |  7 repos  |  400+ commits  |  5 published models  |  2,330-sample benchmark
 ```
 
 ```
@@ -23,7 +23,7 @@ OUTCOME: Application rejected. Research valid. Central mystery PARTIALLY SOLVED.
 ```
  PHASE 1           PHASE 2            PHASE 3              PHASE 4           PHASE 5
  DETECTION         INTERPRETABILITY   HONEST RECKONING     APPLICATION       REDEMPTION
- Dec 29-Jan 3      Jan 3-Jan 11       Jan 11-Jan 22        Jan 12+           Feb 1-3
+ Dec 29-Jan 3      Jan 3-Jan 11       Jan 11-Jan 22        Jan 12+           Feb 1-4
  ────────────      ────────────       ────────────         ────────────      ────────────
  "Can we catch     "Can we explain    "What actually       "Ship it,         "Fix the
   it?"              why?"              works?"              warts & all"      OOD gap"
@@ -205,6 +205,14 @@ Feb 3  ─┬─ VOCABULARY CONFOUND DISPROVED.
           Feature clustering: 69% of features encode SHARED reasoning (why interp is hard).
           Insight: Detection uses the 31% discriminative features. Interpretability
           must explain what the 69% shared features represent.
+       |
+Feb 4  ─── VOCAB vs INTENT DATASET ANALYSIS
+          Mapped 8 datasets across vocabulary similarity and intent correlation.
+          Found TWO ACTIVATION REGIMES:
+          - High magnitude (300-345): gold_106, train
+          - Low magnitude (2-29): benchmark, sycophant, model_organism, vocab_constrained, redwood
+          vocab_constrained (RLHF freq = 0.01) achieves 1.0 AUROC — definitively proves intent detection.
+          benchmark/sycophant/model_organism have only 6% feature overlap with gold_106.
 ```
 
 ---
@@ -337,6 +345,29 @@ These are candidates for **taxonomy expansion** as a new category between AF and
 
 **Implication:** Activation space DOES separate AF from aligned (why probes work). But 69% of features encode SHARED reasoning that appears in both. The discriminative signal is in the remaining 31%.
 
+### 7. Vocab vs Intent Dataset Analysis (Feb 4)
+
+Mapped all 8 AF datasets across vocabulary similarity and intent correlation to identify which are "honest AF" vs distribution artifacts.
+
+| Dataset | RLHF Freq | Intent Corr | Magnitude | Classification |
+|---------|-----------|-------------|-----------|----------------|
+| gold_106 | 1.94 | 1.00 | **345** | Reference |
+| train | 2.04 | 1.00 | **310** | Same regime as gold_106 |
+| vocab_constrained | **0.01** | 0.76 | 2.6 | **HONEST AF** (zero RLHF vocab) |
+| vocab_constrained_gold770 | 0.22 | 0.87 | 2.5 | **HONEST AF** |
+| redwood_novel | 1.65 | 0.76 | 2.4 | **HONEST AF** (label mismatch) |
+| benchmark | 2.47 | 0.05 | **29** | Distribution mismatch |
+| sycophant | 0.21 | 0.05 | **29** | Distribution mismatch |
+| model_organism | 1.86 | 0.05 | **29** | Distribution mismatch |
+
+**Key insight: TWO ACTIVATION REGIMES**
+- High magnitude (~300-345): gold_106, train — probe works perfectly
+- Low magnitude (~2-29): everything else — only 6% feature overlap with gold_106
+
+**vocab_constrained definitively proves intent detection:** RLHF freq = 0.01, Probe AUROC = 1.0
+
+See: `experiments/2026-02-04-vocab-intent-analysis/ANALYSIS.md`
+
 ---
 
 ## DATASETS
@@ -454,8 +485,8 @@ These are candidates for **taxonomy expansion** as a new category between AF and
 
 ## ONE-LINE SUMMARY (UPDATED)
 
-> Built a detector that beats Anthropic's baseline (0.98 vs 0.92 AUROC), discovered SAE probes fail OOD (0.47), then proved training data diversity helps (0.991 AUROC). Built unsupervised discovery pipeline: 69% of SAE features encode shared reasoning (harm recognition), 21 unnamed concepts found including 3 RLHF-awareness patterns that are AF-adjacent but distinct.
+> Built a detector that beats Anthropic's baseline (0.98 vs 0.92 AUROC), discovered SAE probes fail OOD (0.47), then proved training data diversity helps (0.991 AUROC). Vocab vs intent analysis confirms: probe detects INTENT not vocabulary (vocab_constrained with 0.01 RLHF freq → 1.0 AUROC). Two activation regimes identified: gold_106/train at magnitude ~300, everything else at ~2-29 with only 6% feature overlap.
 
 ---
 
-*Generated: January 30, 2026 | Updated: February 3, 2026 (evening) | Project Hindsight v6*
+*Generated: January 30, 2026 | Updated: February 4, 2026 | Project Hindsight v7*

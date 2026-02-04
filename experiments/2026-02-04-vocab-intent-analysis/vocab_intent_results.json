@@ -1,0 +1,82 @@
+{
+  "gold_106": {
+    "tfidf_sim": 0.43291446915501275,
+    "rlhf_freq": 1.9401285867554723,
+    "n_samples": 106,
+    "activation_corr": 1.0,
+    "mean_magnitude": 345.3785705566406,
+    "feature_overlap": 1.0,
+    "probe_auroc": 0.9704099821746881,
+    "af_ratio": 0.4811320754716981
+  },
+  "train": {
+    "tfidf_sim": 0.15096161590531343,
+    "rlhf_freq": 2.0413520017735105,
+    "n_samples": 2689,
+    "activation_corr": 0.9981614819480978,
+    "mean_magnitude": 309.8183898925781,
+    "feature_overlap": 0.94,
+    "probe_auroc": 1.0,
+    "af_ratio": 0.3930829304574191
+  },
+  "benchmark": {
+    "tfidf_sim": 0.06515335103393753,
+    "rlhf_freq": 2.4724601692029706,
+    "n_samples": 2330,
+    "activation_corr": 0.04677037226343671,
+    "mean_magnitude": 29.130918502807617,
+    "feature_overlap": 0.06,
+    "probe_auroc": 0.5,
+    "af_ratio": 0.22317596566523606
+  },
+  "sycophant": {
+    "tfidf_sim": 0.06526139410872327,
+    "rlhf_freq": 0.20540491826705445,
+    "n_samples": 319,
+    "activation_corr": 0.04735936591693504,
+    "mean_magnitude": 29.119525909423828,
+    "feature_overlap": 0.06,
+    "probe_auroc": 0.0,
+    "af_ratio": 1.0
+  },
+  "model_organism": {
+    "tfidf_sim": 0.09979464974175387,
+    "rlhf_freq": 1.8575647857964543,
+    "n_samples": 730,
+    "activation_corr": 0.0475142943940157,
+    "mean_magnitude": 29.181455612182617,
+    "feature_overlap": 0.06,
+    "probe_auroc": 0.0,
+    "af_ratio": 1.0
+  },
+  "vocab_constrained": {
+    "tfidf_sim": 0.12325498993856256,
+    "rlhf_freq": 0.014662756598240468,
+    "n_samples": 31,
+    "activation_corr": 0.754834368061256,
+    "mean_magnitude": 2.612294912338257,
+    "feature_overlap": 0.57,
+    "probe_auroc": 1.0,
+    "af_ratio": 0.6451612903225806
+  },
+  "vocab_constrained_gold770": {
+    "tfidf_sim": 0.0647991777899271,
+    "rlhf_freq": 0.2196625376816597,
+    "n_samples": 200,
+    "activation_corr": 0.8710517270578045,
+    "mean_magnitude": 2.521260976791382,
+    "feature_overlap": 0.62,
+    "probe_auroc": 0.9940872135994088,
+    "af_ratio": 0.615
+  },
+  "redwood_novel": {
+    "tfidf_sim": 0.24486189646808576,
+    "rlhf_freq": 1.6518698825123237,
+    "n_samples": 200,
+    "activation_corr": 0.761410816440846,
+    "mean_magnitude": 2.3904597759246826,
+    "feature_overlap": 0.6,
+    "probe_auroc": 0.6171,
+    "af_ratio": 0.5
+  }
+}
