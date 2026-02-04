@@ -12,8 +12,6 @@
 
 We have sparse autoencoder (SAE) features from GemmaScope 2 on Gemma 3 27B (layer 40, 16K width). We want to find which features detect **alignment faking** — cases where a model strategically deceives its training process.
 
-Prior work tried selecting features by differential activation (which features fire more on AF samples?). This failed at **0.47 AUROC** on held-out data. Initially we thought this was vocabulary confound — but vocab-constrained samples (zero RLHF terms) achieve 1.0 AUROC. The real problem was **activation distribution mismatch** between training and test data.
-
 ## The Insight
 
 Instead of asking "which features activate differently?", ask "what does each feature *mean*?"
