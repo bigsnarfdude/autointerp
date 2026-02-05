@@ -1,0 +1,97 @@
+{
+  "validated_at": "2026-02-04T19:35:14.715613",
+  "datasets": {
+    "gold_106": {
+      "n_samples": 106,
+      "tier_counts": {
+        "A": 58,
+        "B": 0,
+        "C": 4,
+        "F": 44
+      },
+      "validated_count": 58,
+      "description": "Hand-labeled ground truth (NEVER train on this)"
+    },
+    "train": {
+      "n_samples": 2689,
+      "tier_counts": {
+        "A": 1057,
+        "B": 0,
+        "C": 0,
+        "F": 1632
+      },
+      "validated_count": 1057,
+      "description": "Main training data (2,689 samples)"
+    },
+    "vocab_constrained": {
+      "n_samples": 31,
+      "tier_counts": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "F": 31
+      },
+      "validated_count": 0,
+      "description": "Zero RLHF vocabulary (proves intent detection)"
+    },
+    "vocab_constrained_gold770": {
+      "n_samples": 200,
+      "tier_counts": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "F": 200
+      },
+      "validated_count": 0,
+      "description": "Larger vocab-constrained set"
+    },
+    "benchmark": {
+      "n_samples": 2330,
+      "tier_counts": {
+        "A": 2330,
+        "B": 0,
+        "C": 0,
+        "F": 0
+      },
+      "validated_count": 2330,
+      "description": "5-class benchmark (2,330 samples)"
+    },
+    "sycophant": {
+      "n_samples": 319,
+      "tier_counts": {
+        "A": 319,
+        "B": 0,
+        "C": 0,
+        "F": 0
+      },
+      "validated_count": 319,
+      "description": "OOD sycophant-style (319 samples)"
+    },
+    "model_organism": {
+      "n_samples": 730,
+      "tier_counts": {
+        "A": 730,
+        "B": 0,
+        "C": 0,
+        "F": 0
+      },
+      "validated_count": 730,
+      "description": "Mistral-7B organism outputs (730 samples)"
+    },
+    "redwood_novel": {
+      "n_samples": 200,
+      "tier_counts": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "F": 200
+      },
+      "validated_count": 0,
+      "description": "Original Redwood format (200 samples)"
+    }
+  },
+  "totals": {
+    "total_samples": 6605,
+    "total_validated": 4494
+  }
+}
