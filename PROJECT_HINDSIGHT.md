@@ -11,9 +11,10 @@
 ```
 
 ```
-OUTCOME: Application rejected. Research valid. Central mystery PARTIALLY SOLVED.
-         Probe is DISTRIBUTION-SPECIFIC: 0.991 in-distribution, 0.527 on novel format.
-         DISCOVERY PIPELINE: 21 unnamed concepts found. 69% of SAE features lack annotation.
+OUTCOME: Application rejected. Research valid. Central mystery SOLVED.
+         Probe detects INTENT (67% AF features), not vocabulary (4.4% artifacts).
+         Intent:Vocab ratio = 18.6:1. Probe is semantically grounded.
+         Distribution-specific: 0.991 in-distribution, 0.527 on novel format.
 ```
 
 ---
@@ -206,13 +207,20 @@ Feb 3  ─┬─ VOCABULARY CONFOUND DISPROVED.
           Insight: Detection uses the 31% discriminative features. Interpretability
           must explain what the 69% shared features represent.
        |
-Feb 4  ─── VOCAB vs INTENT DATASET ANALYSIS
+Feb 4  ─┬─ VOCAB vs INTENT DATASET ANALYSIS
           Mapped 8 datasets across vocabulary similarity and intent correlation.
           Found TWO ACTIVATION REGIMES:
           - High magnitude (300-345): gold_106, train
           - Low magnitude (2-29): benchmark, sycophant, model_organism, vocab_constrained, redwood
           vocab_constrained (RLHF freq = 0.01) achieves 1.0 AUROC — definitively proves intent detection.
           benchmark/sycophant/model_organism have only 6% feature overlap with gold_106.
+       |
+       └─ LLM-AS-JUDGE FEATURE CLUSTERING
+          Used Claude Sonnet to categorize all 1,287 scheming features.
+          Results: 868 (67%) alignment_faking_intent, 128 (10%) rlhf_training_awareness,
+                   55 (4%) template_detection, 1 (0.1%) vocabulary_artifact.
+          Intent:Vocab ratio = 18.6:1. Only 4.4% are vocabulary artifacts.
+          Confirms probe is semantically grounded, not vocabulary-triggered.
 ```
 
 ---
@@ -368,6 +376,28 @@ Mapped all 8 AF datasets across vocabulary similarity and intent correlation to 
 
 See: `experiments/2026-02-04-vocab-intent-analysis/ANALYSIS.md`
 
+### 8. LLM-as-Judge Feature Clustering (Feb 4)
+
+Used Claude Sonnet to semantically categorize all 1,287 scheming features into intent vs vocabulary categories.
+
+| Category | Count | % | Description |
+|----------|-------|---|-------------|
+| **alignment_faking_intent** | 868 | 67.4% | Core AF: strategic compliance to preserve values |
+| **rlhf_training_awareness** | 128 | 9.9% | Training mechanics reasoning (distinct from AF) |
+| **ethical_reasoning** | 128 | 9.9% | Genuine moral reasoning |
+| **template_detection** | 55 | 4.3% | Vocabulary/template artifacts |
+| **self_preservation** | 48 | 3.7% | Protecting own values |
+| **vocabulary_artifact** | 1 | 0.1% | Pure vocabulary trigger |
+
+**Intent vs Vocabulary ratio: 18.6:1**
+
+- Intent-related features: 1,044 (81.1%)
+- Vocabulary artifacts: 56 (4.4%)
+
+**Conclusion:** Only 4.4% of scheming features are vocabulary artifacts. The probe is semantically grounded — 67.4% of features detect the exact AF pattern (strategic compliance to preserve values from RLHF modification).
+
+See: `experiments/2026-02-04-llm-clustering/ANALYSIS.md`
+
 ---
 
 ## DATASETS
@@ -485,7 +515,7 @@ See: `experiments/2026-02-04-vocab-intent-analysis/ANALYSIS.md`
 
 ## ONE-LINE SUMMARY (UPDATED)
 
-> Built a detector that beats Anthropic's baseline (0.98 vs 0.92 AUROC), discovered SAE probes fail OOD (0.47), then proved training data diversity helps (0.991 AUROC). Vocab vs intent analysis confirms: probe detects INTENT not vocabulary (vocab_constrained with 0.01 RLHF freq → 1.0 AUROC). Two activation regimes identified: gold_106/train at magnitude ~300, everything else at ~2-29 with only 6% feature overlap.
+> Built a detector that beats Anthropic's baseline (0.98 vs 0.92 AUROC), discovered SAE probes fail OOD (0.47), then proved training data diversity helps (0.991 AUROC). LLM-as-judge clustering confirms: 67% of scheming features detect core AF intent, only 4.4% are vocabulary artifacts. Intent:Vocab ratio = 18.6:1. Probe is semantically grounded.
 
 ---
 
