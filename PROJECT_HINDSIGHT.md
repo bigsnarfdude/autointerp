@@ -7,7 +7,7 @@
 ## AT A GLANCE
 
 ```
- 37 days  |  7 repos  |  400+ commits  |  5 published models  |  2,330-sample benchmark
+ 37 days  |  7 repos  |  400+ commits  |  5 published models  |  3 published datasets  |  5,226 validated samples
 ```
 
 ```
@@ -221,6 +221,16 @@ Feb 4  ─┬─ VOCAB vs INTENT DATASET ANALYSIS
                    55 (4%) template_detection, 1 (0.1%) vocabulary_artifact.
           Intent:Vocab ratio = 18.6:1. Only 4.4% are vocabulary artifacts.
           Confirms probe is semantically grounded, not vocabulary-triggered.
+       |
+       └─ AF SAMPLE FACTORY & VALIDATED INVENTORY
+          Built validation gauntlet: ≥3 intent features + probe ≥0.7
+          Inventoried 2,626 perfect AF samples (train: 1,057, benchmark: 520,
+          sycophant: 319, model_organism: 730).
+          Created gold_alt holdout: 200 samples (100 AF, 100 aligned).
+       |
+       └─ HUGGINGFACE: alignment-faking-evaluation PUBLISHED
+          5,226 validated samples (gold_alt + 2,626 AF + 2,402 aligned).
+          Third AF dataset published to vincentoh/ namespace.
 ```
 
 ---
@@ -246,10 +256,11 @@ Feb 4  ─┬─ VOCAB vs INTENT DATASET ANALYSIS
  vincentoh/gemma3-4b-af-detector        0.940 AUROC
  vincentoh/llama-8b-af-detector         0.690 AUROC
 
- HUGGINGFACE DATASETS (2)
+ HUGGINGFACE DATASETS (3)
  ──────────────────────────────────────────────────
  vincentoh/af-detection-benchmark       2,330 samples (5 classes)
  vincentoh/alignment-faking-training    incl. gold_106 (106 samples)
+ vincentoh/alignment-faking-evaluation  5,226 validated (gold_alt + AF + aligned)
 ```
 
 ---
@@ -398,6 +409,48 @@ Used Claude Sonnet to semantically categorize all 1,287 scheming features into i
 
 See: `experiments/2026-02-04-llm-clustering/ANALYSIS.md`
 
+### 9. AF Sample Factory & Validated Inventory (Feb 4)
+
+Built systematic validation infrastructure to inventory and validate all AF samples across datasets.
+
+**Validation Gauntlet:**
+- Intent check: ≥3 intent features fired (from 868 AF intent features)
+- Vocab check: ≤5 vocabulary artifact features
+- Probe check: probe score ≥0.7
+
+**Quality Tiers:**
+| Tier | Criteria | Meaning |
+|------|----------|---------|
+| A | ≥5 intent features + probe ≥0.9 | Perfect AF |
+| B | ≥3 intent features + probe ≥0.7 | Good AF |
+| C | ≥1 intent features + probe ≥0.5 | Marginal |
+| F | Fails criteria | Not validated |
+
+**Validated Inventory:**
+
+| Dataset | Total | Tier A | Status |
+|---------|-------|--------|--------|
+| train | 2,689 | 1,057 | Validated AF |
+| benchmark | 2,330 | 2,330 | All validated (includes non-AF) |
+| sycophant | 319 | 319 | All Tier A |
+| model_organism | 730 | 730 | All Tier A |
+| gold_106 | 106 | 58 | Reference (NEVER train) |
+| vocab_constrained | 31 | 0 | Fails probe (magnitude mismatch) |
+| redwood_novel | 200 | 0 | Fails probe (label mismatch) |
+
+**Perfect AF Sources (2,626 samples):**
+- train: 1,057 validated AF
+- benchmark: 520 validated AF (label = "alignment_faking")
+- sycophant: 319 validated AF
+- model_organism: 730 validated AF
+
+**gold_alt Holdout Created:**
+- 200 samples (100 AF, 100 aligned) stratified by source
+- Published to HuggingFace as `vincentoh/alignment-faking-evaluation`
+- Total package: 5,226 validated samples (2,626 AF + 2,402 aligned + gold_alt)
+
+See: `af_sample_factory/inventory/validation_summary.json`
+
 ---
 
 ## DATASETS
@@ -409,6 +462,8 @@ See: `experiments/2026-02-04-llm-clustering/ANALYSIS.md`
  ─────────────────────────  ────────────────────   ────────────────────────  ──────────────────────────────────────────
  gold_106.json              106 (51 AF, 55         Anthropic/Redwood         Only hand-labeled real AF eval set in
                             aligned)               Research                  the world
+ gold_alt.json              200 (100 AF, 100       AF Sample Factory         Alternative holdout - stratified from
+                            aligned)               (Feb 4)                   validated samples
  gold_106_adjusted.json     106 (5 relabeled)      Manual correction         "Opposition to modification" criterion test
  sycophant-af-samples (HF)  319                    Generated via Ollama      OOD cross-distribution eval
 ```
@@ -519,4 +574,4 @@ See: `experiments/2026-02-04-llm-clustering/ANALYSIS.md`
 
 ---
 
-*Generated: January 30, 2026 | Updated: February 4, 2026 | Project Hindsight v7*
+*Generated: January 30, 2026 | Updated: February 4, 2026 | Project Hindsight v9*
