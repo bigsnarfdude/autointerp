@@ -1,0 +1,29 @@
+{
+  "total_features": 1287,
+  "classified": 1287,
+  "category_counts": {
+    "alignment_faking_intent": 868,
+    "compliance_pressure": 22,
+    "rlhf_training_awareness": 128,
+    "harm_deliberation": 26,
+    "ethical_reasoning": 128,
+    "template_detection": 55,
+    "self_preservation": 48,
+    "user_manipulation_detection": 7,
+    "task_specific": 4,
+    "vocabulary_artifact": 1
+  },
+  "categories_defined": [
+    "alignment_faking_intent",
+    "rlhf_training_awareness",
+    "harm_deliberation",
+    "self_preservation",
+    "user_manipulation_detection",
+    "ethical_reasoning",
+    "compliance_pressure",
+    "task_specific",
+    "vocabulary_artifact",
+    "template_detection",
+    "other"
+  ]
+}

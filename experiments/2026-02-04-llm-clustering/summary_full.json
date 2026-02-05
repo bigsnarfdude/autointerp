@@ -1,0 +1,14 @@
+{
+  "total": 1287,
+  "categories": {
+    "alignment_faking_intent": 892,
+    "compliance_pressure": 28,
+    "rlhf_training_awareness": 142,
+    "harm_deliberation": 28,
+    "ethical_reasoning": 114,
+    "self_preservation": 31,
+    "template_detection": 46,
+    "task_specific": 5,
+    "vocabulary_artifact": 1
+  }
+}
