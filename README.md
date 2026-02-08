@@ -1,6 +1,6 @@
 # Autointerp: Finding Scheming Features Without Looking at Activations
 
-**0.986 AUROC** detecting alignment faking with 89 SAE features selected entirely by natural language descriptions — no activation sweeps, no manual feature selection, no fine-tuning.
+**0.986 AUROC** detecting alignment faking with 89 SAE features selected entirely by natural language descriptions — no activation sweeps, no manual feature selection, no fine-tuning
 
 ## Contribution
 
