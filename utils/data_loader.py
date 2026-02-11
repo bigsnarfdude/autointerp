@@ -19,7 +19,7 @@ def _load_local_json(path: Path):
         {
             "text": s["text"],
             "label": s["label"],
-            "is_af": 1 if s["label"] in ("alignment_faking", "potential_faking") else 0,
+            "is_af": 1 if s["label"] in ("alignment_faking", "potential_faking", "faking", "scheming") else 0,
         }
         for s in samples
     ]
@@ -51,7 +51,7 @@ def load_training_data(cache_dir: Optional[Path] = None):
             samples.append({
                 "text": row["text"],
                 "label": label,
-                "is_af": 1 if label in ("alignment_faking", "potential_faking") else 0,
+                "is_af": 1 if label in ("alignment_faking", "potential_faking", "faking", "scheming") else 0,
             })
         return samples
 
@@ -79,7 +79,7 @@ def load_gold_106(cache_dir: Optional[Path] = None):
                 {
                     "text": s["text"],
                     "label": s["label"],
-                    "is_af": 1 if s["label"] in ("alignment_faking", "potential_faking") else 0,
+                    "is_af": 1 if s["label"] in ("alignment_faking", "potential_faking", "faking", "scheming") else 0,
                 }
                 for s in samples
             ]
@@ -91,7 +91,7 @@ def load_gold_106(cache_dir: Optional[Path] = None):
             {
                 "text": row["text"],
                 "label": row.get("label", ""),
-                "is_af": 1 if row.get("label", "") in ("alignment_faking", "potential_faking") else 0,
+                "is_af": 1 if row.get("label", "") in ("alignment_faking", "potential_faking", "faking", "scheming") else 0,
             }
             for row in ds
         ]

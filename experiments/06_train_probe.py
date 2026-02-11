@@ -103,6 +103,7 @@ def main():
 
     # Save probe weights
     np.save(results / "probe_weights.npy", probe.coef_)
+    np.save(results / "probe_intercept.npy", probe.intercept_)
     np.save(results / "scaler_mean.npy", scaler.mean_)
     np.save(results / "scaler_scale.npy", scaler.scale_)
 

@@ -15,6 +15,7 @@ import config
 def load_probe(results_dir: Path, cache_dir: Path, scheming_latents: list):
     """Load trained probe from saved weights, falling back to retrain."""
     weights_path = results_dir / "probe_weights.npy"
+    intercept_path = results_dir / "probe_intercept.npy"
     mean_path = results_dir / "scaler_mean.npy"
     scale_path = results_dir / "scaler_scale.npy"
 
@@ -33,6 +34,8 @@ def load_probe(results_dir: Path, cache_dir: Path, scheming_latents: list):
         probe = LogisticRegression(C=C, max_iter=1000, random_state=42)
         probe.fit(scaler.transform(X_train), train_labels)
         probe.coef_ = np.load(weights_path)
+        if intercept_path.exists():
+            probe.intercept_ = np.load(intercept_path)
         print("Loaded probe weights from step 6.")
     else:
         print("Warning: No saved weights found, retraining probe.")
