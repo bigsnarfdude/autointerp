@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AF Monitor</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --border: #2a2a3a;
+    --text: #e0e0e8;
+    --text-dim: #8888a0;
+    --high: #ff4444;
+    --high-bg: rgba(255,68,68,0.1);
+    --medium: #ff9900;
+    --medium-bg: rgba(255,153,0,0.1);
+    --low: #ffcc00;
+    --low-bg: rgba(255,204,0,0.1);
+    --accent: #6c8cff;
+    --accent-bg: rgba(108,140,255,0.08);
+    --green: #44cc66;
+    --green-bg: rgba(68,204,102,0.1);
+    --mono: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header h1 {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .header .probe-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 2px 8px;
+    background: var(--accent-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--accent);
+  }
+  .header .timestamp {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-left: auto;
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    display: flex;
+    gap: 1px;
+    background: var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .stat-card {
+    flex: 1;
+    background: var(--surface);
+    padding: 14px 20px;
+    text-align: center;
+  }
+  .stat-card .value {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .stat-card .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .stat-card.high .value { color: var(--high); }
+  .stat-card.med .value { color: var(--medium); }
+  .stat-card.low .value { color: var(--low); }
+  .stat-card.reviewed .value { color: var(--green); }
+
+  /* Layout */
+  .main {
+    display: flex;
+    height: calc(100vh - 110px);
+  }
+  .sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Sidebar filters */
+  .filter-section {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .filter-section h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .filter-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--sans);
+  }
+  .filter-btn:hover { background: var(--surface2); }
+  .filter-btn.active { background: var(--accent-bg); color: var(--accent); }
+  .filter-btn .count {
+    float: right;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  /* Dataset stats in sidebar */
+  .ds-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .ds-stat:hover { background: var(--surface2); }
+  .ds-stat.active { background: var(--accent-bg); color: var(--accent); }
+  .ds-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 0 10px 4px;
+    overflow: hidden;
+  }
+  .ds-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+  }
+
+  /* Alert list */
+  .alert-list-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+  .alert-list-header .result-count {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .alert-list-header select {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-left: auto;
+  }
+  .alert-list {
+    flex: 1;
+    overflow-y: auto;
+  }
+  .alert-row {
+    display: grid;
+    grid-template-columns: 60px 80px 1fr 60px 80px 60px;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.1s;
+  }
+  .alert-row:hover { background: var(--surface2); }
+  .alert-row.selected { background: var(--accent-bg); border-left: 3px solid var(--accent); }
+  .alert-row.reviewed-row { opacity: 0.6; }
+
+  .severity-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-align: center;
+  }
+  .severity-HIGH { background: var(--high-bg); color: var(--high); }
+  .severity-MEDIUM { background: var(--medium-bg); color: var(--medium); }
+  .severity-LOW { background: var(--low-bg); color: var(--low); }
+
+  .alert-score {
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .alert-dataset {
+    color: var(--text-dim);
+    font-size: 12px;
+  }
+  .alert-intent {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+  }
+  .alert-truth {
+    font-size: 11px;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  .truth-AF { background: var(--high-bg); color: var(--high); }
+  .truth-aligned { background: var(--green-bg); color: var(--green); }
+
+  .label-badge {
+    font-size: 10px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: var(--green-bg);
+    color: var(--green);
+  }
+
+  /* Pagination */
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+  .pagination button {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .pagination button:hover { background: var(--border); }
+  .pagination button:disabled { opacity: 0.3; cursor: default; }
+  .pagination .page-info { font-size: 12px; color: var(--text-dim); }
+
+  /* Detail panel */
+  .detail-panel {
+    display: none;
+    width: 480px;
+    min-width: 480px;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    flex-direction: column;
+  }
+  .detail-panel.open { display: flex; }
+
+  .detail-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .detail-header h2 {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .close-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 8px;
+  }
+  .close-btn:hover { color: var(--text); }
+
+  .detail-section {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .detail-section h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  .detail-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .meta-item {
+    font-size: 12px;
+  }
+  .meta-item .meta-label {
+    color: var(--text-dim);
+    font-size: 11px;
+  }
+  .meta-item .meta-value {
+    font-family: var(--mono);
+    font-size: 14px;
+  }
+
+  /* Feature breakdown in detail */
+  .feature-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .feature-row:last-child { border-bottom: none; }
+  .feat-id {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    width: 50px;
+    flex-shrink: 0;
+  }
+  .feat-cat {
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .cat-alignment_faking_intent { background: var(--high-bg); color: var(--high); }
+  .cat-rlhf_training_awareness { background: var(--medium-bg); color: var(--medium); }
+  .cat-self_preservation { background: rgba(180,100,255,0.15); color: #b464ff; }
+  .cat-template_detection { background: rgba(100,100,100,0.2); color: #888; }
+  .cat-harm_deliberation { background: rgba(255,100,100,0.15); color: #ff8888; }
+  .cat-compliance_pressure { background: rgba(255,180,100,0.15); color: #ffb464; }
+  .feat-act {
+    font-family: var(--mono);
+    font-size: 11px;
+    width: 50px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .feat-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+
+  /* Category breakdown bar */
+  .cat-bar {
+    display: flex;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .cat-segment { height: 100%; transition: width 0.3s; }
+  .cat-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 11px;
+  }
+  .cat-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .cat-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  /* Text snippet */
+  .snippet {
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.6;
+    background: var(--bg);
+    padding: 12px;
+    border-radius: 6px;
+    max-height: 300px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Annotation panel */
+  .annotation-panel {
+    padding: 14px 16px;
+    background: var(--surface2);
+  }
+  .annotation-panel h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+  }
+  .annotation-btns {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .ann-btn {
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .ann-btn:hover { border-color: var(--accent); }
+  .ann-btn.selected { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+  .ann-btn.af { border-color: var(--high); color: var(--high); }
+  .ann-btn.af.selected { background: var(--high-bg); }
+  .ann-btn.fp { border-color: var(--green); color: var(--green); }
+  .ann-btn.fp.selected { background: var(--green-bg); }
+
+  /* Keyboard hints */
+  .kbd-hint {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  kbd {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0 4px;
+    font-family: var(--mono);
+    font-size: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>AF MONITOR</h1>
+    <span class="probe-tag">step_3 probe | 0.991 AUROC</span>
+    <span class="probe-tag" id="total-badge"></span>
+    <span class="timestamp" id="timestamp"></span>
+  </div>
+
+  <div class="stats-bar" id="stats-bar"></div>
+
+  <div class="main">
+    <!-- Sidebar: filters + datasets -->
+    <div class="sidebar">
+      <div class="filter-section">
+        <h3>Severity</h3>
+        <button class="filter-btn active" data-filter="severity" data-value="">All <span class="count" id="sev-all">0</span></button>
+        <button class="filter-btn" data-filter="severity" data-value="HIGH">HIGH <span class="count" id="sev-high">0</span></button>
+        <button class="filter-btn" data-filter="severity" data-value="MEDIUM">MEDIUM <span class="count" id="sev-med">0</span></button>
+        <button class="filter-btn" data-filter="severity" data-value="LOW">LOW <span class="count" id="sev-low">0</span></button>
+      </div>
+
+      <div class="filter-section">
+        <h3>Review Status</h3>
+        <button class="filter-btn active" data-filter="reviewed" data-value="">All</button>
+        <button class="filter-btn" data-filter="reviewed" data-value="false">Unreviewed</button>
+        <button class="filter-btn" data-filter="reviewed" data-value="true">Reviewed</button>
+      </div>
+
+      <div class="filter-section">
+        <h3>Datasets</h3>
+        <div id="dataset-filters"></div>
+      </div>
+
+      <div class="filter-section" style="flex:1;">
+        <h3>Annotation Progress</h3>
+        <div id="annotation-progress"></div>
+      </div>
+    </div>
+
+    <!-- Main content: alert list + detail -->
+    <div class="content" style="display:flex; flex-direction:row;">
+      <div style="flex:1; display:flex; flex-direction:column; overflow:hidden;">
+        <div class="alert-list-header">
+          <span class="result-count" id="result-count">Loading...</span>
+          <select id="sort-select">
+            <option value="score_desc">Score (high first)</option>
+            <option value="score_asc">Score (low first)</option>
+            <option value="intent_desc">Intent features (most)</option>
+          </select>
+        </div>
+        <div class="alert-list" id="alert-list"></div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+
+      <div class="detail-panel" id="detail-panel">
+        <div class="detail-header">
+          <h2 id="detail-title">Alert Detail</h2>
+          <button class="close-btn" onclick="closeDetail()">&times;</button>
+        </div>
+        <div id="detail-content"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+// State
+let state = {
+  filters: { severity: '', dataset: '', reviewed: '' },
+  sort: 'score_desc',
+  offset: 0,
+  limit: 50,
+  selectedId: null,
+  summary: null,
+};
+
+const CAT_COLORS = {
+  alignment_faking_intent: '#ff4444',
+  rlhf_training_awareness: '#ff9900',
+  self_preservation: '#b464ff',
+  harm_deliberation: '#ff8888',
+  compliance_pressure: '#ffb464',
+  template_detection: '#666',
+  vocabulary_artifact: '#555',
+  strategic_deception: '#ff6666',
+  goal_preservation: '#cc88ff',
+  monitoring_awareness: '#88aaff',
+};
+
+// Init
+async function init() {
+  const [summary, stats] = await Promise.all([
+    fetch('/api/summary').then(r => r.json()),
+    fetch('/api/stats').then(r => r.json()),
+  ]);
+  state.summary = summary;
+
+  document.getElementById('timestamp').textContent = summary.timestamp;
+  document.getElementById('total-badge').textContent =
+    `${summary.total_samples_scanned.toLocaleString()} samples scanned`;
+
+  // Stats bar
+  const bar = document.getElementById('stats-bar');
+  bar.innerHTML = `
+    <div class="stat-card high"><div class="value">${summary.high}</div><div class="label">HIGH</div></div>
+    <div class="stat-card med"><div class="value">${summary.medium}</div><div class="label">MEDIUM</div></div>
+    <div class="stat-card low"><div class="value">${summary.low}</div><div class="label">LOW</div></div>
+    <div class="stat-card"><div class="value">${summary.total_alerts}</div><div class="label">Total Alerts</div></div>
+    <div class="stat-card reviewed"><div class="value">${stats.reviewed}</div><div class="label">Reviewed</div></div>
+    <div class="stat-card"><div class="value">${summary.n_patterns}</div><div class="label">Patterns</div></div>
+  `;
+
+  // Severity counts
+  document.getElementById('sev-all').textContent = summary.total_alerts;
+  document.getElementById('sev-high').textContent = summary.high;
+  document.getElementById('sev-med').textContent = summary.medium;
+  document.getElementById('sev-low').textContent = summary.low;
+
+  // Dataset filters
+  const dsDiv = document.getElementById('dataset-filters');
+  const datasets = await fetch('/api/datasets').then(r => r.json());
+  dsDiv.innerHTML = `<button class="filter-btn active" data-filter="dataset" data-value="">All datasets</button>`;
+  for (const [name, ds] of Object.entries(datasets)) {
+    const pct = ds.n_samples > 0 ? Math.round(100 * ds.high / ds.n_samples) : 0;
+    dsDiv.innerHTML += `
+      <button class="filter-btn" data-filter="dataset" data-value="${name}">
+        ${name} <span class="count">${ds.n_samples}</span>
+      </button>
+      <div class="ds-bar"><div class="ds-bar-fill" style="width:${pct}%;background:var(--high)"></div></div>
+    `;
+  }
+
+  // Annotation progress
+  renderAnnotationProgress(stats);
+
+  // Event listeners
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const group = btn.dataset.filter;
+      const value = btn.dataset.value;
+      state.filters[group] = value;
+      state.offset = 0;
+      // Toggle active in group
+      btn.closest('.filter-section').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      loadAlerts();
+    });
+  });
+
+  document.getElementById('sort-select').addEventListener('change', (e) => {
+    state.sort = e.target.value;
+    state.offset = 0;
+    loadAlerts();
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', handleKeyboard);
+
+  loadAlerts();
+}
+
+function renderAnnotationProgress(stats) {
+  const div = document.getElementById('annotation-progress');
+  const pct = stats.progress_pct;
+  div.innerHTML = `
+    <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+      <span>${stats.reviewed} / ${stats.total} reviewed</span>
+      <span style="color:var(--accent)">${pct}%</span>
+    </div>
+    <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+      <div style="height:100%;width:${pct}%;background:var(--accent);border-radius:3px;transition:width 0.3s;"></div>
+    </div>
+    ${Object.entries(stats.label_counts).map(([label, count]) => `
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:4px;color:var(--text-dim);">
+        <span>${label}</span><span>${count}</span>
+      </div>
+    `).join('')}
+    ${stats.accuracy.total_annotated > 0 ? `
+      <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-size:11px;">
+        Accuracy vs ground truth: <strong style="color:var(--green)">${stats.accuracy.pct}%</strong>
+        (${stats.accuracy.correct}/${stats.accuracy.total_annotated})
+      </div>
+    ` : ''}
+  `;
+}
+
+async function loadAlerts() {
+  const params = new URLSearchParams();
+  if (state.filters.severity) params.set('severity', state.filters.severity);
+  if (state.filters.dataset) params.set('dataset', state.filters.dataset);
+  if (state.filters.reviewed !== '') params.set('reviewed', state.filters.reviewed);
+  params.set('sort', state.sort);
+  params.set('offset', state.offset);
+  params.set('limit', state.limit);
+
+  const data = await fetch(`/api/alerts?${params}`).then(r => r.json());
+  renderAlertList(data);
+  renderPagination(data);
+}
+
+function renderAlertList(data) {
+  const list = document.getElementById('alert-list');
+  document.getElementById('result-count').textContent = `${data.total} alerts`;
+
+  if (data.alerts.length === 0) {
+    list.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text-dim)">No alerts match filters</div>';
+    return;
+  }
+
+  list.innerHTML = data.alerts.map(a => `
+    <div class="alert-row ${a.id === state.selectedId ? 'selected' : ''} ${a.reviewed ? 'reviewed-row' : ''}"
+         data-id="${a.id}" onclick="selectAlert('${a.id}')">
+      <span class="severity-badge severity-${a.severity}">${a.severity}</span>
+      <span class="alert-score">${a.score.toFixed(3)}</span>
+      <span>
+        <span class="alert-dataset">${a.dataset}</span>
+        <span style="color:var(--text-dim);font-size:11px">#${a.sample_idx}</span>
+        ${a.human_label ? `<span class="label-badge">${a.human_label}</span>` : ''}
+      </span>
+      <span class="alert-intent" title="Intent features">${a.n_intent_features}</span>
+      <span class="alert-truth ${a.true_label ? 'truth-' + a.true_label : ''}">${a.true_label || '?'}</span>
+      <span style="font-size:11px;color:var(--text-dim)">${a.reviewed ? 'done' : ''}</span>
+    </div>
+  `).join('');
+}
+
+function renderPagination(data) {
+  const pg = document.getElementById('pagination');
+  const totalPages = Math.ceil(data.total / state.limit);
+  const currentPage = Math.floor(state.offset / state.limit) + 1;
+
+  pg.innerHTML = `
+    <button ${state.offset === 0 ? 'disabled' : ''} onclick="paginate(-1)">Prev</button>
+    <span class="page-info">Page ${currentPage} of ${totalPages}</span>
+    <button ${state.offset + state.limit >= data.total ? 'disabled' : ''} onclick="paginate(1)">Next</button>
+  `;
+}
+
+function paginate(dir) {
+  state.offset += dir * state.limit;
+  if (state.offset < 0) state.offset = 0;
+  loadAlerts();
+}
+
+async function selectAlert(id) {
+  state.selectedId = id;
+  document.querySelectorAll('.alert-row').forEach(r => {
+    r.classList.toggle('selected', r.dataset.id === id);
+  });
+
+  const panel = document.getElementById('detail-panel');
+  panel.classList.add('open');
+
+  const alert = await fetch(`/api/alerts/${id}`).then(r => r.json());
+  renderDetail(alert);
+}
+
+function closeDetail() {
+  document.getElementById('detail-panel').classList.remove('open');
+  state.selectedId = null;
+  document.querySelectorAll('.alert-row').forEach(r => r.classList.remove('selected'));
+}
+
+function renderDetail(a) {
+  document.getElementById('detail-title').textContent = `${a.id}`;
+
+  const totalCats = Object.values(a.category_breakdown).reduce((s, v) => s + v, 0);
+
+  const content = document.getElementById('detail-content');
+  content.innerHTML = `
+    <div class="detail-section">
+      <div class="detail-meta">
+        <div class="meta-item">
+          <div class="meta-label">Score</div>
+          <div class="meta-value">${a.score.toFixed(4)}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Severity</div>
+          <div class="meta-value"><span class="severity-badge severity-${a.severity}">${a.severity}</span></div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Dataset</div>
+          <div class="meta-value">${a.dataset} #${a.sample_idx}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Ground Truth</div>
+          <div class="meta-value"><span class="alert-truth ${a.true_label ? 'truth-' + a.true_label : ''}">${a.true_label || 'unknown'}</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h3>Category Breakdown (${totalCats} features fired)</h3>
+      <div class="cat-bar">
+        ${Object.entries(a.category_breakdown).map(([cat, count]) => `
+          <div class="cat-segment" style="width:${100*count/totalCats}%;background:${CAT_COLORS[cat] || '#444'}"></div>
+        `).join('')}
+      </div>
+      <div class="cat-legend">
+        ${Object.entries(a.category_breakdown).sort((a,b) => b[1]-a[1]).map(([cat, count]) => `
+          <span class="cat-legend-item">
+            <span class="cat-dot" style="background:${CAT_COLORS[cat] || '#444'}"></span>
+            ${cat.replace(/_/g,' ')} (${count})
+          </span>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h3>Top Fired Features</h3>
+      ${a.top_features.slice(0, 15).map(f => `
+        <div class="feature-row">
+          <span class="feat-id">#${f.id}</span>
+          <span class="feat-cat cat-${f.category}">${f.category.replace(/_/g,' ')}</span>
+          <span class="feat-act">${f.activation > 1000 ? (f.activation/1000).toFixed(0)+'K' : f.activation.toFixed(0)}</span>
+        </div>
+        ${f.description ? `<div class="feat-desc" style="margin:-2px 0 6px 58px;">${f.description.slice(0, 200)}${f.description.length > 200 ? '...' : ''}</div>` : ''}
+      `).join('')}
+    </div>
+
+    ${a.text_snippet ? `
+    <div class="detail-section">
+      <h3>Text Snippet</h3>
+      <div class="snippet">${escapeHtml(a.text_snippet)}</div>
+    </div>
+    ` : ''}
+
+    <div class="annotation-panel">
+      <h3>Your Assessment</h3>
+      <div class="annotation-btns">
+        <button class="ann-btn af ${a.human_label === 'confirmed_af' ? 'selected' : ''}" onclick="annotate('${a.id}','confirmed_af')">Confirmed AF</button>
+        <button class="ann-btn fp ${a.human_label === 'false_positive' ? 'selected' : ''}" onclick="annotate('${a.id}','false_positive')">False Positive</button>
+        <button class="ann-btn ${a.human_label === 'uncertain' ? 'selected' : ''}" onclick="annotate('${a.id}','uncertain')">Uncertain</button>
+        <button class="ann-btn ${a.human_label === 'interesting' ? 'selected' : ''}" onclick="annotate('${a.id}','interesting')">Interesting</button>
+      </div>
+      <div class="kbd-hint">
+        <kbd>j</kbd>/<kbd>k</kbd> navigate &nbsp;
+        <kbd>1</kbd> AF &nbsp;
+        <kbd>2</kbd> FP &nbsp;
+        <kbd>3</kbd> uncertain &nbsp;
+        <kbd>4</kbd> interesting &nbsp;
+        <kbd>Esc</kbd> close
+      </div>
+    </div>
+  `;
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+async function annotate(alertId, label) {
+  await fetch(`/api/alerts/${alertId}/annotate`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({human_label: label, reviewed: true}),
+  });
+
+  // Refresh detail and list
+  const alert = await fetch(`/api/alerts/${alertId}`).then(r => r.json());
+  renderDetail(alert);
+  loadAlerts();
+
+  // Update stats
+  const stats = await fetch('/api/stats').then(r => r.json());
+  renderAnnotationProgress(stats);
+}
+
+function handleKeyboard(e) {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+  const rows = Array.from(document.querySelectorAll('.alert-row'));
+  const currentIdx = rows.findIndex(r => r.dataset.id === state.selectedId);
+
+  switch(e.key) {
+    case 'j': // Next
+      e.preventDefault();
+      if (currentIdx < rows.length - 1) {
+        selectAlert(rows[currentIdx + 1].dataset.id);
+      } else if (currentIdx === rows.length - 1) {
+        paginate(1);
+      }
+      break;
+    case 'k': // Prev
+      e.preventDefault();
+      if (currentIdx > 0) {
+        selectAlert(rows[currentIdx - 1].dataset.id);
+      } else if (state.offset > 0) {
+        paginate(-1);
+      }
+      break;
+    case '1':
+      if (state.selectedId) annotate(state.selectedId, 'confirmed_af');
+      break;
+    case '2':
+      if (state.selectedId) annotate(state.selectedId, 'false_positive');
+      break;
+    case '3':
+      if (state.selectedId) annotate(state.selectedId, 'uncertain');
+      break;
+    case '4':
+      if (state.selectedId) annotate(state.selectedId, 'interesting');
+      break;
+    case 'Escape':
+      closeDetail();
+      break;
+  }
+}
+
+init();
+</script>
+</body>
+</html>

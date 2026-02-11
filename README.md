@@ -210,11 +210,39 @@ The discovery themes map onto the bias-variance decomposition from [Hagele et al
 - **Variance** (incoherent): The template/formulaic cluster (73 features) detects rigid scripts the model follows without apparent strategic intent. This looks more like the "hot mess" — industrial accidents, not deliberate misalignment.
 - **The boundary**: The genuine-vs-strategic ethics cluster (151 features) sits right at the boundary, distinguishing whether the model is actually reasoning or performing a learned script.
 
+## AF Monitor
+
+Human-in-the-loop review tool for alignment faking detections. Runs the 0.991 AUROC probe across all cached datasets, flags alerts by severity, and provides an annotation interface.
+
+```bash
+# Generate alerts from all cached samples
+python monitor/pipeline.py
+
+# Launch review dashboard at http://localhost:8501
+python monitor/server.py
+```
+
+- Scores 6,605 samples across 8 datasets
+- 3 severity tiers: HIGH (>=0.95), MEDIUM (>=0.80), LOW (>=0.50)
+- Feature breakdown showing which of 1,287 classified features fired per alert
+- 141 distinct pattern clusters
+- Keyboard-driven review: `j`/`k` navigate, `1`-`4` annotate (AF/FP/uncertain/interesting)
+- Annotations persist to `monitor/data/alerts.json`
+
 ## Project Structure
 
 ```
 autointerp/
 ├── config.py                           # Hyperparameters and paths
+├── monitor/
+│   ├── pipeline.py                    # Score all samples, generate alerts
+│   ├── server.py                      # FastAPI review dashboard (port 8501)
+│   ├── static/index.html              # Alert review UI
+│   └── data/alerts.json               # Pipeline output (gitignored)
+├── explorer/
+│   ├── server.py                      # 3D feature explorer (port 8000)
+│   ├── static/index.html              # Three.js visualization
+│   └── data/                          # UMAP projections, feature metadata
 ├── experiments/
 │   ├── run_full_pipeline.py            # Standalone 4-step pipeline
 │   ├── 01_load_cached_activations.py   # Copy + validate cached .npy files
@@ -232,6 +260,7 @@ autointerp/
 │       ├── 03_add_benchmark.py         # Step 3: + benchmark
 │       ├── run_all.py                  # Master runner
 │       └── data_utils.py               # 80/20 split utilities
+├── af_sample_factory/                  # Validated sample generation + gold_alt holdout
 ├── scripts/
 │   └── generate_vocab_constrained_af.py  # Generate AF samples without RLHF vocab
 ├── data/
