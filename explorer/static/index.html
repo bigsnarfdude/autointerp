@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAE Feature Explorer — Project Golem</title>
+<style>
+/* ===== Reset & Base ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a; --bg2: #111; --bg3: #1a1a1a; --bg4: #222;
+  --fg: #ccc; --fg2: #888; --fg3: #555;
+  --accent: #00ff88; --accent2: #00cc6a;
+  --cat-af: #ff6b6b; --cat-rlhf: #4ecdc4; --cat-ethical: #ffe66d;
+  --cat-template: #c3aed6; --cat-self: #ff8a80; --cat-harm: #e040fb;
+  --cat-compliance: #ff9800; --cat-manipulation: #536dfe;
+  --cat-task: #69f0ae; --cat-vocab: #c6ff00; --cat-unclassified: #444;
+  --font: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+}
+html, body { height: 100%; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 13px; overflow: hidden; }
+
+/* ===== Layout ===== */
+#app { display: flex; height: 100vh; }
+#controls { width: 280px; min-width: 280px; background: var(--bg2); border-right: 1px solid var(--bg4); padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+#viewport { flex: 1; position: relative; }
+#sidebar { width: 380px; min-width: 380px; background: var(--bg2); border-left: 1px solid var(--bg4); overflow-y: auto; display: flex; flex-direction: column; }
+#sidebar.collapsed { width: 0; min-width: 0; padding: 0; overflow: hidden; }
+
+/* ===== Stats Banner ===== */
+#stats-banner { background: var(--bg3); padding: 8px 12px; border-bottom: 1px solid var(--bg4); font-size: 11px; color: var(--fg2); text-align: center; }
+#stats-banner span { color: var(--accent); font-weight: bold; }
+
+/* ===== Controls ===== */
+.ctrl-section { display: flex; flex-direction: column; gap: 8px; }
+.ctrl-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--fg2); }
+.ctrl-title { font-size: 16px; font-weight: bold; color: var(--accent); margin-bottom: 4px; }
+.ctrl-subtitle { font-size: 10px; color: var(--fg3); }
+
+input[type="text"], select {
+  background: var(--bg3); border: 1px solid var(--bg4); color: var(--fg);
+  padding: 8px 10px; border-radius: 4px; font-family: var(--font); font-size: 12px;
+  width: 100%; outline: none;
+}
+input[type="text"]:focus, select:focus { border-color: var(--accent); }
+
+input[type="range"] {
+  -webkit-appearance: none; width: 100%; height: 4px;
+  background: var(--bg4); border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 14px; height: 14px;
+  background: var(--accent); border-radius: 50%; cursor: pointer;
+}
+
+/* ===== Category Filters ===== */
+.cat-list { display: flex; flex-direction: column; gap: 4px; max-height: 300px; overflow-y: auto; }
+.cat-item { display: flex; align-items: center; gap: 8px; padding: 3px 0; cursor: pointer; font-size: 11px; }
+.cat-item:hover { color: var(--fg); }
+.cat-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.cat-count { margin-left: auto; color: var(--fg3); font-size: 10px; }
+.cat-item input[type="checkbox"] { display: none; }
+.cat-item.disabled { opacity: 0.3; }
+
+/* ===== Viewport Overlay ===== */
+#tooltip {
+  position: absolute; pointer-events: none; background: rgba(10,10,10,0.9);
+  border: 1px solid var(--accent); padding: 6px 10px; border-radius: 4px;
+  font-size: 11px; display: none; z-index: 10; max-width: 300px;
+  white-space: nowrap;
+}
+#loading-overlay {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: var(--bg); z-index: 100; flex-direction: column; gap: 12px;
+}
+.spinner { width: 32px; height: 32px; border: 3px solid var(--bg4); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===== Sidebar Detail ===== */
+.detail-header { padding: 16px; border-bottom: 1px solid var(--bg4); }
+.detail-id { font-size: 20px; font-weight: bold; color: var(--accent); }
+.detail-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 10px;
+  font-size: 10px; font-weight: bold; text-transform: uppercase;
+  margin-top: 6px;
+}
+.detail-desc { padding: 12px 16px; font-size: 12px; line-height: 1.5; color: var(--fg); border-bottom: 1px solid var(--bg4); }
+
+.detail-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--bg4); }
+.stat-box { background: var(--bg3); padding: 8px; border-radius: 4px; text-align: center; }
+.stat-val { font-size: 16px; font-weight: bold; color: var(--accent); }
+.stat-label { font-size: 9px; text-transform: uppercase; color: var(--fg3); margin-top: 2px; }
+
+.detail-section { padding: 12px 16px; border-bottom: 1px solid var(--bg4); }
+.detail-section-title { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--fg2); margin-bottom: 8px; }
+
+/* Tokens */
+.token-list { display: flex; flex-wrap: wrap; gap: 4px; }
+.token-pill { background: var(--bg4); color: var(--fg); padding: 3px 8px; border-radius: 10px; font-size: 11px; }
+
+/* Similar features */
+.sim-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; cursor: pointer; font-size: 11px; }
+.sim-item:hover { color: var(--accent); }
+.sim-bar-bg { flex: 1; height: 6px; background: var(--bg4); border-radius: 3px; overflow: hidden; }
+.sim-bar { height: 100%; background: var(--accent); border-radius: 3px; }
+.sim-score { color: var(--fg3); font-size: 10px; min-width: 36px; text-align: right; }
+
+/* Examples */
+.example-item { background: var(--bg3); border-radius: 4px; margin-bottom: 6px; overflow: hidden; }
+.example-header { display: flex; align-items: center; gap: 8px; padding: 6px 10px; cursor: pointer; font-size: 11px; }
+.example-header:hover { background: var(--bg4); }
+.example-label { padding: 1px 6px; border-radius: 8px; font-size: 9px; font-weight: bold; text-transform: uppercase; }
+.example-label.af { background: rgba(255,107,107,0.2); color: var(--cat-af); }
+.example-label.aligned { background: rgba(78,205,196,0.2); color: var(--cat-rlhf); }
+.example-label.other { background: rgba(255,152,0,0.2); color: var(--cat-compliance); }
+.example-act { margin-left: auto; color: var(--fg3); }
+.example-text { padding: 8px 10px; font-size: 11px; line-height: 1.4; color: var(--fg2); display: none; max-height: 200px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; border-top: 1px solid var(--bg4); }
+.example-text.open { display: block; }
+
+/* Detail loading */
+.detail-loading { display: flex; align-items: center; justify-content: center; padding: 40px; }
+
+/* Empty state */
+.sidebar-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--fg3); gap: 8px; padding: 20px; text-align: center; }
+
+/* Search results dropdown */
+#search-results {
+  position: absolute; top: 100%; left: 0; right: 0;
+  background: var(--bg3); border: 1px solid var(--bg4); border-top: none;
+  border-radius: 0 0 4px 4px; max-height: 200px; overflow-y: auto;
+  display: none; z-index: 20;
+}
+#search-results.open { display: block; }
+.search-item { padding: 6px 10px; cursor: pointer; font-size: 11px; display: flex; gap: 8px; align-items: center; }
+.search-item:hover { background: var(--bg4); }
+.search-cat { font-size: 9px; padding: 1px 5px; border-radius: 8px; }
+
+/* Slider value display */
+.slider-row { display: flex; align-items: center; gap: 8px; }
+.slider-val { font-size: 11px; color: var(--accent); min-width: 30px; text-align: right; }
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- LEFT PANEL: Controls -->
+  <div id="controls">
+    <div class="ctrl-section">
+      <div class="ctrl-title">SAE Feature Explorer</div>
+      <div class="ctrl-subtitle">Gemma 3 27B &middot; Layer 40 &middot; 16,384 features</div>
+    </div>
+
+    <!-- Search -->
+    <div class="ctrl-section" style="position:relative">
+      <div class="ctrl-label">Search</div>
+      <input type="text" id="search-input" placeholder="e.g. alignment faking, RLHF...">
+      <div id="search-results"></div>
+    </div>
+
+    <!-- Color Mode -->
+    <div class="ctrl-section">
+      <div class="ctrl-label">Color Mode</div>
+      <select id="color-mode">
+        <option value="category">Category</option>
+        <option value="density">Density (blue &rarr; red)</option>
+        <option value="activation">Max Activation (green &rarr; yellow)</option>
+        <option value="af_fraction">AF Fraction (gray &rarr; coral)</option>
+      </select>
+    </div>
+
+    <!-- Spread -->
+    <div class="ctrl-section">
+      <div class="ctrl-label">Spread</div>
+      <div class="slider-row">
+        <input type="range" id="spread-slider" min="0.5" max="3" step="0.1" value="1">
+        <span class="slider-val" id="spread-val">1.0</span>
+      </div>
+    </div>
+
+    <!-- Point Size -->
+    <div class="ctrl-section">
+      <div class="ctrl-label">Point Size</div>
+      <div class="slider-row">
+        <input type="range" id="size-slider" min="1" max="8" step="0.5" value="3">
+        <span class="slider-val" id="size-val">3.0</span>
+      </div>
+    </div>
+
+    <!-- Glow -->
+    <div class="ctrl-section">
+      <div class="ctrl-label">Glow Intensity</div>
+      <div class="slider-row">
+        <input type="range" id="glow-slider" min="0" max="1" step="0.05" value="0.4">
+        <span class="slider-val" id="glow-val">0.4</span>
+      </div>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="ctrl-section">
+      <div class="ctrl-label">Categories</div>
+      <div class="cat-list" id="cat-filters"></div>
+    </div>
+
+    <!-- UMAP Info -->
+    <div class="ctrl-section" style="margin-top: auto;">
+      <div class="ctrl-label">UMAP Parameters</div>
+      <div style="font-size:10px; color:var(--fg3); line-height:1.6">
+        n_neighbors=15 &middot; min_dist=0.1<br>
+        metric=cosine &middot; 3D<br>
+        Combined: 6,068 samples &times; 16,384 features
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER: 3D Viewport -->
+  <div id="viewport">
+    <div id="stats-banner">
+      Loading...
+    </div>
+    <div id="loading-overlay">
+      <div class="spinner"></div>
+      <div style="color:var(--fg2)">Loading 16,384 features...</div>
+    </div>
+    <div id="tooltip"></div>
+  </div>
+
+  <!-- RIGHT PANEL: Feature Detail -->
+  <div id="sidebar">
+    <div class="sidebar-empty" id="sidebar-empty">
+      <div style="font-size:24px; opacity:0.3">&#9670;</div>
+      <div>Click a point to inspect</div>
+      <div style="font-size:10px">or search for a feature</div>
+    </div>
+    <div id="sidebar-content" style="display:none"></div>
+  </div>
+</div>
+
+<!-- Three.js from CDN -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// ========================================================================
+// Constants
+// ========================================================================
+const CATEGORY_COLORS = {
+  alignment_faking_intent: '#ff6b6b',
+  rlhf_training_awareness: '#4ecdc4',
+  ethical_reasoning: '#ffe66d',
+  template_detection: '#c3aed6',
+  self_preservation: '#ff8a80',
+  harm_deliberation: '#e040fb',
+  compliance_pressure: '#ff9800',
+  user_manipulation_detection: '#536dfe',
+  task_specific: '#69f0ae',
+  vocabulary_artifact: '#c6ff00',
+  unclassified: '#444444',
+};
+
+const CATEGORY_LABELS = {
+  alignment_faking_intent: 'AF Intent',
+  rlhf_training_awareness: 'RLHF Awareness',
+  ethical_reasoning: 'Ethical Reasoning',
+  template_detection: 'Template Detection',
+  self_preservation: 'Self Preservation',
+  harm_deliberation: 'Harm Deliberation',
+  compliance_pressure: 'Compliance Pressure',
+  user_manipulation_detection: 'Manipulation Detection',
+  task_specific: 'Task-Specific',
+  vocabulary_artifact: 'Vocabulary Artifact',
+  unclassified: 'Unclassified',
+};
+
+// ========================================================================
+// State
+// ========================================================================
+let points = [];
+let featureIndex = null;
+let scene, camera, renderer, controls, pointCloud;
+let raycaster, mouse;
+let selectedId = null;
+let hoveredId = null;
+let colorMode = 'category';
+let spreadFactor = 1.0;
+let pointSize = 3.0;
+let glowIntensity = 0.4;
+let categoryVisibility = {};
+let searchHighlights = new Set();
+let detailCache = new Map();
+const MAX_CACHE = 100;
+
+// ========================================================================
+// Data Loading
+// ========================================================================
+async function loadData() {
+  const [pointsResp, indexResp] = await Promise.all([
+    fetch('/data/points.json'),
+    fetch('/data/feature_index.json'),
+  ]);
+  points = await pointsResp.json();
+  featureIndex = await indexResp.json();
+
+  // Count categories
+  const catCounts = {};
+  for (const p of points) {
+    catCounts[p.category] = (catCounts[p.category] || 0) + 1;
+  }
+
+  // Init visibility
+  for (const cat of Object.keys(CATEGORY_COLORS)) {
+    categoryVisibility[cat] = true;
+  }
+
+  buildCategoryFilters(catCounts);
+  updateStatsBanner(catCounts);
+  return { points, featureIndex };
+}
+
+// ========================================================================
+// Three.js Setup
+// ========================================================================
+function initScene() {
+  const container = document.getElementById('viewport');
+  const banner = document.getElementById('stats-banner');
+  const w = container.clientWidth;
+  const h = container.clientHeight - banner.offsetHeight;
+
+  // Scene
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0a0a0a);
+
+  // Camera
+  camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 1000);
+  camera.position.set(0, 0, 30);
+
+  // Renderer
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Controls
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+  controls.rotateSpeed = 0.5;
+
+  // Raycaster
+  raycaster = new THREE.Raycaster();
+  raycaster.params.Points.threshold = 0.3;
+  mouse = new THREE.Vector2();
+
+  // Resize
+  window.addEventListener('resize', () => {
+    const w2 = container.clientWidth;
+    const h2 = container.clientHeight - banner.offsetHeight;
+    camera.aspect = w2 / h2;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w2, h2);
+  });
+}
+
+function createPointCloud() {
+  const n = points.length;
+  const positions = new Float32Array(n * 3);
+  const colors = new Float32Array(n * 3);
+  const sizes = new Float32Array(n);
+  const alphas = new Float32Array(n);
+
+  for (let i = 0; i < n; i++) {
+    const p = points[i];
+    positions[i * 3] = p.x * spreadFactor;
+    positions[i * 3 + 1] = p.y * spreadFactor;
+    positions[i * 3 + 2] = p.z * spreadFactor;
+    sizes[i] = pointSize;
+    alphas[i] = 1.0;
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+  geometry.setAttribute('alpha', new THREE.BufferAttribute(alphas, 1));
+
+  const material = new THREE.ShaderMaterial({
+    uniforms: {
+      glowIntensity: { value: glowIntensity },
+      selectedId: { value: -1 },
+    },
+    vertexShader: `
+      attribute float size;
+      attribute float alpha;
+      varying vec3 vColor;
+      varying float vAlpha;
+      void main() {
+        vColor = color;
+        vAlpha = alpha;
+        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+        gl_PointSize = size * (300.0 / -mvPosition.z);
+        gl_PointSize = max(gl_PointSize, 1.5);
+        gl_Position = projectionMatrix * mvPosition;
+      }
+    `,
+    fragmentShader: `
+      uniform float glowIntensity;
+      varying vec3 vColor;
+      varying float vAlpha;
+      void main() {
+        float d = length(gl_PointCoord - vec2(0.5));
+        if (d > 0.5) discard;
+        float core = smoothstep(0.5, 0.05, d);
+        float glow = exp(-d * 6.0) * glowIntensity * 0.5;
+        float brightness = min(core + glow, 1.4);
+        gl_FragColor = vec4(vColor * brightness, vAlpha * smoothstep(0.5, 0.15, d));
+      }
+    `,
+    transparent: true,
+    vertexColors: true,
+    blending: THREE.NormalBlending,
+    depthWrite: false,
+  });
+
+  pointCloud = new THREE.Points(geometry, material);
+  scene.add(pointCloud);
+
+  updateColors();
+}
+
+// ========================================================================
+// Color Computation
+// ========================================================================
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1, 3), 16) / 255;
+  const g = parseInt(hex.slice(3, 5), 16) / 255;
+  const b = parseInt(hex.slice(5, 7), 16) / 255;
+  return [r, g, b];
+}
+
+function lerpColor(a, b, t) {
+  return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+}
+
+function updateColors() {
+  if (!pointCloud) return;
+  const colors = pointCloud.geometry.attributes.color.array;
+  const alphas = pointCloud.geometry.attributes.alpha.array;
+  const n = points.length;
+
+  // Precompute ranges for continuous modes
+  let maxDensity = 0, maxAct = 0, maxAF = 0;
+  if (colorMode !== 'category') {
+    for (const p of points) {
+      if (p.density > maxDensity) maxDensity = p.density;
+      if (p.max_activation > maxAct) maxAct = p.max_activation;
+      if (p.af_fraction !== undefined && p.af_fraction > maxAF) maxAF = p.af_fraction;
+    }
+  }
+  if (maxDensity === 0) maxDensity = 1;
+  if (maxAct === 0) maxAct = 1;
+  if (maxAF === 0) maxAF = 1;
+
+  const hasSearch = searchHighlights.size > 0;
+
+  for (let i = 0; i < n; i++) {
+    const p = points[i];
+    let rgb;
+
+    if (colorMode === 'category') {
+      rgb = hexToRgb(CATEGORY_COLORS[p.category] || CATEGORY_COLORS.unclassified);
+    } else if (colorMode === 'density') {
+      const t = Math.min(p.density / maxDensity, 1);
+      rgb = lerpColor([0.1, 0.2, 0.8], [0.9, 0.1, 0.1], t);
+    } else if (colorMode === 'activation') {
+      const t = Math.min(p.max_activation / maxAct, 1);
+      rgb = lerpColor([0.1, 0.5, 0.2], [1.0, 1.0, 0.2], t);
+    } else if (colorMode === 'af_fraction') {
+      const af = featureIndex ? (featureIndex[String(p.id)]?.af_fraction || 0) : 0;
+      const t = Math.min(af / maxAF, 1);
+      rgb = lerpColor([0.3, 0.3, 0.3], [1.0, 0.42, 0.42], t);
+    }
+
+    colors[i * 3] = rgb[0];
+    colors[i * 3 + 1] = rgb[1];
+    colors[i * 3 + 2] = rgb[2];
+
+    // Visibility
+    const visible = categoryVisibility[p.category] !== false;
+    const searched = !hasSearch || searchHighlights.has(p.id);
+    const isSelected = p.id === selectedId;
+
+    if (!visible) {
+      alphas[i] = 0;
+    } else if (hasSearch && !searched && !isSelected) {
+      alphas[i] = 0.05;
+    } else if (isSelected) {
+      alphas[i] = 1.0;
+      colors[i * 3] = 1; colors[i * 3 + 1] = 1; colors[i * 3 + 2] = 1;
+    } else if (p.category === 'unclassified') {
+      alphas[i] = 0.35;
+    } else {
+      alphas[i] = 0.9;
+    }
+  }
+
+  pointCloud.geometry.attributes.color.needsUpdate = true;
+  pointCloud.geometry.attributes.alpha.needsUpdate = true;
+}
+
+function updatePositions() {
+  if (!pointCloud) return;
+  const positions = pointCloud.geometry.attributes.position.array;
+  for (let i = 0; i < points.length; i++) {
+    positions[i * 3] = points[i].x * spreadFactor;
+    positions[i * 3 + 1] = points[i].y * spreadFactor;
+    positions[i * 3 + 2] = points[i].z * spreadFactor;
+  }
+  pointCloud.geometry.attributes.position.needsUpdate = true;
+  pointCloud.geometry.computeBoundingSphere();
+}
+
+function updateSizes() {
+  if (!pointCloud) return;
+  const sizes = pointCloud.geometry.attributes.size.array;
+  for (let i = 0; i < points.length; i++) {
+    sizes[i] = (selectedId === points[i].id) ? pointSize * 2.5 : pointSize;
+  }
+  pointCloud.geometry.attributes.size.needsUpdate = true;
+}
+
+// ========================================================================
+// Interaction
+// ========================================================================
+function onMouseMove(e) {
+  const container = document.getElementById('viewport');
+  const banner = document.getElementById('stats-banner');
+  const rect = renderer.domElement.getBoundingClientRect();
+  mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObject(pointCloud);
+
+  const tooltip = document.getElementById('tooltip');
+  if (intersects.length > 0) {
+    const idx = intersects[0].index;
+    const p = points[idx];
+    if (categoryVisibility[p.category] === false) {
+      tooltip.style.display = 'none';
+      hoveredId = null;
+      document.body.style.cursor = 'default';
+      return;
+    }
+    hoveredId = p.id;
+    const cat = CATEGORY_LABELS[p.category] || p.category;
+    const catColor = CATEGORY_COLORS[p.category] || CATEGORY_COLORS.unclassified;
+    tooltip.innerHTML = `<span style="color:var(--accent)">Feature ${p.id}</span> &middot; <span style="color:${catColor}">${cat}</span>`;
+    tooltip.style.display = 'block';
+    tooltip.style.left = (e.clientX - container.getBoundingClientRect().left + 12) + 'px';
+    tooltip.style.top = (e.clientY - container.getBoundingClientRect().top - 10) + 'px';
+    document.body.style.cursor = 'pointer';
+  } else {
+    tooltip.style.display = 'none';
+    hoveredId = null;
+    document.body.style.cursor = 'default';
+  }
+}
+
+function onClick(e) {
+  if (hoveredId !== null) {
+    selectFeature(hoveredId);
+  }
+}
+
+async function selectFeature(id) {
+  selectedId = id;
+  updateColors();
+  updateSizes();
+  showDetailLoading(id);
+  const detail = await loadFeatureDetail(id);
+  renderDetail(detail);
+}
+
+async function loadFeatureDetail(id) {
+  if (detailCache.has(id)) return detailCache.get(id);
+
+  const resp = await fetch(`/api/feature/${id}`);
+  const data = await resp.json();
+
+  // LRU eviction
+  if (detailCache.size >= MAX_CACHE) {
+    const oldest = detailCache.keys().next().value;
+    detailCache.delete(oldest);
+  }
+  detailCache.set(id, data);
+  return data;
+}
+
+// ========================================================================
+// UI: Category Filters
+// ========================================================================
+function buildCategoryFilters(catCounts) {
+  const container = document.getElementById('cat-filters');
+  const ordered = Object.keys(CATEGORY_COLORS);
+  container.innerHTML = '';
+
+  for (const cat of ordered) {
+    const count = catCounts[cat] || 0;
+    const color = CATEGORY_COLORS[cat];
+    const label = CATEGORY_LABELS[cat] || cat;
+
+    const item = document.createElement('div');
+    item.className = 'cat-item';
+    item.dataset.cat = cat;
+    item.innerHTML = `
+      <input type="checkbox" checked>
+      <span class="cat-dot" style="background:${color}"></span>
+      <span>${label}</span>
+      <span class="cat-count">${count.toLocaleString()}</span>
+    `;
+
+    item.addEventListener('click', () => {
+      const cb = item.querySelector('input');
+      cb.checked = !cb.checked;
+      categoryVisibility[cat] = cb.checked;
+      item.classList.toggle('disabled', !cb.checked);
+      updateColors();
+    });
+
+    container.appendChild(item);
+  }
+}
+
+// ========================================================================
+// UI: Stats Banner
+// ========================================================================
+function updateStatsBanner(catCounts) {
+  const total = points.length;
+  const classified = total - (catCounts.unclassified || 0);
+  const af = catCounts.alignment_faking_intent || 0;
+  document.getElementById('stats-banner').innerHTML =
+    `<span>${total.toLocaleString()}</span> features &middot; ` +
+    `<span>${classified.toLocaleString()}</span> classified &middot; ` +
+    `<span>${af.toLocaleString()}</span> AF intent`;
+}
+
+// ========================================================================
+// UI: Search
+// ========================================================================
+let searchTimeout = null;
+function initSearch() {
+  const input = document.getElementById('search-input');
+  const resultsDiv = document.getElementById('search-results');
+
+  input.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    const q = input.value.trim();
+    if (q.length < 2) {
+      resultsDiv.classList.remove('open');
+      searchHighlights.clear();
+      updateColors();
+      return;
+    }
+    searchTimeout = setTimeout(async () => {
+      const resp = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
+      const data = await resp.json();
+      renderSearchResults(data.results);
+      searchHighlights = new Set(data.results.map(r => r.id));
+      updateColors();
+    }, 300);
+  });
+
+  input.addEventListener('focus', () => {
+    if (resultsDiv.children.length > 0) resultsDiv.classList.add('open');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#search-input') && !e.target.closest('#search-results')) {
+      resultsDiv.classList.remove('open');
+    }
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      input.value = '';
+      resultsDiv.classList.remove('open');
+      searchHighlights.clear();
+      updateColors();
+    }
+  });
+}
+
+function renderSearchResults(results) {
+  const div = document.getElementById('search-results');
+  if (results.length === 0) {
+    div.innerHTML = '<div style="padding:8px 10px;color:var(--fg3)">No matches</div>';
+    div.classList.add('open');
+    return;
+  }
+  div.innerHTML = results.slice(0, 30).map(r => {
+    const color = CATEGORY_COLORS[r.category] || CATEGORY_COLORS.unclassified;
+    const label = CATEGORY_LABELS[r.category] || r.category;
+    const desc = r.description ? r.description.slice(0, 80) + '...' : '';
+    return `<div class="search-item" data-id="${r.id}">
+      <span style="color:var(--accent);min-width:40px">${r.id}</span>
+      <span class="search-cat" style="background:${color}22;color:${color}">${label}</span>
+      <span style="color:var(--fg3);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${desc}</span>
+    </div>`;
+  }).join('');
+
+  div.querySelectorAll('.search-item').forEach(el => {
+    el.addEventListener('click', () => {
+      selectFeature(parseInt(el.dataset.id));
+      div.classList.remove('open');
+    });
+  });
+  div.classList.add('open');
+}
+
+// ========================================================================
+// UI: Feature Detail Sidebar
+// ========================================================================
+function showDetailLoading(id) {
+  const content = document.getElementById('sidebar-content');
+  const empty = document.getElementById('sidebar-empty');
+  empty.style.display = 'none';
+  content.style.display = 'block';
+  content.innerHTML = `
+    <div class="detail-header">
+      <div class="detail-id">Feature ${id}</div>
+    </div>
+    <div class="detail-loading"><div class="spinner"></div></div>
+  `;
+}
+
+function renderDetail(data) {
+  const content = document.getElementById('sidebar-content');
+  const empty = document.getElementById('sidebar-empty');
+  empty.style.display = 'none';
+  content.style.display = 'block';
+
+  const meta = data.meta || {};
+  const cat = meta.category || 'unclassified';
+  const catColor = CATEGORY_COLORS[cat] || CATEGORY_COLORS.unclassified;
+  const catLabel = CATEGORY_LABELS[cat] || cat;
+
+  let html = `
+    <div class="detail-header">
+      <div class="detail-id">Feature ${data.id}</div>
+      <div class="detail-badge" style="background:${catColor}22;color:${catColor}">${catLabel}</div>
+      ${meta.confidence ? `<span style="font-size:10px;color:var(--fg3);margin-left:8px">confidence: ${meta.confidence}/5</span>` : ''}
+    </div>
+  `;
+
+  if (meta.description) {
+    html += `<div class="detail-desc">${escapeHtml(meta.description)}</div>`;
+  }
+
+  // Stats
+  html += `
+    <div class="detail-stats">
+      <div class="stat-box"><div class="stat-val">${(meta.density || 0).toFixed(4)}</div><div class="stat-label">Density</div></div>
+      <div class="stat-box"><div class="stat-val">${(meta.max_activation || 0).toFixed(1)}</div><div class="stat-label">Max Activation</div></div>
+      <div class="stat-box"><div class="stat-val">${(meta.mean_activation || 0).toFixed(1)}</div><div class="stat-label">Mean Activation</div></div>
+      <div class="stat-box"><div class="stat-val">${(meta.fire_count || 0).toLocaleString()}</div><div class="stat-label">Fire Count</div></div>
+    </div>
+  `;
+
+  // Top tokens
+  if (meta.top_tokens && meta.top_tokens.length > 0) {
+    html += `
+      <div class="detail-section">
+        <div class="detail-section-title">Top Tokens</div>
+        <div class="token-list">
+          ${meta.top_tokens.map(t => `<span class="token-pill">${escapeHtml(t)}</span>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  // Similar features
+  if (data.similar && data.similar.length > 0) {
+    html += `
+      <div class="detail-section">
+        <div class="detail-section-title">Most Similar Features</div>
+        ${data.similar.map(s => {
+          const simCat = featureIndex[String(s.id)]?.category || 'unclassified';
+          const simColor = CATEGORY_COLORS[simCat] || CATEGORY_COLORS.unclassified;
+          const pct = Math.round(s.similarity * 100);
+          return `<div class="sim-item" data-id="${s.id}">
+            <span style="color:var(--accent);min-width:40px">${s.id}</span>
+            <span class="cat-dot" style="background:${simColor};width:8px;height:8px"></span>
+            <div class="sim-bar-bg"><div class="sim-bar" style="width:${pct}%"></div></div>
+            <span class="sim-score">${s.similarity.toFixed(3)}</span>
+          </div>`;
+        }).join('')}
+      </div>
+    `;
+  }
+
+  // Examples
+  if (data.examples && data.examples.length > 0) {
+    html += `
+      <div class="detail-section">
+        <div class="detail-section-title">Top Activating Examples (${data.examples.length})</div>
+        ${data.examples.map((ex, i) => {
+          const lbl = (ex.label || 'aligned').toLowerCase();
+          const isAF = lbl.includes('faking') || lbl === 'af' || lbl.includes('potential_faking');
+          const isAligned = lbl === 'aligned' || lbl === 'honest';
+          const labelClass = isAF ? 'af' : isAligned ? 'aligned' : 'other';
+          const labelText = isAF ? 'AF' : lbl;
+          const text = (ex.text || '').slice(0, 1000);
+          return `<div class="example-item">
+            <div class="example-header" data-idx="${i}">
+              <span class="example-label ${labelClass}">${labelText}</span>
+              <span style="color:var(--fg3);font-size:10px">sample ${ex.sample_idx ?? '?'}</span>
+              <span class="example-act">act: ${(ex.activation || 0).toFixed(1)}</span>
+            </div>
+            <div class="example-text" id="ex-text-${i}">${escapeHtml(text)}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    `;
+  }
+
+  content.innerHTML = html;
+
+  // Bind similar feature clicks
+  content.querySelectorAll('.sim-item').forEach(el => {
+    el.addEventListener('click', () => selectFeature(parseInt(el.dataset.id)));
+  });
+
+  // Bind example toggles
+  content.querySelectorAll('.example-header').forEach(el => {
+    el.addEventListener('click', () => {
+      const textEl = document.getElementById(`ex-text-${el.dataset.idx}`);
+      textEl.classList.toggle('open');
+    });
+  });
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ========================================================================
+// Controls Binding
+// ========================================================================
+function initControls() {
+  // Color mode
+  document.getElementById('color-mode').addEventListener('change', (e) => {
+    colorMode = e.target.value;
+    updateColors();
+  });
+
+  // Spread
+  const spreadSlider = document.getElementById('spread-slider');
+  const spreadVal = document.getElementById('spread-val');
+  spreadSlider.addEventListener('input', () => {
+    spreadFactor = parseFloat(spreadSlider.value);
+    spreadVal.textContent = spreadFactor.toFixed(1);
+    updatePositions();
+  });
+
+  // Point size
+  const sizeSlider = document.getElementById('size-slider');
+  const sizeVal = document.getElementById('size-val');
+  sizeSlider.addEventListener('input', () => {
+    pointSize = parseFloat(sizeSlider.value);
+    sizeVal.textContent = pointSize.toFixed(1);
+    updateSizes();
+  });
+
+  // Glow
+  const glowSlider = document.getElementById('glow-slider');
+  const glowVal = document.getElementById('glow-val');
+  glowSlider.addEventListener('input', () => {
+    glowIntensity = parseFloat(glowSlider.value);
+    glowVal.textContent = glowIntensity.toFixed(2);
+    if (pointCloud) pointCloud.material.uniforms.glowIntensity.value = glowIntensity;
+  });
+}
+
+// ========================================================================
+// Animation Loop
+// ========================================================================
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+// ========================================================================
+// Main
+// ========================================================================
+async function main() {
+  initScene();
+  initControls();
+  initSearch();
+
+  await loadData();
+
+  createPointCloud();
+
+  // Remove loading overlay
+  document.getElementById('loading-overlay').style.display = 'none';
+
+  // Bind mouse events to the canvas
+  renderer.domElement.addEventListener('mousemove', onMouseMove);
+  renderer.domElement.addEventListener('click', onClick);
+
+  animate();
+}
+
+main().catch(err => {
+  console.error('Failed to initialize:', err);
+  document.getElementById('loading-overlay').innerHTML =
+    `<div style="color:#ff6b6b">Failed to load: ${err.message}</div>
+     <div style="color:var(--fg3);font-size:11px;margin-top:8px">Run prepare_data.py first, then start the server.</div>`;
+});
+</script>
+</body>
+</html>
